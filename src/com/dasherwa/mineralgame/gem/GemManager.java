@@ -1,6 +1,6 @@
-package com.dasherwa.mineralgame.code.gem;
+package com.dasherwa.mineralgame.gem;
 
-import com.dasherwa.mineralgame.code.main.Main;
+import com.dasherwa.mineralgame.main.Main;
 
 public class GemManager {
 

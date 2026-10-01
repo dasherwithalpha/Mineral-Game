@@ -1,9 +1,9 @@
-package com.dasherwa.mineralgame.code.main;
+package com.dasherwa.mineralgame.main;
 
 import static com.raylib.Raylib.*;
 
-import com.dasherwa.mineralgame.code.main.ui.UI;
-import com.dasherwa.mineralgame.code.world.WorldManager;
+import com.dasherwa.mineralgame.main.ui.UI;
+import com.dasherwa.mineralgame.world.WorldManager;
 
 import static com.raylib.Colors.*;
 

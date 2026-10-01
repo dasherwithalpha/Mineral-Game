@@ -1,11 +1,11 @@
-package com.dasherwa.mineralgame.code.main.ui;
+package com.dasherwa.mineralgame.main.ui;
 
 import static com.raylib.Raylib.*;
 
 import java.text.DecimalFormat;
 
-import com.dasherwa.mineralgame.code.main.Main;
-import com.dasherwa.mineralgame.code.main.TextureManager;
+import com.dasherwa.mineralgame.main.Main;
+import com.dasherwa.mineralgame.main.TextureManager;
 
 public class UI {
 

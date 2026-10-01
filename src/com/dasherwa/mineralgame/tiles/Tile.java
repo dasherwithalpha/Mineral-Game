@@ -1,8 +1,8 @@
-package com.dasherwa.mineralgame.code.tiles;
+package com.dasherwa.mineralgame.tiles;
 
 import static com.raylib.Raylib.*;
 
-import com.dasherwa.mineralgame.code.gem.Rarity;
+import com.dasherwa.mineralgame.gem.Rarity;
 
 public class Tile{
 

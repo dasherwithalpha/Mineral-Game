@@ -1,4 +1,4 @@
-package com.dasherwa.mineralgame.code.tiles;
+package com.dasherwa.mineralgame.tiles;
 
 public class TileData {
 

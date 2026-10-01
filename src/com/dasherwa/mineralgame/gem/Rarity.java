@@ -1,4 +1,4 @@
-package com.dasherwa.mineralgame.code.gem;
+package com.dasherwa.mineralgame.gem;
 
 public enum Rarity {
 

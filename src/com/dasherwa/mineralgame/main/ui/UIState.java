@@ -1,4 +1,4 @@
-package com.dasherwa.mineralgame.code.main.ui;
+package com.dasherwa.mineralgame.main.ui;
 
 public enum UIState {
 

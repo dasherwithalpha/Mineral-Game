@@ -1,14 +1,14 @@
-package com.dasherwa.mineralgame.code.world;
+package com.dasherwa.mineralgame.world;
 
 import com.FastNoiseLite.FastNoiseLite;
 import com.FastNoiseLite.FastNoiseLite.NoiseType;
-import com.dasherwa.mineralgame.code.gem.Rarity;
-import com.dasherwa.mineralgame.code.main.Main;
-import com.dasherwa.mineralgame.code.tiles.Tile;
-import static com.dasherwa.mineralgame.code.tiles.TileData.*;
-import com.dasherwa.mineralgame.code.tiles.TileManager;
-import com.dasherwa.mineralgame.code.tiles.TileType;
+import com.dasherwa.mineralgame.gem.Rarity;
+import com.dasherwa.mineralgame.main.Main;
+import com.dasherwa.mineralgame.tiles.Tile;
+import com.dasherwa.mineralgame.tiles.TileManager;
+import com.dasherwa.mineralgame.tiles.TileType;
 
+import static com.dasherwa.mineralgame.tiles.TileData.*;
 import static com.raylib.Raylib.*;
 
 public class WorldManager {
