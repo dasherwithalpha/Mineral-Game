@@ -23,7 +23,7 @@ public class Tile{
 		this.rarity = tile.rarity;
 		this.texture = tile.texture;
 		this.id = tile.id;
-		this.tile_data = tile.tile_data;
+		this.tile_data = new TileData(tile.tile_data);
 		
 	}
 	

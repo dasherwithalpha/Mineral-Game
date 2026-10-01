@@ -14,13 +14,13 @@ public class TextureManager {
 					black_bar;
 	
 	public static void LoadTextures() {
-		dirt_texture = LoadTexture("src/com/dasherwa/mineralgame/resources/images/dirt.png");
-		quarry_brownite = LoadTexture("src/com/dasherwa/mineralgame/resources/images/quarry-brownite.png");
-		quarry_grayite = LoadTexture("src/com/dasherwa/mineralgame/resources/images/quarry-grayite.png");
-		quarry_whiteoxide = LoadTexture("src/com/dasherwa/mineralgame/resources/images/quarry-whiteoxide.png");
-		quarry_bluntric = LoadTexture("src/com/dasherwa/mineralgame/resources/images/quarry-bluntric.png");
-		selected_tile = LoadTexture("src/com/dasherwa/mineralgame/resources/images/selected-tile.png");
-		black_bar = LoadTexture("src/com/dasherwa/mineralgame/resources/images/black_bar.png");
+		dirt_texture = LoadTexture("com/dasherwa/mineralgame/resources/images/dirt.png");
+		quarry_brownite = LoadTexture("com/dasherwa/mineralgame/resources/images/quarry-brownite.png");
+		quarry_grayite = LoadTexture("com/dasherwa/mineralgame/resources/images/quarry-grayite.png");
+		quarry_whiteoxide = LoadTexture("com/dasherwa/mineralgame/resources/images/quarry-whiteoxide.png");
+		quarry_bluntric = LoadTexture("com/dasherwa/mineralgame/resources/images/quarry-bluntric.png");
+		selected_tile = LoadTexture("com/dasherwa/mineralgame/resources/images/selected-tile.png");
+		black_bar = LoadTexture("com/dasherwa/mineralgame/resources/images/black_bar.png");
 	}
 	
 	public static void UnloadTextures() {

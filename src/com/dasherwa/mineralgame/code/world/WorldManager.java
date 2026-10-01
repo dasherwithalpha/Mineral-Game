@@ -5,7 +5,7 @@ import com.FastNoiseLite.FastNoiseLite.NoiseType;
 import com.dasherwa.mineralgame.code.gem.Rarity;
 import com.dasherwa.mineralgame.code.main.Main;
 import com.dasherwa.mineralgame.code.tiles.Tile;
-import com.dasherwa.mineralgame.code.tiles.TileData;
+import static com.dasherwa.mineralgame.code.tiles.TileData.*;
 import com.dasherwa.mineralgame.code.tiles.TileManager;
 import com.dasherwa.mineralgame.code.tiles.TileType;
 
@@ -137,9 +137,9 @@ public class WorldManager {
 		if(IsKeyPressed(KEY_ONE)) {
 			if(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].GetID() >= 1 && tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].GetID() <= 4) {
 				
-				TileData.SetQuarryPower(
+				SetQuarryPower(
 						tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()],
-						TileData.GetQuarryPower(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()]) + 1);
+						GetQuarryPower(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()]) + 1);
 				
 			}
 		}
@@ -147,11 +147,17 @@ public class WorldManager {
 		if (IsKeyPressed(KEY_TWO)) {
 			if (tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].GetID() >= 1 && tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].GetID() <= 4) {
 
-				TileData.SetQuarryFrequency(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()],
-						TileData.GetQuarryFrequency(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()])
+				SetQuarryFrequency(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()],
+						GetQuarryFrequency(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()])
 								+ 1);
 
 			}
+		}
+		
+		if(IsKeyPressed(KEY_A)) {
+			System.out.println(GetQuarryPower(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()]));
+			System.out.println(GetQuarryFrequency(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()]));
+			System.out.println(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].hashCode());
 		}
 		
 		CollectMineral();
@@ -164,24 +170,24 @@ public class WorldManager {
 			for (int j = 0; j < WORLD_HEIGHT; j++) {
 				if(tiles[i][j].GetType() == TileType.QUARRY) {
 					
-					if(TileData.GetQuarryCounter(tiles[i][j]) >= TileData.FrequencyLevelToPeriod(TileData.GetQuarryFrequency(tiles[i][j]))) {
+					if(GetQuarryCounter(tiles[i][j]) >= FrequencyLevelToPeriod(GetQuarryFrequency(tiles[i][j]))) {
 					
 						switch (tiles[i][j].GetRarity()) {
 
 							case COMMON:
-								Main.ui.mineralKG_counts[0] += TileData.KGPerPower(TileData.GetQuarryPower(tiles[i][j]));
+								Main.ui.mineralKG_counts[0] += KGPerPower(GetQuarryPower(tiles[i][j]));
 								break;
 
 							case RARE:
-								Main.ui.mineralKG_counts[1] += TileData.KGPerPower(TileData.GetQuarryPower(tiles[i][j]));
+								Main.ui.mineralKG_counts[1] += KGPerPower(GetQuarryPower(tiles[i][j]));
 								break;
 
 							case EPIC:
-								Main.ui.mineralKG_counts[2] += TileData.KGPerPower(TileData.GetQuarryPower(tiles[i][j]));
+								Main.ui.mineralKG_counts[2] += KGPerPower(GetQuarryPower(tiles[i][j]));
 								break;
 
 							case LEGENDARY:
-								Main.ui.mineralKG_counts[3] += TileData.KGPerPower(TileData.GetQuarryPower(tiles[i][j]));
+								Main.ui.mineralKG_counts[3] += KGPerPower(GetQuarryPower(tiles[i][j]));
 								break;
 
 							default:
@@ -189,12 +195,12 @@ public class WorldManager {
 
 						}
 						
-						TileData.SetQuarryCounter(tiles[i][j], 0.0f);
+						SetQuarryCounter(tiles[i][j], 0.0f);
 					
 					}
 					
-					TileData.SetQuarryCounter(tiles[i][j], TileData.GetQuarryCounter(tiles[i][j]) + GetFrameTime());
-					System.out.println(TileData.GetQuarryCounter(tiles[i][j]));
+					SetQuarryCounter(tiles[i][j], GetQuarryCounter(tiles[i][j]) + GetFrameTime());
+					//System.out.println(TileData.GetQuarryCounter(tiles[i][j]));
 				}
 			}
 		}
