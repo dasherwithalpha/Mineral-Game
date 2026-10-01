@@ -27,6 +27,7 @@ public class TileData {
 	public static void SetQuarryFrequency(Tile tile, int frequency) {
 		tile.tile_data.quarry_frequency = frequency;
 	}
+	
 	public static void SetQuarryCounter(Tile tile, float counter) {
 		tile.tile_data.quarry_counter = counter;
 	}

@@ -27,9 +27,9 @@ replay_pid*
 *.pdn
 
 # eclipse settings and stuff
-.settings/
+/.settings
 .classpath
 .project
 
 # compiled things
-bin/
+/bin
