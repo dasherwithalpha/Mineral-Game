@@ -11,8 +11,11 @@ public class Tile{
 	TileType type;
 	Rarity rarity;
 	Texture texture;
+	TileData tile_data;
 	
-	public Tile() {}
+	public Tile() {
+		tile_data = new TileData();
+	}
 	public Tile(Tile tile) {
 		
 		this.name = tile.name;
@@ -20,13 +23,16 @@ public class Tile{
 		this.rarity = tile.rarity;
 		this.texture = tile.texture;
 		this.id = tile.id;
+		this.tile_data = tile.tile_data;
 		
 	}
 	
+	//TASK SPECIFIC METHODS
 	public void Draw(int x, int y, Color colour) {
 		DrawTexture(texture, x, y, colour);
 	};
 	
+	//SETTERS
 	public void SetName(String name) {
 		this.name = name;
 	}
@@ -47,6 +53,7 @@ public class Tile{
 		this.id = id;
 	}
 	
+	//GETTERS
 	public Rarity GetRarity() {
 		return this.rarity;
 	}

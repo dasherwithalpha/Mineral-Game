@@ -1,9 +1,12 @@
 package com.dasherwa.mineralgame.code.main;
 
 import static com.raylib.Raylib.*;
+
+import com.dasherwa.mineralgame.code.main.ui.UI;
+import com.dasherwa.mineralgame.code.world.WorldManager;
+
 import static com.raylib.Colors.*;
 
-import com.dasherwa.mineralgame.code.world.WorldManager;
 import com.raylib.Helpers;
 
 public class Main {

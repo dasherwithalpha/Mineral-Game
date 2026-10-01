@@ -25,6 +25,9 @@ public class TileManager {
 		quarry_brownite.SetTexture(TextureManager.quarry_brownite);
 		quarry_brownite.SetType(TileType.QUARRY);
 		quarry_brownite.SetID(1);
+		TileData.SetQuarryPower(quarry_brownite, 1);
+		TileData.SetQuarryFrequency(quarry_brownite, 1);
+		TileData.SetQuarryCounter(quarry_brownite, 0.0f);
 		
 		Tile quarry_grayite = new Tile();
 		quarry_grayite.SetName("Grayite Quarry");
@@ -32,6 +35,9 @@ public class TileManager {
 		quarry_grayite.SetTexture(TextureManager.quarry_grayite);
 		quarry_grayite.SetType(TileType.QUARRY);
 		quarry_grayite.SetID(2);
+		TileData.SetQuarryPower(quarry_grayite, 1);
+		TileData.SetQuarryFrequency(quarry_grayite, 1);
+		TileData.SetQuarryCounter(quarry_grayite, 0.0f);
 		
 		Tile quarry_whiteoxide = new Tile();
 		quarry_whiteoxide.SetName("Whiteoxide Quarry");
@@ -39,6 +45,9 @@ public class TileManager {
 		quarry_whiteoxide.SetTexture(TextureManager.quarry_whiteoxide);
 		quarry_whiteoxide.SetType(TileType.QUARRY);
 		quarry_whiteoxide.SetID(3);
+		TileData.SetQuarryPower(quarry_whiteoxide, 1);
+		TileData.SetQuarryFrequency(quarry_whiteoxide, 1);
+		TileData.SetQuarryCounter(quarry_whiteoxide, 0.0f);
 		
 		Tile quarry_bluntric = new Tile();
 		quarry_bluntric.SetName("Bluntric Quarry");
@@ -46,6 +55,9 @@ public class TileManager {
 		quarry_bluntric.SetTexture(TextureManager.quarry_bluntric);
 		quarry_bluntric.SetType(TileType.QUARRY);
 		quarry_bluntric.SetID(4);
+		TileData.SetQuarryPower(quarry_bluntric, 1);
+		TileData.SetQuarryFrequency(quarry_bluntric, 1);
+		TileData.SetQuarryCounter(quarry_bluntric, 0.0f);
 		
 		
 		world_tiles[0] = dirt_tile;
