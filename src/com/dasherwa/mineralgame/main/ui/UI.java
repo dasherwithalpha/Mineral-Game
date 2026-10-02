@@ -33,43 +33,43 @@ public class UI {
 	
 	public void Update() {
 		
-		if(selection_type == SelectionType.TILE){
+		
+		switch(selection_type) {
 			
-			if(IsKeyPressed(KEY_UP)) {
+			case TILE:
 				
-				if(selected_tile.y() == 0) {
-					
-					selection_type = SelectionType.MENU;
-					
-				} else {
-					
+				if(IsKeyPressed(KEY_UP) && selected_tile.y() > 0) {
 					selected_tile.y(selected_tile.y() - 1);
+				}
+				if(IsKeyPressed(KEY_DOWN) && selected_tile.y() < 5) {
+					selected_tile.y(selected_tile.y() + 1);
+				}
+				if(IsKeyPressed(KEY_LEFT) && selected_tile.x() > 0) {
+					selected_tile.x(selected_tile.x() - 1);
+				}
+				if(IsKeyPressed(KEY_RIGHT) && selected_tile.x() < 9) {
+					selected_tile.x(selected_tile.x() + 1);
+				}
+				
+				if(IsKeyPressed(KEY_K)) {
+					selection_type = SelectionType.MENU;
+					System.out.println(selection_type.toString());
+				}
+				
+				break;
+				
+			case MENU:
+				
+				if(IsKeyPressed(KEY_K)) {
+					
+					selection_type = SelectionType.TILE;
+					System.out.println(selection_type.toString());
 					
 				}
-			}
-			if(IsKeyPressed(KEY_DOWN) && selected_tile.y() < 5) {
-				selected_tile.y(selected_tile.y() + 1);
-			}
-			if(IsKeyPressed(KEY_LEFT) && selected_tile.x() > 0) {
-				selected_tile.x(selected_tile.x() - 1);
-			}
-			if(IsKeyPressed(KEY_RIGHT) && selected_tile.x() < 9) {
-				selected_tile.x(selected_tile.x() + 1);
-			}
-			
-		}
-		
-		if(selection_type == SelectionType.MENU) {
-			
-			if(IsKeyPressed(KEY_DOWN)) {
 				
-				selection_type = SelectionType.TILE;
-				
-			}
+				break;
 			
-		}
-		
-		
+		}	
 	}
 	
 	public void Draw() {

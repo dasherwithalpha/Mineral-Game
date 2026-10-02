@@ -71,27 +71,6 @@ public class WorldManager {
 				
 				tiles[i][j].Draw(i * Main.TILE_SIZE, j * Main.TILE_SIZE + Main.SCREEN_BLACKNESS, Main.APAWHITE);
 				
-//				switch (tiles[i][j].GetRarity()){
-//				
-//				case COMMON:
-//					tiles[i][j].Draw(i * Main.TILE_SIZE, j * Main.TILE_SIZE + Main.SCREEN_BLACKNESS, Main.APABROWN);
-//					break;
-//				
-//				case RARE:
-//					tiles[i][j].Draw(i * Main.TILE_SIZE, j * Main.TILE_SIZE + Main.SCREEN_BLACKNESS, Main.APAGRAY);
-//					break;
-//					
-//				case EPIC:
-//					tiles[i][j].Draw(i * Main.TILE_SIZE, j * Main.TILE_SIZE + Main.SCREEN_BLACKNESS, Main.APAWHITE);
-//					break;
-//					
-//				case LEGENDARY:
-//					tiles[i][j].Draw(i * Main.TILE_SIZE, j * Main.TILE_SIZE + Main.SCREEN_BLACKNESS, Main.APABLUE);
-//					break;
-//				
-//				}
-				
-				
 			}
 		}
 		
