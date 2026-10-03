@@ -4,6 +4,8 @@ import com.FastNoiseLite.FastNoiseLite;
 import com.FastNoiseLite.FastNoiseLite.NoiseType;
 import com.dasherwa.mineralgame.gem.Rarity;
 import com.dasherwa.mineralgame.main.Main;
+import com.dasherwa.mineralgame.main.ui.SelectionType;
+import com.dasherwa.mineralgame.main.ui.UIState;
 import com.dasherwa.mineralgame.tiles.Tile;
 import com.dasherwa.mineralgame.tiles.TileManager;
 import com.dasherwa.mineralgame.tiles.TileType;
@@ -78,28 +80,28 @@ public class WorldManager {
 	
 	public void UpdateWorld() {
 		
-		if(IsKeyPressed(KEY_ENTER)) {
-			if (tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].GetID() == 0) {
-				switch (tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].GetRarity()) {
+		int selected_tile_x = (int) Main.ui.selected_tile.x();
+		int selected_tile_y = (int) Main.ui.selected_tile.y();
+		
+		if(IsKeyPressed(KEY_ENTER) && Main.ui.ui_state == UIState.RESOURCES && Main.ui.selection_type == SelectionType.TILE) {
+			if (tiles[selected_tile_x][selected_tile_y].GetID() == 0) {
+				switch (tiles[selected_tile_x][selected_tile_y].GetRarity()) {
 
 					case COMMON:
-						tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()] = new Tile(
-								tile_manager.world_tiles[1]);
+						System.out.println("a");
+						tiles[selected_tile_x][selected_tile_y] = new Tile(tile_manager.world_tiles[1]);
 						break;
 
 					case RARE:
-						tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()] = new Tile(
-								tile_manager.world_tiles[2]);
+						tiles[selected_tile_x][selected_tile_y] = new Tile(tile_manager.world_tiles[2]);
 						break;
 
 					case EPIC:
-						tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()] = new Tile(
-								tile_manager.world_tiles[3]);
+						tiles[selected_tile_x][selected_tile_y] = new Tile(tile_manager.world_tiles[3]);
 						break;
 
 					case LEGENDARY:
-						tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()] = new Tile(
-								tile_manager.world_tiles[4]);
+						tiles[selected_tile_x][selected_tile_y] = new Tile(tile_manager.world_tiles[4]);
 						break;
 
 					default:
@@ -114,29 +116,25 @@ public class WorldManager {
 		}
 		
 		if(IsKeyPressed(KEY_ONE)) {
-			if(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].GetID() >= 1 && tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].GetID() <= 4) {
+			if(tiles[selected_tile_x][selected_tile_y].GetID() >= 1 && tiles[selected_tile_x][selected_tile_y].GetID() <= 4) {
 				
-				SetQuarryPower(
-						tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()],
-						GetQuarryPower(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()]) + 1);
+				SetQuarryPower(tiles[selected_tile_x][selected_tile_y], GetQuarryPower(tiles[selected_tile_x][selected_tile_y]) + 1);
 				
 			}
 		}
 		
 		if (IsKeyPressed(KEY_TWO)) {
-			if (tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].GetID() >= 1 && tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].GetID() <= 4) {
+			if (tiles[selected_tile_x][selected_tile_y].GetID() >= 1 && tiles[selected_tile_x][selected_tile_y].GetID() <= 4) {
 
-				SetQuarryFrequency(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()],
-						GetQuarryFrequency(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()])
-								+ 1);
+				SetQuarryFrequency(tiles[selected_tile_x][selected_tile_y], GetQuarryFrequency(tiles[selected_tile_x][selected_tile_y]) + 1);
 
 			}
 		}
 		
 		if(IsKeyPressed(KEY_A)) {
-			System.out.println(GetQuarryPower(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()]));
-			System.out.println(GetQuarryFrequency(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()]));
-			System.out.println(tiles[(int) Main.ui.selected_tile.x()][(int) Main.ui.selected_tile.y()].hashCode());
+			System.out.println(GetQuarryPower(tiles[selected_tile_x][selected_tile_y]));
+			System.out.println(GetQuarryFrequency(tiles[selected_tile_x][selected_tile_y]));
+			System.out.println(tiles[selected_tile_x][selected_tile_y].hashCode());
 		}
 		
 		CollectMineral();

@@ -9,22 +9,32 @@ import com.dasherwa.mineralgame.main.TextureManager;
 
 public class UI {
 
-	UIState ui_state;
-	SelectionType selection_type;
+	public UIState ui_state;
+	public SelectionType selection_type;
 	
 	public Vector2 selected_tile;
-	public float[] mineralKG_counts = new float[4];
+	public Vector2 selected_menu, selected_menu_draw;
+	public float[] mineralKG_counts;
+	int balance;
 	
-	DecimalFormat decimal_format = new DecimalFormat("0.00");	
+	DecimalFormat decimal_format, decimal_format2;	
 	
 	@SuppressWarnings("resource")
 	public UI(){
+		
+		decimal_format = new DecimalFormat("0.00");
+		decimal_format2 = new DecimalFormat("00000000000000");
 		
 		ui_state = UIState.RESOURCES;
 		selection_type = SelectionType.TILE;
 		
 		selected_tile = new Vector2().x(0).y(0);
+		selected_menu = new Vector2().x(0).y(0);
+		selected_menu_draw = new Vector2().x(0).y(0);
 		
+		balance = 0;
+		
+		mineralKG_counts = new float[4];
 		mineralKG_counts[0] = 0.0f;
 		mineralKG_counts[1] = 0.0f;
 		mineralKG_counts[2] = 0.0f;
@@ -38,38 +48,92 @@ public class UI {
 			
 			case TILE:
 				
-				if(IsKeyPressed(KEY_UP) && selected_tile.y() > 0) {
-					selected_tile.y(selected_tile.y() - 1);
-				}
-				if(IsKeyPressed(KEY_DOWN) && selected_tile.y() < 5) {
-					selected_tile.y(selected_tile.y() + 1);
-				}
-				if(IsKeyPressed(KEY_LEFT) && selected_tile.x() > 0) {
-					selected_tile.x(selected_tile.x() - 1);
-				}
-				if(IsKeyPressed(KEY_RIGHT) && selected_tile.x() < 9) {
-					selected_tile.x(selected_tile.x() + 1);
-				}
-				
-				if(IsKeyPressed(KEY_K)) {
-					selection_type = SelectionType.MENU;
-					System.out.println(selection_type.toString());
-				}
+				SelectionTypeTileUpdate();
 				
 				break;
 				
 			case MENU:
 				
-				if(IsKeyPressed(KEY_K)) {
-					
-					selection_type = SelectionType.TILE;
-					System.out.println(selection_type.toString());
-					
-				}
+				SelectionTypeMenuUpdate();
 				
 				break;
 			
 		}	
+	}
+	
+	void SelectionTypeTileUpdate() {
+		
+		if(IsKeyPressed(KEY_UP) && selected_tile.y() > 0) {
+			selected_tile.y(selected_tile.y() - 1);
+		}
+		if(IsKeyPressed(KEY_DOWN) && selected_tile.y() < 5) {
+			selected_tile.y(selected_tile.y() + 1);
+		}
+		if(IsKeyPressed(KEY_LEFT) && selected_tile.x() > 0) {
+			selected_tile.x(selected_tile.x() - 1);
+		}
+		if(IsKeyPressed(KEY_RIGHT) && selected_tile.x() < 9) {
+			selected_tile.x(selected_tile.x() + 1);
+		}
+		
+		if(IsKeyPressed(KEY_K)) {
+			selection_type = SelectionType.MENU;
+			selected_menu.x(0);
+			selected_menu.y(0);
+			System.out.println(selection_type.toString());
+		}
+		
+	}
+	void SelectionTypeMenuUpdate() {
+		
+		if(IsKeyPressed(KEY_LEFT) && IsKeyDown(KEY_APOSTROPHE)) {
+			ui_state = ui_state.Previous();
+			System.out.println(ui_state.toString());
+		}
+		if(IsKeyPressed(KEY_RIGHT) && IsKeyDown(KEY_APOSTROPHE)) {
+			ui_state = ui_state.Next();
+			System.out.println(ui_state.toString());
+		}
+		
+		if(IsKeyPressed(KEY_K)) {
+			
+			selection_type = SelectionType.TILE;
+			System.out.println(selection_type.toString());
+			
+		}
+		
+		if(ui_state == UIState.OPTIONS) {
+			
+			if(IsKeyPressed(KEY_UP)) {
+				selected_menu.y(selected_menu.y() - 1);
+			}
+			if(IsKeyPressed(KEY_DOWN)) {
+				selected_menu.y(selected_menu.y() + 1);
+			}
+			if(IsKeyPressed(KEY_LEFT) && !IsKeyDown(KEY_APOSTROPHE)) {
+				selected_menu.x(selected_menu.x() - 1);
+			}
+			if(IsKeyPressed(KEY_RIGHT) && !IsKeyDown(KEY_APOSTROPHE)) {
+				selected_menu.x(selected_menu.x() + 1);
+			}
+			
+			selected_menu_draw.x(selected_menu.x() * 48 + 11);
+			selected_menu_draw.y(selected_menu.y() * 15 + 1);
+			
+			if(IsKeyPressed(KEY_ENTER)) {
+				
+				switch (selected_menu) {
+					
+					case (0,0):
+						break;
+					
+					default:	
+						break;
+				}
+				
+			}
+		}
+		
 	}
 	
 	public void Draw() {
@@ -82,16 +146,25 @@ public class UI {
 				DrawText(decimal_format.format(mineralKG_counts[3]), 20, 3, 13, Main.APAWHITE);
 				DrawText(decimal_format.format(mineralKG_counts[0]), 100, 18, 13, Main.APAWHITE);
 				DrawText(decimal_format.format(mineralKG_counts[1]), 100, 3, 13, Main.APAWHITE);
-				
 				break;
 				
 			case BALANCE:
+				DrawTexture(TextureManager.black_bar_balance, 0, 0, Main.APAWHITE);
+				DrawText(decimal_format2.format(balance), 53, 10, 13, Main.APAWHITE);
 				break;
 				
 			case OPTIONS:
+				DrawTexture(TextureManager.black_bar_options, 0, 0, Main.APAWHITE);
+				DrawTexture(TextureManager.selected_option, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
 				break;
 				
 			case QUARRY:
+				break;
+				
+			case SELL:
+				break;
+				
+			case AERAS:
 				break;
 		}
 		

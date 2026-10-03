@@ -11,7 +11,10 @@ public class TextureManager {
 					quarry_whiteoxide,
 					quarry_bluntric,
 					selected_tile,
-					black_bar;
+					black_bar,
+					black_bar_options,
+					black_bar_balance,
+					selected_option;
 	
 	public static void LoadTextures() {
 		dirt_texture = LoadTexture("Resources/Textures/dirt.png");
@@ -21,6 +24,9 @@ public class TextureManager {
 		quarry_bluntric = LoadTexture("Resources/Textures/quarry-bluntric.png");
 		selected_tile = LoadTexture("Resources/Textures/selected-tile.png");
 		black_bar = LoadTexture("Resources/Textures/black_bar.png");
+		black_bar_options = LoadTexture("Resources/Textures/black_bar_options.png");
+		black_bar_balance = LoadTexture("Resources/Textures/black_bar_balance.png");
+		selected_option = LoadTexture("Resources/Textures/selected_option.png");
 	}
 	
 	public static void UnloadTextures() {
@@ -31,6 +37,9 @@ public class TextureManager {
 		UnloadTexture(quarry_bluntric);
 		UnloadTexture(selected_tile);
 		UnloadTexture(black_bar);
+		UnloadTexture(black_bar_options);
+		UnloadTexture(black_bar_balance);
+		UnloadTexture(selected_option);
 	}
 	
 }
