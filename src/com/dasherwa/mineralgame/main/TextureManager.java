@@ -17,7 +17,8 @@ public class TextureManager {
 					selected_option,
 					black_bar_sell,
 					sell_back_menu,
-					sell_selected_mineral;
+					sell_selected_mineral,
+					sell_selected_mineral_all;
 	
 	public static void LoadTextures() {
 		dirt_texture = LoadTexture("Resources/Textures/dirt.png");
@@ -33,6 +34,7 @@ public class TextureManager {
 		black_bar_sell = LoadTexture("Resources/Textures/black_bar_sell.png");
 		sell_back_menu = LoadTexture("Resources/Textures/sell_back_menu.png");
 		sell_selected_mineral = LoadTexture("Resources/Textures/sell_selected_mineral.png");
+		sell_selected_mineral_all = LoadTexture("Resources/Textures/sell_selected_mineral_all.png");
 	}
 	
 	public static void UnloadTextures() {
@@ -49,6 +51,7 @@ public class TextureManager {
 		UnloadTexture(black_bar_sell);
 		UnloadTexture(sell_back_menu);
 		UnloadTexture(sell_selected_mineral);
+		UnloadTexture(sell_selected_mineral_all);
 	}
 	
 }

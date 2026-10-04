@@ -96,13 +96,15 @@ public class UI {
 	}
 	void SelectionTypeMenuUpdate() {
 		
-		if(IsKeyPressed(KEY_LEFT) && IsKeyDown(KEY_APOSTROPHE)) {
-			ui_state = ui_state.Previous();
-			System.out.println(ui_state.toString());
-		}
-		if(IsKeyPressed(KEY_RIGHT) && IsKeyDown(KEY_APOSTROPHE)) {
-			ui_state = ui_state.Next();
-			System.out.println(ui_state.toString());
+		if(ui_state == UIState.RESOURCES || ui_state == UIState.BALANCE || ui_state == UIState.OPTIONS) {
+			if(IsKeyPressed(KEY_LEFT) && IsKeyDown(KEY_APOSTROPHE)) {
+				ui_state = ui_state.Previous();
+				System.out.println(ui_state.toString());
+			}
+			if(IsKeyPressed(KEY_RIGHT) && IsKeyDown(KEY_APOSTROPHE)) {
+				ui_state = ui_state.Next();
+				System.out.println(ui_state.toString());
+			}
 		}
 		
 		if(IsKeyPressed(KEY_K)) {
@@ -139,18 +141,17 @@ public class UI {
 				}
 				if(selected_menu.x() == AREAS.x() && selected_menu.y() == AREAS.y()) {
 					ui_state = UIState.AERAS;
+					return;
 				}
 				if (selected_menu.x() == QUARRY.x() && selected_menu.y() == QUARRY.y()) {
 					ui_state = UIState.QUARRY;
+					return;
 				}
 			}
 			
 		}
 		
 		if(ui_state == UIState.SELL) {
-			if(IsKeyPressed(KEY_APOSTROPHE)) {
-				ui_state = UIState.OPTIONS;
-			}
 			
 			if(IsKeyPressed(KEY_LEFT) && selected_sell.x() > 0) {
 				selected_sell.x(selected_sell.x() - 1);
@@ -161,13 +162,33 @@ public class UI {
 			}
 			
 			if(selected_sell.x() >= 0 && selected_sell.x() <= 3) {
-				selected_menu_draw.x(selected_sell.x() * 30 + 1);
-				selected_menu_draw.y(2);
 				
-				if(IsKeyPressed(KEY_ENTER)) {
-					balance = balance + mineralKG_counts[(int)selected_sell.x()] * GemManager.GetGemValue((int)selected_sell.x());
-					mineralKG_counts[(int)selected_sell.x()] = 0;
-					ui_state = UIState.BALANCE;
+				if(!IsKeyDown(KEY_APOSTROPHE)) {
+					
+					selected_menu_draw.x(selected_sell.x() * 30 + 1);
+					selected_menu_draw.y(2);
+					
+					if(IsKeyPressed(KEY_ENTER)) {
+						balance = balance + mineralKG_counts[(int)selected_sell.x()] * GemManager.GetGemValue((int)selected_sell.x());
+						mineralKG_counts[(int)selected_sell.x()] = 0;
+						ui_state = UIState.BALANCE;
+					}
+					
+				}
+				
+				if(IsKeyDown(KEY_APOSTROPHE)) {
+					
+					selected_menu_draw.x(1);
+					selected_menu_draw.y(2);
+					
+					if(IsKeyPressed(KEY_ENTER)) {
+						for (int i = 0; i < 4; i++) {
+							balance = balance + mineralKG_counts[i] * GemManager.GetGemValue(i);
+							mineralKG_counts[i] = 0;
+						}
+						ui_state = UIState.BALANCE;
+					}
+					
 				}
 				
 			}
@@ -212,7 +233,12 @@ public class UI {
 				DrawTexture(TextureManager.black_bar_sell, 0, 0, Main.APAWHITE);
 				
 				if(selected_sell.x() >= 0 && selected_sell.x() <= 3) {
-					DrawTexture(TextureManager.sell_selected_mineral, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+					
+					if(!IsKeyDown(KEY_APOSTROPHE)) {
+						DrawTexture(TextureManager.sell_selected_mineral, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+					} else {
+						DrawTexture(TextureManager.sell_selected_mineral_all, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+					}
 				}
 				if(selected_sell.x() == 4) {
 					DrawTexture(TextureManager.sell_back_menu, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
