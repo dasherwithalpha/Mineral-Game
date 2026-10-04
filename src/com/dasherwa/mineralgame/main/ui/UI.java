@@ -14,6 +14,7 @@ public class UI {
 	
 	public Vector2 selected_tile;
 	public Vector2 selected_menu, selected_menu_draw;
+	public final Vector2 SELL, AREAS, QUARRY;
 	public float[] mineralKG_counts;
 	int balance;
 	
@@ -31,6 +32,10 @@ public class UI {
 		selected_tile = new Vector2().x(0).y(0);
 		selected_menu = new Vector2().x(0).y(0);
 		selected_menu_draw = new Vector2().x(0).y(0);
+		
+		SELL = new Vector2().x(0).y(0);
+		AREAS = new Vector2().x(0).y(1);
+		QUARRY = new Vector2().x(1).y(0);
 		
 		balance = 0;
 		
@@ -104,16 +109,16 @@ public class UI {
 		
 		if(ui_state == UIState.OPTIONS) {
 			
-			if(IsKeyPressed(KEY_UP)) {
+			if(IsKeyPressed(KEY_UP) && selected_menu.y() > 0) {
 				selected_menu.y(selected_menu.y() - 1);
 			}
-			if(IsKeyPressed(KEY_DOWN)) {
+			if(IsKeyPressed(KEY_DOWN) && selected_menu.y() < 1) {
 				selected_menu.y(selected_menu.y() + 1);
 			}
-			if(IsKeyPressed(KEY_LEFT) && !IsKeyDown(KEY_APOSTROPHE)) {
+			if(IsKeyPressed(KEY_LEFT) && !IsKeyDown(KEY_APOSTROPHE) && selected_menu.x() > 0) {
 				selected_menu.x(selected_menu.x() - 1);
 			}
-			if(IsKeyPressed(KEY_RIGHT) && !IsKeyDown(KEY_APOSTROPHE)) {
+			if(IsKeyPressed(KEY_RIGHT) && !IsKeyDown(KEY_APOSTROPHE) && selected_menu.x() < 2) {
 				selected_menu.x(selected_menu.x() + 1);
 			}
 			
@@ -122,15 +127,22 @@ public class UI {
 			
 			if(IsKeyPressed(KEY_ENTER)) {
 				
-				switch (selected_menu) {
-					
-					case (0,0):
-						break;
-					
-					default:	
-						break;
+				if(selected_menu.x() == SELL.x() && selected_menu.y() == SELL.y()) {
+					ui_state = UIState.SELL;
 				}
-				
+				if(selected_menu.x() == AREAS.x() && selected_menu.y() == AREAS.y()) {
+					ui_state = UIState.AERAS;
+				}
+				if (selected_menu.x() == QUARRY.x() && selected_menu.y() == QUARRY.y()) {
+					ui_state = UIState.QUARRY;
+				}
+			}
+			
+		}
+		
+		if(ui_state == UIState.SELL) {
+			if(IsKeyPressed(KEY_APOSTROPHE)) {
+				ui_state = UIState.OPTIONS;
 			}
 		}
 		

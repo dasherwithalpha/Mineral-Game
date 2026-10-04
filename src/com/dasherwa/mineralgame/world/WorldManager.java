@@ -1,6 +1,7 @@
 package com.dasherwa.mineralgame.world;
 
 import com.FastNoiseLite.FastNoiseLite;
+import com.FastNoiseLite.FastNoiseLite.FractalType;
 import com.FastNoiseLite.FastNoiseLite.NoiseType;
 import com.dasherwa.mineralgame.gem.Rarity;
 import com.dasherwa.mineralgame.main.Main;
@@ -20,6 +21,8 @@ public class WorldManager {
 	final int WORLD_HEIGHT = 6;
 	TileManager tile_manager;
 	
+	int noise_extend;
+	
 	static Tile[][] tiles;
 	
 	public WorldManager() {
@@ -28,17 +31,25 @@ public class WorldManager {
 		
 		tiles = new Tile[WORLD_WIDTH][WORLD_HEIGHT];
 		
+		noise_extend = 1;
+		
 		noise = new FastNoiseLite();
 		noise.SetNoiseType(NoiseType.OpenSimplex2);
 		noise.SetSeed(10);
 		noise.SetFrequency(0.09f);
+		noise.SetFractalType(FractalType.PingPong);
+		noise.SetFractalOctaves(4);
+		noise.SetFractalLacunarity(0.2f);
+		noise.SetFractalGain(0.21f);
+		noise.SetFractalWeightedStrength(7.47f);
+		noise.SetFractalPingPongStrength(2);
 		
 		for (int i = 0; i < WORLD_WIDTH; i++) {
 			for (int j = 0; j < WORLD_HEIGHT; j++) {
 				
 				tiles[i][j] = new Tile(tile_manager.world_tiles[0]);
 				
-				float noise_value = (noise.GetNoise(i, j) + 1) / 2 * 15;
+				float noise_value = (noise.GetNoise(i * noise_extend, j * noise_extend) + 1) / 2 * 15;
 				
 				System.out.println(noise_value);
 				
@@ -88,7 +99,6 @@ public class WorldManager {
 				switch (tiles[selected_tile_x][selected_tile_y].GetRarity()) {
 
 					case COMMON:
-						System.out.println("a");
 						tiles[selected_tile_x][selected_tile_y] = new Tile(tile_manager.world_tiles[1]);
 						break;
 
