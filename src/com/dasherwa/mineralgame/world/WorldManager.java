@@ -54,19 +54,19 @@ public class WorldManager {
 				System.out.println(noise_value);
 				
 				if(noise_value >= 0 && noise_value < 6) {
-					System.out.println("this value is between 0 and 6 (could be 0 as well)");
+//					System.out.println("this value is between 0 and 6 (could be 0 as well)");
 					tiles[i][j].SetRarity(Rarity.COMMON);
 				}
 				if(noise_value >= 6 && noise_value < 11) {
-					System.out.println("this value is between 6 and 11 (could be 6 as well)");
+//					System.out.println("this value is between 6 and 11 (could be 6 as well)");
 					tiles[i][j].SetRarity(Rarity.RARE);
 				}
 				if(noise_value >= 11 && noise_value < 13) {
-					System.out.println("this value is between 11 and 13 (could be 11 as well)");
+//					System.out.println("this value is between 11 and 13 (could be 11 as well)");
 					tiles[i][j].SetRarity(Rarity.EPIC);
 				}
 				if(noise_value >= 13 && noise_value < 15) {
-					System.out.println("this value is between 13 and 15 (could be 13 as well)");
+//					System.out.println("this value is between 13 and 15 (could be 13 as well)");
 					tiles[i][j].SetRarity(Rarity.LEGENDARY);
 				}
 				

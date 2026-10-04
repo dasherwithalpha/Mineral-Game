@@ -4,6 +4,7 @@ import static com.raylib.Raylib.*;
 
 import java.text.DecimalFormat;
 
+import com.dasherwa.mineralgame.gem.GemManager;
 import com.dasherwa.mineralgame.main.Main;
 import com.dasherwa.mineralgame.main.TextureManager;
 
@@ -13,12 +14,13 @@ public class UI {
 	public SelectionType selection_type;
 	
 	public Vector2 selected_tile;
-	public Vector2 selected_menu, selected_menu_draw;
+	public Vector2 selected_menu, selected_menu_draw, selected_sell;
 	public final Vector2 SELL, AREAS, QUARRY;
 	public float[] mineralKG_counts;
-	int balance;
+	float balance;
 	
 	DecimalFormat decimal_format, decimal_format2;	
+	GemManager gem_manager;
 	
 	@SuppressWarnings("resource")
 	public UI(){
@@ -26,12 +28,15 @@ public class UI {
 		decimal_format = new DecimalFormat("0.00");
 		decimal_format2 = new DecimalFormat("00000000000000");
 		
+		gem_manager = new GemManager();
+		
 		ui_state = UIState.RESOURCES;
 		selection_type = SelectionType.TILE;
 		
 		selected_tile = new Vector2().x(0).y(0);
 		selected_menu = new Vector2().x(0).y(0);
 		selected_menu_draw = new Vector2().x(0).y(0);
+		selected_sell = new Vector2().x(0).y(0);
 		
 		SELL = new Vector2().x(0).y(0);
 		AREAS = new Vector2().x(0).y(1);
@@ -129,6 +134,8 @@ public class UI {
 				
 				if(selected_menu.x() == SELL.x() && selected_menu.y() == SELL.y()) {
 					ui_state = UIState.SELL;
+					selected_sell.x(4);
+					return;
 				}
 				if(selected_menu.x() == AREAS.x() && selected_menu.y() == AREAS.y()) {
 					ui_state = UIState.AERAS;
@@ -143,6 +150,34 @@ public class UI {
 		if(ui_state == UIState.SELL) {
 			if(IsKeyPressed(KEY_APOSTROPHE)) {
 				ui_state = UIState.OPTIONS;
+			}
+			
+			if(IsKeyPressed(KEY_LEFT) && selected_sell.x() > 0) {
+				selected_sell.x(selected_sell.x() - 1);
+				
+			}
+			if(IsKeyPressed(KEY_RIGHT) && selected_sell.x() < 4) {
+				selected_sell.x(selected_sell.x() + 1);
+			}
+			
+			if(selected_sell.x() >= 0 && selected_sell.x() <= 3) {
+				selected_menu_draw.x(selected_sell.x() * 30 + 1);
+				selected_menu_draw.y(2);
+				
+				if(IsKeyPressed(KEY_ENTER)) {
+					balance = balance + mineralKG_counts[(int)selected_sell.x()] * GemManager.GetGemValue((int)selected_sell.x());
+					mineralKG_counts[(int)selected_sell.x()] = 0;
+					ui_state = UIState.BALANCE;
+				}
+				
+			}
+			if(selected_sell.x() == 4) {
+				selected_menu_draw.x(137);
+				selected_menu_draw.y(20);
+				
+				if(IsKeyPressed(KEY_ENTER)) {
+					ui_state = UIState.OPTIONS;
+				}
 			}
 		}
 		
@@ -174,6 +209,14 @@ public class UI {
 				break;
 				
 			case SELL:
+				DrawTexture(TextureManager.black_bar_sell, 0, 0, Main.APAWHITE);
+				
+				if(selected_sell.x() >= 0 && selected_sell.x() <= 3) {
+					DrawTexture(TextureManager.sell_selected_mineral, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+				}
+				if(selected_sell.x() == 4) {
+					DrawTexture(TextureManager.sell_back_menu, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+				}
 				break;
 				
 			case AERAS:

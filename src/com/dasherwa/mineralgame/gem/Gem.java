@@ -6,16 +6,14 @@ public class Gem {
 	String name;
 	Rarity rarity;
 	Color colour;
-	int value;
-	float kilogram;
+	float value;
 	
-	public Gem(String name, Rarity rarity, Color colour, int value, float kilogram) {
+	public Gem(String name, Rarity rarity, Color colour, float value) {
 		
 		this.name = name;
 		this.rarity = rarity;
 		this.colour = colour;
 		this.value = value;
-		this.kilogram = kilogram;
 		
 	}
 }

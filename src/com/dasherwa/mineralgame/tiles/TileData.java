@@ -20,7 +20,7 @@ public class TileData {
 	}
 	
 	public static float KGPerPower(int power_level) {
-		return (float) (10 * Math.pow(1.15f, power_level - 1));
+		return (float) (9 * Math.pow(1.15f, power_level - 1));
 	}
 	
 	public static float FrequencyLevelToPeriod(int frequency_level) {
