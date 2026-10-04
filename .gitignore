@@ -36,3 +36,6 @@ replay_pid*
 
 # jar exports
 /jar
+
+# ingame unrelated assets
+/InGameUnrelatedAssets

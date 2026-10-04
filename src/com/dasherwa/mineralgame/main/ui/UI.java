@@ -267,4 +267,8 @@ public class UI {
 		
 	}
 	
+	public int GetTotalBalance() {
+		return Math.round(balance);
+	}
+	
 }

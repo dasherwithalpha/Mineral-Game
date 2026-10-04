@@ -23,7 +23,7 @@ public class WorldManager {
 	
 	int noise_extend;
 	
-	static Tile[][] tiles;
+	Tile[][] tiles;
 	
 	public WorldManager() {
 		

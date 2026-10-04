@@ -2,6 +2,7 @@ package com.dasherwa.mineralgame.main;
 
 import static com.raylib.Raylib.*;
 
+import com.dasherwa.mineralgame.drpc.DRPC;
 import com.dasherwa.mineralgame.main.ui.UI;
 import com.dasherwa.mineralgame.world.WorldManager;
 
@@ -22,8 +23,11 @@ public class Main {
 	public static final Color APAGRAY = Helpers.newColor(75, 75, 75, 255);
 	
 	public static UI ui;
+	static DRPC discord_rpc;
 	
 	static final int SCREEN_MULTIPLIER = 6;
+	
+	
 	
 	public static void main(String[] args) {
 		InitWindow(
@@ -42,6 +46,9 @@ public class Main {
 		WorldManager world_manager = new WorldManager();
 		ui = new UI();
 		
+		discord_rpc = new DRPC();
+		discord_rpc.InitDiscordRPC();
+		
 		while(!WindowShouldClose()) {
 			
 			ui.Update();
@@ -55,7 +62,24 @@ public class Main {
 			EndMode2D();
 			EndDrawing();
 			
+			if(discord_rpc.GetCounter() == 0f) {
+				System.out.println("a");
+				try {
+					discord_rpc.UpdateDiscordRPC();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			discord_rpc.SetCounter(discord_rpc.GetCounter() + GetFrameTime());
+			
+			if(discord_rpc.GetCounter() > 3f) {
+				discord_rpc.SetCounter(0f);
+			}
+			
 		}
+		
+		discord_rpc.EndDiscordRPC();
 		
 		TextureManager.UnloadTextures();
 		camera2d.close();
