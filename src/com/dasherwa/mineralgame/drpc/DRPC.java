@@ -1,7 +1,6 @@
 package com.dasherwa.mineralgame.drpc;
 
 import com.dasherwa.mineralgame.main.Main;
-
 import dev.firstdark.rpc.DiscordRpc;
 import dev.firstdark.rpc.enums.ActivityType;
 import dev.firstdark.rpc.enums.ErrorCode;
@@ -75,6 +74,7 @@ public class DRPC {
                 .build();
 		
 		drpc.updatePresence(presence);
+		
 	}
 	
 	public void EndDiscordRPC() {
