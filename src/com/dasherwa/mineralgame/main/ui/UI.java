@@ -42,7 +42,7 @@ public class UI {
 		AREAS = new Vector2().x(0).y(1);
 		QUARRY = new Vector2().x(1).y(0);
 		
-		balance = 0;
+		balance = 1000;
 		
 		mineralKG_counts = new float[4];
 		mineralKG_counts[0] = 0.0f;
@@ -267,8 +267,27 @@ public class UI {
 		
 	}
 	
-	public int GetTotalBalance() {
-		return Math.round(balance);
+	public float GetTotalBalance(int mode) {
+		
+		switch (mode) {
+
+			case 0:
+				return balance;
+
+			case 1:
+				return Math.round(balance);
+
+			default:
+				return balance;
+
+		}
+		
+		
+		
+	}
+	
+	public void SetTotalBalance(float balance) {
+		this.balance = balance;
 	}
 	
 }

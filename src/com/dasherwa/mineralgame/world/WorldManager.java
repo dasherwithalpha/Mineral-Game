@@ -7,7 +7,9 @@ import com.dasherwa.mineralgame.gem.Rarity;
 import com.dasherwa.mineralgame.main.Main;
 import com.dasherwa.mineralgame.main.ui.SelectionType;
 import com.dasherwa.mineralgame.main.ui.UIState;
+import com.dasherwa.mineralgame.main.ui.dialoguebox.DialogueBoxManager.BoxType;
 import com.dasherwa.mineralgame.tiles.Tile;
+import com.dasherwa.mineralgame.tiles.TileData;
 import com.dasherwa.mineralgame.tiles.TileManager;
 import com.dasherwa.mineralgame.tiles.TileType;
 
@@ -19,7 +21,7 @@ public class WorldManager {
 	FastNoiseLite noise;
 	final int WORLD_WIDTH = 10;
 	final int WORLD_HEIGHT = 6;
-	TileManager tile_manager;
+	public TileManager tile_manager;
 	
 	int noise_extend;
 	
@@ -27,7 +29,7 @@ public class WorldManager {
 	
 	public WorldManager() {
 		
-		tile_manager = new TileManager();
+//		tile_manager = new TileManager();
 		
 		tiles = new Tile[WORLD_WIDTH][WORLD_HEIGHT];
 		
@@ -47,7 +49,7 @@ public class WorldManager {
 		for (int i = 0; i < WORLD_WIDTH; i++) {
 			for (int j = 0; j < WORLD_HEIGHT; j++) {
 				
-				tiles[i][j] = new Tile(tile_manager.world_tiles[0]);
+				tiles[i][j] = new Tile(TileManager.world_tiles[0]);
 				
 				float noise_value = (noise.GetNoise(i * noise_extend, j * noise_extend) + 1) / 2 * 15;
 				
@@ -96,28 +98,19 @@ public class WorldManager {
 		
 		if(IsKeyPressed(KEY_ENTER) && Main.ui.ui_state == UIState.RESOURCES && Main.ui.selection_type == SelectionType.TILE) {
 			if (tiles[selected_tile_x][selected_tile_y].GetID() == 0) {
-				switch (tiles[selected_tile_x][selected_tile_y].GetRarity()) {
-
-					case COMMON:
-						tiles[selected_tile_x][selected_tile_y] = new Tile(tile_manager.world_tiles[1]);
-						break;
-
-					case RARE:
-						tiles[selected_tile_x][selected_tile_y] = new Tile(tile_manager.world_tiles[2]);
-						break;
-
-					case EPIC:
-						tiles[selected_tile_x][selected_tile_y] = new Tile(tile_manager.world_tiles[3]);
-						break;
-
-					case LEGENDARY:
-						tiles[selected_tile_x][selected_tile_y] = new Tile(tile_manager.world_tiles[4]);
-						break;
-
-					default:
-						break;
-						
+				
+				if(Main.ui.GetTotalBalance(0) >= TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y])) {
+					
+					Main.ui.SetTotalBalance(Main.ui.GetTotalBalance(0) - TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y]));
+					
+					tiles[selected_tile_x][selected_tile_y] = TileData.PlaceQuarry(tiles[selected_tile_x][selected_tile_y]);
+					
+				} else {
+					System.out.println("not enough money bruh");
+					Main.dialogue_box_manager.SetBoxShow(BoxType.NOT_ENOUGH_MONEY);
 				}
+				
+				
 
 			}
 			
@@ -194,4 +187,7 @@ public class WorldManager {
 		
 	}
 
+	public Tile[][] GetWorldTiles(){
+		return tiles;
+	}
 }

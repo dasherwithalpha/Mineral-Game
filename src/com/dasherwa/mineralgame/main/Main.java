@@ -4,6 +4,9 @@ import static com.raylib.Raylib.*;
 
 import com.dasherwa.mineralgame.drpc.DRPC;
 import com.dasherwa.mineralgame.main.ui.UI;
+import com.dasherwa.mineralgame.main.ui.dialoguebox.DialogueBoxManager;
+import com.dasherwa.mineralgame.main.ui.dialoguebox.DialogueBoxManager.BoxType;
+import com.dasherwa.mineralgame.tiles.TileManager;
 import com.dasherwa.mineralgame.world.WorldManager;
 
 import static com.raylib.Colors.*;
@@ -16,6 +19,8 @@ public class Main {
 	public static final int TILE_COUNT_HORIZONTAL = 10;
 	public static final int TILE_COUNT_VERTICAL = 8;
 	public static final int SCREEN_BLACKNESS = 2 * TILE_SIZE;
+	public static final int GAME_SCREEN_HEIGHT = TILE_SIZE * TILE_COUNT_VERTICAL;
+	public static final int GAME_SCREEN_WIDHT = TILE_SIZE * TILE_COUNT_HORIZONTAL;
 	
 	public static final Color APABROWN = Helpers.newColor(119, 80, 39, 255);
 	public static final Color APABLUE = Helpers.newColor(182, 185, 244, 255);
@@ -23,9 +28,10 @@ public class Main {
 	public static final Color APAGRAY = Helpers.newColor(75, 75, 75, 255);
 	
 	public static UI ui;
+	public static DialogueBoxManager dialogue_box_manager;
 	static DRPC discord_rpc;
 	
-	static final int SCREEN_MULTIPLIER = 6;
+	static final int SCREEN_MULTIPLIER = 11;
 	
 	
 	
@@ -42,8 +48,12 @@ public class Main {
 		Camera2D camera2d = new Camera2D().zoom(SCREEN_MULTIPLIER);
 		
 		TextureManager.LoadTextures();
-		
+		@SuppressWarnings("unused")
+		TileManager tile_manager = new TileManager();
 		WorldManager world_manager = new WorldManager();
+		
+		dialogue_box_manager = new DialogueBoxManager();
+		
 		ui = new UI();
 		
 		discord_rpc = new DRPC();
@@ -59,11 +69,11 @@ public class Main {
 			ClearBackground(BLACK);
 			world_manager.DrawWorld();
 			ui.Draw();
+			dialogue_box_manager.DrawBox(BoxType.NOT_ENOUGH_MONEY);
 			EndMode2D();
 			EndDrawing();
 			
 			if(discord_rpc.GetCounter() == 0f) {
-				System.out.println("a");
 				try {
 					discord_rpc.UpdateDiscordRPC();
 				} catch (Exception e) {
@@ -76,6 +86,12 @@ public class Main {
 			if(discord_rpc.GetCounter() > 3f) {
 				discord_rpc.SetCounter(0f);
 			}
+			
+//			if(IsKeyPressed(KEY_S)) {
+//				BytePointer pointer = new BytePointer("a");
+//				SaveFileData("bomboclat.data", pointer, 1);
+//				System.out.println(world_manager.GetWorldTiles().toString());
+//			}
 			
 		}
 		

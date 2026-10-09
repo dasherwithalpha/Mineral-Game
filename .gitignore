@@ -39,3 +39,6 @@ replay_pid*
 
 # ingame unrelated assets
 /InGameUnrelatedAssets
+
+# exe creations
+/exe

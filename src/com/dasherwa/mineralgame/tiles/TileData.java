@@ -27,6 +27,27 @@ public class TileData {
 		return 5 / (float)frequency_level;
 	}
 	
+	public static Tile PlaceQuarry(Tile tile) {
+		
+		switch (tile.GetRarity()) {
+
+			case COMMON:
+				return new Tile(TileManager.world_tiles[1]);
+
+			case RARE:
+				return new Tile(TileManager.world_tiles[2]);
+
+			case EPIC:
+				return new Tile(TileManager.world_tiles[3]);
+
+			case LEGENDARY:
+				return new Tile(TileManager.world_tiles[4]);
+				
+		}
+		return tile;
+		
+	}
+	
 	// SETTERS
 	public static void SetQuarryPower(Tile tile, int power) {
 		tile.tile_data.quarry_power = power;
@@ -52,5 +73,27 @@ public class TileData {
 	public static float GetQuarryCounter(Tile tile) {
 		return tile.tile_data.quarry_counter;
 	}
+	
+	public static int GetQuarryPrice(Tile tile) {
+		switch (tile.GetRarity()) {
+
+			case COMMON:
+				return 1000;
+
+			case RARE:
+				return 1200;
+
+			case EPIC:
+				return 3000;
+
+			case LEGENDARY:
+				return 3000;
+
+			default:
+				return 0;
+
+		}
+	}
+
 
 }

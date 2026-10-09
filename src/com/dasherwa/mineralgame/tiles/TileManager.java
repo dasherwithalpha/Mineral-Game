@@ -7,7 +7,7 @@ import com.dasherwa.mineralgame.main.TextureManager;
 
 public class TileManager {
 
-	public Tile[] world_tiles;
+	public static Tile[] world_tiles;
 	private final int TILE_COUNT = 5;
 	
 	public TileManager() {
