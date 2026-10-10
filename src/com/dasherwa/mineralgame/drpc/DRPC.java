@@ -30,7 +30,7 @@ public class DRPC {
 			
 			public void ready(User user) {
 				presence = DiscordRichPresence.builder()
-						.details("Total Money: " + Main.ui.GetTotalBalance(1))
+						.details("Total Money: " + (int)Main.ui.GetTotalBalance(1))
 		                .largeImageKey("quarry_drpc_main")
 		                .activityType(ActivityType.PLAYING)
 		                .state("Getting Minerals")
@@ -66,7 +66,7 @@ public class DRPC {
 	public void UpdateDiscordRPC() {
 		
 		presence = DiscordRichPresence.builder()
-				.details("Total Money: " + Main.ui.GetTotalBalance(1))
+				.details("Total Money: " + (int)Main.ui.GetTotalBalance(1))
                 .largeImageKey("quarry_drpc_main")
                 .activityType(ActivityType.PLAYING)
                 .state("Getting Minerals")

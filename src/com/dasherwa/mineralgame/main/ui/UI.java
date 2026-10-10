@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 import com.dasherwa.mineralgame.gem.GemManager;
 import com.dasherwa.mineralgame.main.Main;
 import com.dasherwa.mineralgame.main.TextureManager;
+import com.dasherwa.mineralgame.world.WorldManager;
 
 public class UI {
 
@@ -14,10 +15,11 @@ public class UI {
 	public SelectionType selection_type;
 	
 	public Vector2 selected_tile;
-	public Vector2 selected_menu, selected_menu_draw, selected_sell;
+	public Vector2 selected_menu, selected_menu_draw, selected_sell, selected_quarry;
 	public final Vector2 SELL, AREAS, QUARRY;
 	public float[] mineralKG_counts;
 	float balance;
+	int quarry_count;
 	
 	DecimalFormat decimal_format, decimal_format2;	
 	GemManager gem_manager;
@@ -28,6 +30,8 @@ public class UI {
 		decimal_format = new DecimalFormat("0.00");
 		decimal_format2 = new DecimalFormat("00000000000000");
 		
+		quarry_count = 0;
+		
 		gem_manager = new GemManager();
 		
 		ui_state = UIState.RESOURCES;
@@ -37,6 +41,7 @@ public class UI {
 		selected_menu = new Vector2().x(0).y(0);
 		selected_menu_draw = new Vector2().x(0).y(0);
 		selected_sell = new Vector2().x(0).y(0);
+		selected_quarry = new Vector2().x(0).y(1);
 		
 		SELL = new Vector2().x(0).y(0);
 		AREAS = new Vector2().x(0).y(1);
@@ -129,25 +134,26 @@ public class UI {
 				selected_menu.x(selected_menu.x() + 1);
 			}
 			
-			selected_menu_draw.x(selected_menu.x() * 48 + 11);
-			selected_menu_draw.y(selected_menu.y() * 15 + 1);
-			
-			if(IsKeyPressed(KEY_ENTER)) {
-				
-				if(selected_menu.x() == SELL.x() && selected_menu.y() == SELL.y()) {
+			if (IsKeyPressed(KEY_ENTER)) {
+
+				if (selected_menu.x() == SELL.x() && selected_menu.y() == SELL.y()) {
 					ui_state = UIState.SELL;
 					selected_sell.x(4);
 					return;
 				}
-				if(selected_menu.x() == AREAS.x() && selected_menu.y() == AREAS.y()) {
+				if (selected_menu.x() == AREAS.x() && selected_menu.y() == AREAS.y()) {
 					ui_state = UIState.AERAS;
 					return;
 				}
 				if (selected_menu.x() == QUARRY.x() && selected_menu.y() == QUARRY.y()) {
 					ui_state = UIState.QUARRY;
+					selected_quarry.x(1);
 					return;
 				}
 			}
+			
+			selected_menu_draw.x(selected_menu.x() * 48 + 11);
+			selected_menu_draw.y(selected_menu.y() * 15 + 1);
 			
 		}
 		
@@ -202,6 +208,52 @@ public class UI {
 			}
 		}
 		
+		if(ui_state == UIState.QUARRY) {
+			
+			if(IsKeyPressed(KEY_LEFT)) {
+				selected_quarry.x(0);
+			}
+			if(IsKeyPressed(KEY_RIGHT)) {
+				selected_quarry.x(1);
+			}
+			if(IsKeyPressed(KEY_UP)) {
+				selected_quarry.y(0);
+			}
+			if(IsKeyPressed(KEY_DOWN)) {
+				selected_quarry.y(1);
+			}
+			
+			if(IsKeyPressed(KEY_ENTER)) {
+				
+				if(selected_quarry.x() == 0 && selected_quarry.y() == 0) {
+					WorldManager.IncreaseTileQuarryPower((int)selected_tile.x(), (int)selected_tile.y());
+				}
+				
+				if (selected_quarry.x() == 0 && selected_quarry.y() == 1) {
+					WorldManager.IncreaseTileQuarryFrequency((int)selected_tile.x(), (int)selected_tile.y());
+				}
+				
+				if(selected_quarry.x() == 1) {
+					ui_state = UIState.OPTIONS;
+				}
+				
+			}
+			
+			
+			if(selected_quarry.x() == 1) {
+				selected_menu_draw.x(137);
+				selected_menu_draw.y(20);
+			}
+			
+			if(selected_quarry.x() == 0) {
+				selected_menu_draw.x(34);
+				selected_menu_draw.y(selected_quarry.y() * 16);
+			}
+		}
+	
+		if(ui_state == UIState.AERAS) {
+			ui_state = UIState.OPTIONS;
+		}
 	}
 	
 	public void Draw() {
@@ -227,6 +279,37 @@ public class UI {
 				break;
 				
 			case QUARRY:
+				DrawTexture(TextureManager.black_bar_quarry, 0, 0, Main.APAWHITE);
+				DrawText(
+						"" + WorldManager.GetTileQuarryPower((int)selected_tile.x(), (int)selected_tile.y()),
+						55,
+						1,
+						16,
+						Main.APAWHITE
+						);
+				DrawText(
+						"" + WorldManager.GetTileQuarryFrequency((int)selected_tile.x(), (int)selected_tile.y()),
+						55,
+						17,
+						16,
+						Main.APAWHITE
+						);
+				
+				DrawTexture(
+						TextureManager.selected_tile_notinmenu,
+						(int)selected_tile.x() * Main.TILE_SIZE,
+						(int)selected_tile.y() * Main.TILE_SIZE + Main.SCREEN_BLACKNESS,
+						Main.APAWHITE
+						);
+				
+				if(selected_quarry.x() == 1) {
+					DrawTexture(TextureManager.quarry_back_menu, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+				}
+				
+				if(selected_quarry.x() == 0) {
+					DrawTexture(TextureManager.quarry_selected_attribute, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+				}
+				
 				break;
 				
 			case SELL:
@@ -290,4 +373,11 @@ public class UI {
 		this.balance = balance;
 	}
 	
+	public void IncreaseQuarryCountByOne() {
+		quarry_count += 1;
+	}
+	
+	public int GetQuarryCount() {
+		return quarry_count;
+	}
 }

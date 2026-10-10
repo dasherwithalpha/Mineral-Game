@@ -18,7 +18,11 @@ public class TextureManager {
 					black_bar_sell,
 					sell_back_menu,
 					sell_selected_mineral,
-					sell_selected_mineral_all;
+					sell_selected_mineral_all,
+					black_bar_quarry,
+					quarry_selected_attribute,
+					quarry_back_menu,
+					selected_tile_notinmenu;
 	
 	public static void LoadTextures() {
 		dirt_texture = LoadTexture("Resources/Textures/dirt.png");
@@ -35,6 +39,10 @@ public class TextureManager {
 		sell_back_menu = LoadTexture("Resources/Textures/sell_back_menu.png");
 		sell_selected_mineral = LoadTexture("Resources/Textures/sell_selected_mineral.png");
 		sell_selected_mineral_all = LoadTexture("Resources/Textures/sell_selected_mineral_all.png");
+		black_bar_quarry = LoadTexture("Resources/Textures/black_bar_quarry.png");
+		quarry_selected_attribute = LoadTexture("Resources/Textures/quarry_selected_attribute.png");
+		quarry_back_menu = LoadTexture("Resources/Textures/quarry_back_menu.png");
+		selected_tile_notinmenu = LoadTexture("Resources/Textures/selected-tile_notinmenu.png");
 	}
 	
 	public static void UnloadTextures() {
@@ -52,6 +60,10 @@ public class TextureManager {
 		UnloadTexture(sell_back_menu);
 		UnloadTexture(sell_selected_mineral);
 		UnloadTexture(sell_selected_mineral_all);
+		UnloadTexture(black_bar_quarry);
+		UnloadTexture(quarry_selected_attribute);
+		UnloadTexture(quarry_back_menu);
+		UnloadTexture(selected_tile_notinmenu);
 	}
 	
 }

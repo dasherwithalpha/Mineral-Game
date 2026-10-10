@@ -25,7 +25,7 @@ public class WorldManager {
 	
 	int noise_extend;
 	
-	Tile[][] tiles;
+	static Tile[][] tiles;
 	
 	public WorldManager() {
 		
@@ -99,11 +99,13 @@ public class WorldManager {
 		if(IsKeyPressed(KEY_ENTER) && Main.ui.ui_state == UIState.RESOURCES && Main.ui.selection_type == SelectionType.TILE) {
 			if (tiles[selected_tile_x][selected_tile_y].GetID() == 0) {
 				
-				if(Main.ui.GetTotalBalance(0) >= TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y])) {
+				if(Main.ui.GetTotalBalance(0) >= TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y], Main.ui.GetQuarryCount())) {
 					
-					Main.ui.SetTotalBalance(Main.ui.GetTotalBalance(0) - TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y]));
+					Main.ui.SetTotalBalance(Main.ui.GetTotalBalance(0) - TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y], Main.ui.GetQuarryCount()));
 					
 					tiles[selected_tile_x][selected_tile_y] = TileData.PlaceQuarry(tiles[selected_tile_x][selected_tile_y]);
+					System.out.println(TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y], Main.ui.GetQuarryCount()));
+					Main.ui.IncreaseQuarryCountByOne();
 					
 				} else {
 					System.out.println("not enough money bruh");
@@ -121,16 +123,16 @@ public class WorldManager {
 		if(IsKeyPressed(KEY_ONE)) {
 			if(tiles[selected_tile_x][selected_tile_y].GetID() >= 1 && tiles[selected_tile_x][selected_tile_y].GetID() <= 4) {
 				
-				SetQuarryPower(tiles[selected_tile_x][selected_tile_y], GetQuarryPower(tiles[selected_tile_x][selected_tile_y]) + 1);
-				
+//				SetQuarryPower(tiles[selected_tile_x][selected_tile_y], GetQuarryPower(tiles[selected_tile_x][selected_tile_y]) + 1);
+				IncreaseTileQuarryPower(selected_tile_x, selected_tile_y);
 			}
 		}
 		
 		if (IsKeyPressed(KEY_TWO)) {
 			if (tiles[selected_tile_x][selected_tile_y].GetID() >= 1 && tiles[selected_tile_x][selected_tile_y].GetID() <= 4) {
 
-				SetQuarryFrequency(tiles[selected_tile_x][selected_tile_y], GetQuarryFrequency(tiles[selected_tile_x][selected_tile_y]) + 1);
-
+//				SetQuarryFrequency(tiles[selected_tile_x][selected_tile_y], GetQuarryFrequency(tiles[selected_tile_x][selected_tile_y]) + 1);
+				IncreaseTileQuarryFrequency(selected_tile_x, selected_tile_y);
 			}
 		}
 		
@@ -189,5 +191,21 @@ public class WorldManager {
 
 	public Tile[][] GetWorldTiles(){
 		return tiles;
+	}
+
+	public static void IncreaseTileQuarryPower(int tile_x, int tile_y) {
+		SetQuarryPower(tiles[tile_x][tile_y], GetQuarryPower(tiles[tile_x][tile_y]) + 1);
+	}
+	
+	public static void IncreaseTileQuarryFrequency(int tile_x, int tile_y) {
+		SetQuarryFrequency(tiles[tile_x][tile_y], GetQuarryFrequency(tiles[tile_x][tile_y]) + 1);
+	}
+	
+	public static int GetTileQuarryPower(int tile_x, int tile_y) {
+		return GetQuarryPower(tiles[tile_x][tile_y]);
+	}
+	
+	public static int GetTileQuarryFrequency(int tile_x, int tile_y) {
+		return GetQuarryFrequency(tiles[tile_x][tile_y]);
 	}
 }

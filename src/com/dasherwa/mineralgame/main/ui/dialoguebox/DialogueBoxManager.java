@@ -16,6 +16,7 @@ public class DialogueBoxManager {
 		
 	}
 	
+	@SuppressWarnings("resource")
 	void CreateBoxes() {
 		
 		not_enough_money_dialogue_box = new DialogueBox.Builder()
@@ -67,6 +68,9 @@ public class DialogueBoxManager {
 
 		}
 		
+	}
+	public void Draw() {
+		DrawBox(BoxType.NOT_ENOUGH_MONEY);
 	}
 	
 	public void SetBoxShow(BoxType box_type) {

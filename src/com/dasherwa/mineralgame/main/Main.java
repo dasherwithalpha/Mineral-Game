@@ -5,7 +5,6 @@ import static com.raylib.Raylib.*;
 import com.dasherwa.mineralgame.drpc.DRPC;
 import com.dasherwa.mineralgame.main.ui.UI;
 import com.dasherwa.mineralgame.main.ui.dialoguebox.DialogueBoxManager;
-import com.dasherwa.mineralgame.main.ui.dialoguebox.DialogueBoxManager.BoxType;
 import com.dasherwa.mineralgame.tiles.TileManager;
 import com.dasherwa.mineralgame.world.WorldManager;
 
@@ -31,7 +30,7 @@ public class Main {
 	public static DialogueBoxManager dialogue_box_manager;
 	static DRPC discord_rpc;
 	
-	static final int SCREEN_MULTIPLIER = 11;
+	static final int SCREEN_MULTIPLIER = 6;
 	
 	
 	
@@ -69,29 +68,12 @@ public class Main {
 			ClearBackground(BLACK);
 			world_manager.DrawWorld();
 			ui.Draw();
-			dialogue_box_manager.DrawBox(BoxType.NOT_ENOUGH_MONEY);
+			dialogue_box_manager.Draw();
 			EndMode2D();
 			EndDrawing();
 			
-			if(discord_rpc.GetCounter() == 0f) {
-				try {
-					discord_rpc.UpdateDiscordRPC();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+			discord_rpc.UpdateDiscordRPC();
 			
-			discord_rpc.SetCounter(discord_rpc.GetCounter() + GetFrameTime());
-			
-			if(discord_rpc.GetCounter() > 3f) {
-				discord_rpc.SetCounter(0f);
-			}
-			
-//			if(IsKeyPressed(KEY_S)) {
-//				BytePointer pointer = new BytePointer("a");
-//				SaveFileData("bomboclat.data", pointer, 1);
-//				System.out.println(world_manager.GetWorldTiles().toString());
-//			}
 			
 		}
 		
