@@ -7,6 +7,8 @@ import java.text.DecimalFormat;
 import com.dasherwa.mineralgame.gem.GemManager;
 import com.dasherwa.mineralgame.main.Main;
 import com.dasherwa.mineralgame.main.TextureManager;
+import com.dasherwa.mineralgame.main.ui.dialoguebox.BoxType;
+import com.dasherwa.mineralgame.tiles.TileData;
 import com.dasherwa.mineralgame.world.WorldManager;
 
 public class UI {
@@ -18,7 +20,7 @@ public class UI {
 	public Vector2 selected_menu, selected_menu_draw, selected_sell, selected_quarry;
 	public final Vector2 SELL, AREAS, QUARRY;
 	public float[] mineralKG_counts;
-	float balance;
+	long balance;
 	int quarry_count;
 	
 	DecimalFormat decimal_format, decimal_format2;	
@@ -95,11 +97,15 @@ public class UI {
 			selection_type = SelectionType.MENU;
 			selected_menu.x(0);
 			selected_menu.y(0);
-			System.out.println(selection_type.toString());
 		}
 		
 	}
 	void SelectionTypeMenuUpdate() {
+		
+		if(IsKeyPressed(KEY_K)) {
+			selection_type = SelectionType.TILE;
+			return;
+		}
 		
 		if(ui_state == UIState.RESOURCES || ui_state == UIState.BALANCE || ui_state == UIState.OPTIONS) {
 			if(IsKeyPressed(KEY_LEFT) && IsKeyDown(KEY_APOSTROPHE)) {
@@ -111,14 +117,7 @@ public class UI {
 				System.out.println(ui_state.toString());
 			}
 		}
-		
-		if(IsKeyPressed(KEY_K)) {
-			
-			selection_type = SelectionType.TILE;
-			System.out.println(selection_type.toString());
-			
-		}
-		
+				
 		if(ui_state == UIState.OPTIONS) {
 			
 			if(IsKeyPressed(KEY_UP) && selected_menu.y() > 0) {
@@ -175,9 +174,10 @@ public class UI {
 					selected_menu_draw.y(2);
 					
 					if(IsKeyPressed(KEY_ENTER)) {
-						balance = balance + mineralKG_counts[(int)selected_sell.x()] * GemManager.GetGemValue((int)selected_sell.x());
+						balance += Math.round(mineralKG_counts[(int)selected_sell.x()] * GemManager.GetGemValue((int)selected_sell.x()));
 						mineralKG_counts[(int)selected_sell.x()] = 0;
 						ui_state = UIState.BALANCE;
+						System.out.println(balance);
 					}
 					
 				}
@@ -189,7 +189,7 @@ public class UI {
 					
 					if(IsKeyPressed(KEY_ENTER)) {
 						for (int i = 0; i < 4; i++) {
-							balance = balance + mineralKG_counts[i] * GemManager.GetGemValue(i);
+							balance += Math.round(mineralKG_counts[i] * GemManager.GetGemValue(i));
 							mineralKG_counts[i] = 0;
 						}
 						ui_state = UIState.BALANCE;
@@ -225,13 +225,68 @@ public class UI {
 			
 			if(IsKeyPressed(KEY_ENTER)) {
 				
-				if(selected_quarry.x() == 0 && selected_quarry.y() == 0) {
+				if(		WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y()) &&
+						selected_quarry.x() == 0 &&
+						selected_quarry.y() == 0 &&
+						balance > TileData.GetQuarryUpgradePowerPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y()))
+						)
+				{
+					balance -= TileData.GetQuarryUpgradePowerPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y()));
+					
+					Main.dialogue_box_manager.SetRemovedMoneyBoxText(TileData.GetQuarryUpgradePowerPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())));
+					Main.dialogue_box_manager.SetBoxShow(BoxType.REMOVED_MONEY);
+					
 					WorldManager.IncreaseTileQuarryPower((int)selected_tile.x(), (int)selected_tile.y());
-				}
 				
-				if (selected_quarry.x() == 0 && selected_quarry.y() == 1) {
+				} else if(	!WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y()) &&
+							selected_quarry.x() == 0 &&
+							selected_quarry.y() == 0
+						)
+				{	
+					Main.dialogue_box_manager.SetBoxShow(BoxType.NOT_A_QUARRY);
+					
+				
+				} else if(	balance < TileData.GetQuarryUpgradePowerPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())) &&
+							selected_quarry.x() == 0 &&
+							selected_quarry.y() == 0
+							)
+				{
+					
+					Main.dialogue_box_manager.SetBoxShow(BoxType.NOT_ENOUGH_MONEY);
+					
+				} 
+				
+				if (	WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y()) &&
+						selected_quarry.x() == 0 &&
+						selected_quarry.y() == 1 &&
+						balance > TileData.GetQuarryUpgradeFrequencyPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y()))
+						)
+				{
+					
+					balance -= TileData.GetQuarryUpgradeFrequencyPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y()));
+					
+					Main.dialogue_box_manager.SetRemovedMoneyBoxText(TileData.GetQuarryUpgradeFrequencyPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())));
+					Main.dialogue_box_manager.SetBoxShow(BoxType.REMOVED_MONEY);
+					
 					WorldManager.IncreaseTileQuarryFrequency((int)selected_tile.x(), (int)selected_tile.y());
-				}
+				
+				}  else if(!WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y()) &&
+						selected_quarry.x() == 0 &&
+						selected_quarry.y() == 1
+						)
+				{
+					
+					Main.dialogue_box_manager.SetBoxShow(BoxType.NOT_A_QUARRY);
+					
+				}  else if(	balance < TileData.GetQuarryUpgradeFrequencyPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())) &&
+							selected_quarry.x() == 0 &&
+							selected_quarry.y() == 1
+							)
+				{
+					
+					Main.dialogue_box_manager.SetBoxShow(BoxType.NOT_ENOUGH_MONEY);
+					
+				} 
 				
 				if(selected_quarry.x() == 1) {
 					ui_state = UIState.OPTIONS;
@@ -254,6 +309,7 @@ public class UI {
 		if(ui_state == UIState.AERAS) {
 			ui_state = UIState.OPTIONS;
 		}
+
 	}
 	
 	public void Draw() {
@@ -350,26 +406,11 @@ public class UI {
 		
 	}
 	
-	public float GetTotalBalance(int mode) {
-		
-		switch (mode) {
-
-			case 0:
-				return balance;
-
-			case 1:
-				return Math.round(balance);
-
-			default:
-				return balance;
-
-		}
-		
-		
-		
+	public long GetTotalBalance() {
+		return balance;
 	}
 	
-	public void SetTotalBalance(float balance) {
+	public void SetTotalBalance(long balance) {
 		this.balance = balance;
 	}
 	

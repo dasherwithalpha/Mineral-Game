@@ -50,7 +50,7 @@ public class TileData {
 	
 	public static float GetQuarryPrice(Tile tile, int quarry_count) {
 		
-		float pow = 1.05f;
+		float pow = 1.1f;
 		
 		switch (tile.GetRarity()) {
 
@@ -72,6 +72,13 @@ public class TileData {
 		}
 	}
 	
+	public static float GetQuarryUpgradePowerPrice(Tile tile) {
+		return (float) (500 * Math.pow(1.1f, (GetQuarryPower(tile) - 1)));
+	}
+	
+	public static float GetQuarryUpgradeFrequencyPrice(Tile tile) {
+		return (float) (500 * Math.pow(1.1f, (GetQuarryFrequency(tile) - 1)));
+	}
 	
 	// SETTERS
 	public static void SetQuarryPower(Tile tile, int power) {
