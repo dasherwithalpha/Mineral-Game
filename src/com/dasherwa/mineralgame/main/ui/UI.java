@@ -229,7 +229,8 @@ public class UI {
 				if(		WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y()) &&
 						selected_quarry.x() == 0 &&
 						selected_quarry.y() == 0 &&
-						balance > TileData.GetQuarryUpgradePowerPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y()))
+						balance > TileData.GetQuarryUpgradePowerPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())) &&
+						!WorldManager.IsTileQuarryPowerMaxed((int)selected_tile.x(), (int)selected_tile.y(), 10)
 						)
 				{
 					balance -= TileData.GetQuarryUpgradePowerPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y()));
@@ -237,13 +238,23 @@ public class UI {
 					Main.dialogue_box_manager.SetRemovedMoneyBoxText(TileData.GetQuarryUpgradePowerPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())));
 					Main.dialogue_box_manager.SetBoxShow(BoxType.REMOVED_MONEY);
 					
-					WorldManager.IncreaseTileQuarryPower((int)selected_tile.x(), (int)selected_tile.y());
+					WorldManager.IncreaseTileQuarryPower((int)selected_tile.x(), (int)selected_tile.y(), 1);
+					System.out.println(WorldManager.GetTileQuarryPower((int)selected_tile.x(), (int)selected_tile.y()));
 				
-				} else if(	!WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y()) &&
+				} else if (WorldManager.IsTileQuarryPowerMaxed((int)selected_tile.x(), (int)selected_tile.y(), 10) &&
+						selected_quarry.x() == 0 &&
+						selected_quarry.y() == 0
+						)
+				{
+				
+					Main.dialogue_box_manager.SetBoxShow(BoxType.MAX_QUARRY_ATTRIBUTE_LEVEL);
+				
+				}	else if(	!WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y()) &&
 							selected_quarry.x() == 0 &&
 							selected_quarry.y() == 0
-						)
+							)
 				{	
+						
 					Main.dialogue_box_manager.SetBoxShow(BoxType.NOT_A_QUARRY);
 					
 				
@@ -255,12 +266,13 @@ public class UI {
 					
 					Main.dialogue_box_manager.SetBoxShow(BoxType.NOT_ENOUGH_MONEY);
 					
-				} 
+				}
 				
 				if (	WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y()) &&
 						selected_quarry.x() == 0 &&
 						selected_quarry.y() == 1 &&
-						balance > TileData.GetQuarryUpgradeFrequencyPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y()))
+						balance > TileData.GetQuarryUpgradeFrequencyPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())) &&
+						!WorldManager.IsTileQuarryFrequencyMaxed((int)selected_tile.x(), (int)selected_tile.y(), 10)
 						)
 				{
 					
@@ -269,9 +281,18 @@ public class UI {
 					Main.dialogue_box_manager.SetRemovedMoneyBoxText(TileData.GetQuarryUpgradeFrequencyPrice(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())));
 					Main.dialogue_box_manager.SetBoxShow(BoxType.REMOVED_MONEY);
 					
-					WorldManager.IncreaseTileQuarryFrequency((int)selected_tile.x(), (int)selected_tile.y());
+					WorldManager.IncreaseTileQuarryFrequency((int)selected_tile.x(), (int)selected_tile.y(), 1);
 				
-				}  else if(!WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y()) &&
+				}  else if (WorldManager.IsTileQuarryFrequencyMaxed((int)selected_tile.x(), (int)selected_tile.y(), 10) &&
+						selected_quarry.x() == 0 &&
+						selected_quarry.y() == 1
+						)
+						
+				{
+		
+					Main.dialogue_box_manager.SetBoxShow(BoxType.MAX_QUARRY_ATTRIBUTE_LEVEL);
+
+				}	else if(!WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y()) &&
 						selected_quarry.x() == 0 &&
 						selected_quarry.y() == 1
 						)
@@ -287,7 +308,7 @@ public class UI {
 					
 					Main.dialogue_box_manager.SetBoxShow(BoxType.NOT_ENOUGH_MONEY);
 					
-				} 
+				}
 				
 				if(selected_quarry.x() == 1) {
 					ui_state = UIState.OPTIONS;

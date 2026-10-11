@@ -11,6 +11,7 @@ public class DialogueBoxManager {
 	DialogueBox not_enough_money;
 	DialogueBox not_a_quarry;
 	DialogueBox removed_money;
+	DialogueBox max_quarry_attribute_level;
 	
 	public DialogueBoxManager() {
 		
@@ -45,6 +46,14 @@ public class DialogueBoxManager {
 				.duration(2.0f)
 				.build();
 		
+		max_quarry_attribute_level = new DialogueBox.Builder()
+				.counter(0.0f)
+				.text("Attribute Maxed Out")
+				.box(new Rectangle().height(16).width(111).x(8).y(Main.GAME_SCREEN_HEIGHT - 8 - 16))
+				.show(false)
+				.duration(2.0f)
+				.build();
+		
 	}
 	
 	public void DrawBox(BoxType box_type) {
@@ -62,6 +71,9 @@ public class DialogueBoxManager {
 			case REMOVED_MONEY:
 				DialogueBox.Draw(removed_money);
 				break;
+				
+			case MAX_QUARRY_ATTRIBUTE_LEVEL:
+				DialogueBox.Draw(max_quarry_attribute_level);
 
 			default:
 				break;
@@ -74,6 +86,7 @@ public class DialogueBoxManager {
 		DrawBox(BoxType.NOT_ENOUGH_MONEY);
 		DrawBox(BoxType.NOT_A_QUARRY);
 		DrawBox(BoxType.REMOVED_MONEY);
+		DrawBox(BoxType.MAX_QUARRY_ATTRIBUTE_LEVEL);
 	}
 	
 	public void SetBoxShow(BoxType box_type) {
@@ -91,6 +104,9 @@ public class DialogueBoxManager {
 			case REMOVED_MONEY:
 				removed_money.SetShow(true);
 				break;
+				
+			case MAX_QUARRY_ATTRIBUTE_LEVEL:
+				max_quarry_attribute_level.SetShow(true);
 
 			default:
 				break;

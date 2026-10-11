@@ -139,6 +139,11 @@ public class WorldManager {
 //			System.out.println(tiles[selected_tile_x][selected_tile_y].hashCode());
 //		}
 		
+		//DE-COMMENT IN DEBUG
+//		if(IsKeyPressed(KEY_A)) {
+//			TileData.SetQuarryPower(tiles[selected_tile_x][selected_tile_y], 10);
+//		}
+		
 		CollectMineral();
 		
 	}
@@ -189,15 +194,27 @@ public class WorldManager {
 		return tiles;
 	}
 
-	public static void IncreaseTileQuarryPower(int tile_x, int tile_y) {
-		if(GetQuarryPower(tiles[tile_x][tile_y]) < 10) {
-			SetQuarryPower(tiles[tile_x][tile_y], GetQuarryPower(tiles[tile_x][tile_y]) + 1);
+	public static void IncreaseTileQuarryPower(int tile_x, int tile_y, int factor) {
+		SetQuarryPower(tiles[tile_x][tile_y], GetQuarryPower(tiles[tile_x][tile_y]) + factor);
+	}
+	
+	public static void IncreaseTileQuarryFrequency(int tile_x, int tile_y, int factor) {
+		SetQuarryFrequency(tiles[tile_x][tile_y], GetQuarryFrequency(tiles[tile_x][tile_y]) + factor);
+	}
+	
+	public static boolean IsTileQuarryPowerMaxed(int tile_x, int tile_y, int max) {
+		if(GetQuarryPower(tiles[tile_x][tile_y]) < max) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 	
-	public static void IncreaseTileQuarryFrequency(int tile_x, int tile_y) {
-		if(GetQuarryFrequency(tiles[tile_x][tile_y]) < 10) {
-			SetQuarryFrequency(tiles[tile_x][tile_y], GetQuarryFrequency(tiles[tile_x][tile_y]) + 1);
+	public static boolean IsTileQuarryFrequencyMaxed(int tile_x, int tile_y, int max) {
+		if(GetQuarryFrequency(tiles[tile_x][tile_y]) < max) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 	

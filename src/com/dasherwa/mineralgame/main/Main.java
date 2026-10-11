@@ -36,15 +36,20 @@ public class Main {
 	
 	static final int SCREEN_MULTIPLIER = 6;
 	
+	static final int MAJOR = 1;
+	static final int MINOR = 0;
+	static final int PATCH = 1;
+	static final Version.ReleaseIdentifier RELEASE_IDENTIFIER = ALPHA;
+	
 	
 	
 	public static void main(String[] args) {
 		
 		version = new Version.Builder()
-				.major(1)
-				.minor(0)
-				.patch(0)
-				.release(ALPHA)
+				.major(MAJOR)
+				.minor(MINOR)
+				.patch(PATCH)
+				.release(RELEASE_IDENTIFIER)
 				.build();
 		
 		InitWindow(
