@@ -10,6 +10,7 @@ import com.dasherwa.mineralgame.main.TextureManager;
 import com.dasherwa.mineralgame.main.ui.dialoguebox.BoxType;
 import com.dasherwa.mineralgame.tiles.TileData;
 import com.dasherwa.mineralgame.world.WorldManager;
+import com.dasherwa.utilities.romannumeral.RomanNumeral;
 
 public class UI {
 
@@ -337,14 +338,14 @@ public class UI {
 			case QUARRY:
 				DrawTexture(TextureManager.black_bar_quarry, 0, 0, Main.APAWHITE);
 				DrawText(
-						"" + WorldManager.GetTileQuarryPower((int)selected_tile.x(), (int)selected_tile.y()),
+						"" + RomanNumeral.GetRomanNumeral(WorldManager.GetTileQuarryPower((int)selected_tile.x(), (int)selected_tile.y())),
 						55,
 						1,
 						16,
 						Main.APAWHITE
 						);
 				DrawText(
-						"" + WorldManager.GetTileQuarryFrequency((int)selected_tile.x(), (int)selected_tile.y()),
+						"" + RomanNumeral.GetRomanNumeral(WorldManager.GetTileQuarryFrequency((int)selected_tile.x(), (int)selected_tile.y())),
 						55,
 						17,
 						16,

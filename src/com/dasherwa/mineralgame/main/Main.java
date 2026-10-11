@@ -7,6 +7,9 @@ import com.dasherwa.mineralgame.main.ui.UI;
 import com.dasherwa.mineralgame.main.ui.dialoguebox.DialogueBoxManager;
 import com.dasherwa.mineralgame.tiles.TileManager;
 import com.dasherwa.mineralgame.world.WorldManager;
+import com.dasherwa.utilities.version.Version;
+
+import static com.dasherwa.utilities.version.Version.ReleaseIdentifier.*;
 
 import static com.raylib.Colors.*;
 
@@ -29,16 +32,25 @@ public class Main {
 	public static UI ui;
 	public static DialogueBoxManager dialogue_box_manager;
 	static DRPC discord_rpc;
+	static Version version;
 	
 	static final int SCREEN_MULTIPLIER = 6;
 	
 	
 	
 	public static void main(String[] args) {
+		
+		version = new Version.Builder()
+				.major(1)
+				.minor(0)
+				.patch(0)
+				.release(ALPHA)
+				.build();
+		
 		InitWindow(
 				TILE_SIZE * TILE_COUNT_HORIZONTAL * SCREEN_MULTIPLIER,
 				TILE_SIZE * TILE_COUNT_VERTICAL * SCREEN_MULTIPLIER,
-				"Mineral Game"
+				"Mineral Game " + version.GetVersionName()
 				);
 		
 		SetTargetFPS(60);
