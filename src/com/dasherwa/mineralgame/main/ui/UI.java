@@ -50,7 +50,7 @@ public class UI {
 		AREAS = new Vector2().x(0).y(1);
 		QUARRY = new Vector2().x(1).y(0);
 		
-		balance = 1000;
+		balance = 3000;
 		
 		mineralKG_counts = new float[4];
 		mineralKG_counts[0] = 0.0f;
