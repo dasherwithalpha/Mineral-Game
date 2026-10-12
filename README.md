@@ -31,6 +31,6 @@ To navigate in game, firstly press K to go into the menu mode, then press the ri
 
 To place a quarry, go to the kilograms screen(the first screen you see in the game) and make sure you are in tile mode. A white border square will be seen on the world grid when you are at it. To switch between Tile and Menu modes, press K.
 
-To run the game, open a command line terminal in the directory of where the mineralgame.jar is located and type "java -jar mineralgame.jar" and make sure Resources folder is in the same directory as mineralgame.jar.
+To run the game, open a command line terminal in the directory of where the mineralgame.jar is located and type "javaw -jar mineralgame.jar" and make sure Resources folder is in the same directory as mineralgame.jar.
 
 I made it in Java 27 so probably it's required. Haven't tested in previous versions lol.
