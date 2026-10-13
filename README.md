@@ -10,7 +10,7 @@ Each quarry you place will have their own cycle of gathering minerals.
 - Bluntric
 
 Each one has a different value.
-Brownite and Graynite has the lowest value, so it will make less money when sold. Whiteoxide has more, and Bluntric has the most value.
+Brownite has the lowest value, so it will make less money when sold. Grayite has more, Whiteoxide and Bluntric has the most value.
 
 ## You can also upgrade your quarries' attributes:
 - Power, determines how many kilograms of minerals a quarry gathers in it's cycle.
