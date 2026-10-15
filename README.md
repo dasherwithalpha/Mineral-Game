@@ -1,4 +1,4 @@
-# Introducing Mineral Game by Dαsher! <img src="https://github.com/dasherwithalpha/Mineral-Game/blob/main/src/Resources/Textures/quarry-grayite-1000px.png" alt="Grayite Quarry Image" width="36"/>
+# Introducing Mineral Game by Dαsher! <img src="https://github.com/dasherwithalpha/Mineral-Game/blob/main/src/Resources/quarry-tier-mineral-loop-01-500px.gif" alt="Quarry Variations Loop" width="36"/>
 An incremental game where the goal is to get as much as money you can.
 Place quarries and gather minerals from underground and sell them.
 Each quarry you place will have their own cycle of gathering minerals.
