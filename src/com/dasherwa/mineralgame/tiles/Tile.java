@@ -3,6 +3,7 @@ package com.dasherwa.mineralgame.tiles;
 import static com.raylib.Raylib.*;
 
 import com.dasherwa.mineralgame.gem.Rarity;
+import com.dasherwa.mineralgame.main.TextureManager;
 
 public class Tile{
 
@@ -29,7 +30,14 @@ public class Tile{
 	
 	//TASK SPECIFIC METHODS
 	public void Draw(int x, int y, Color colour) {
+		
 		DrawTexture(texture, x, y, colour);
+		
+		if(type == TileType.QUARRY) {
+			if(tile_data.quarry_counter > TileData.FrequencyLevelToPeriod(TileData.GetQuarryFrequency(this)) - 0.1f) {
+				DrawTexture(TextureManager.quarry_cycle_completed, x, y, colour);
+			}
+		}
 	};
 	
 	//SETTERS
@@ -64,5 +72,9 @@ public class Tile{
 	
 	public TileType GetType() {
 		return this.type;
+	}
+	
+	public String GetName() {
+		return this.name;
 	}
 }

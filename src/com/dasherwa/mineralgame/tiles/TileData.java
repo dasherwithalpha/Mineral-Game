@@ -5,6 +5,7 @@ public class TileData {
 	int quarry_power;
 	int quarry_frequency;
 	float quarry_counter;
+	int quarry_tier;
 	
 	public TileData() {}
 	

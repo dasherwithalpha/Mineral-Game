@@ -12,12 +12,18 @@ import dev.firstdark.rpc.models.User;
 
 public class DRPC {
 
-	String app_id = "1556396580267892776";
+	String app_id;
 	DiscordRpc drpc;
 	RPCEventHandler handler;
 	DiscordRichPresence presence;
 	float counter;
 	long start_time_stamp;
+	
+	public DRPC(String app_id) {
+		
+		this.app_id = app_id;
+		
+	}
 		
 	public void InitDiscordRPC(){
 		
@@ -33,7 +39,7 @@ public class DRPC {
 						.details("Total Money: " + Main.ui.GetTotalBalance())
 		                .largeImageKey("quarry_drpc_main")
 		                .activityType(ActivityType.PLAYING)
-		                .state("Getting Minerals")
+		                .state("Quarry Count: " + Main.ui.GetQuarryCount())
 		                .startTimestamp(start_time_stamp)
 		                .build();
 				
@@ -69,7 +75,7 @@ public class DRPC {
 				.details("Total Money: " + Main.ui.GetTotalBalance())
                 .largeImageKey("quarry_drpc_main")
                 .activityType(ActivityType.PLAYING)
-                .state("Getting Minerals")
+                .state("Quarry Count: " + Main.ui.GetQuarryCount())
                 .startTimestamp(start_time_stamp)
                 .build();
 		

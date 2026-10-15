@@ -32,30 +32,39 @@ public class Main {
 	public static UI ui;
 	public static DialogueBoxManager dialogue_box_manager;
 	static DRPC discord_rpc;
+	static boolean discord_rpc_on;
 	static Version version;
 	
 	static final int SCREEN_MULTIPLIER = 6;
 	
 	static final int MAJOR = 1;
-	static final int MINOR = 0;
-	static final int PATCH = 1;
+	static final int MINOR = 1;
+	static final int PATCH = 0;
 	static final Version.ReleaseIdentifier RELEASE_IDENTIFIER = ALPHA;
+	static final String BUILD = "0000-20261016";
 	
 	
 	
 	public static void main(String[] args) {
+		
+		if(args.length == 0) {
+			discord_rpc_on = false;
+		} else {
+			discord_rpc_on = true;
+		}
 		
 		version = new Version.Builder()
 				.major(MAJOR)
 				.minor(MINOR)
 				.patch(PATCH)
 				.release(RELEASE_IDENTIFIER)
+				.buildver(BUILD)
 				.build();
 		
 		InitWindow(
 				TILE_SIZE * TILE_COUNT_HORIZONTAL * SCREEN_MULTIPLIER,
 				TILE_SIZE * TILE_COUNT_VERTICAL * SCREEN_MULTIPLIER,
-				"Mineral Game " + version.GetVersionName()
+				"Mineral Game " + version.GetVersionName(1)
 				);
 		
 		SetTargetFPS(60);
@@ -72,8 +81,11 @@ public class Main {
 		
 		ui = new UI();
 		
-		discord_rpc = new DRPC();
-		discord_rpc.InitDiscordRPC();
+		if(discord_rpc_on) {
+			discord_rpc = new DRPC(args[0]);
+			discord_rpc.InitDiscordRPC();
+		}
+		
 		
 		while(!WindowShouldClose()) {
 			
@@ -89,12 +101,14 @@ public class Main {
 			EndMode2D();
 			EndDrawing();
 			
-			discord_rpc.UpdateDiscordRPC();
-			
-			
+			if(discord_rpc_on) {
+				discord_rpc.UpdateDiscordRPC();
+			}
 		}
 		
-		discord_rpc.EndDiscordRPC();
+		if(discord_rpc_on) {
+			discord_rpc.EndDiscordRPC();
+		}
 		
 		TextureManager.UnloadTextures();
 		camera2d.close();

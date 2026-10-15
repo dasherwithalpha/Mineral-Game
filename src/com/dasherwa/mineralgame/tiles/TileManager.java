@@ -24,7 +24,7 @@ public class TileManager {
 		Tile quarry_brownite = new Tile();
 		quarry_brownite.SetName("Brownite Quarry");
 		quarry_brownite.SetRarity(Rarity.COMMON);
-		quarry_brownite.SetTexture(TextureManager.quarry_brownite);
+		quarry_brownite.SetTexture(TextureManager.quarry_brownite_01);
 		quarry_brownite.SetType(TileType.QUARRY);
 		quarry_brownite.SetID(1);
 		SetQuarryPower(quarry_brownite, 1);
@@ -34,7 +34,7 @@ public class TileManager {
 		Tile quarry_grayite = new Tile();
 		quarry_grayite.SetName("Grayite Quarry");
 		quarry_grayite.SetRarity(Rarity.RARE);
-		quarry_grayite.SetTexture(TextureManager.quarry_grayite);
+		quarry_grayite.SetTexture(TextureManager.quarry_grayite_01);
 		quarry_grayite.SetType(TileType.QUARRY);
 		quarry_grayite.SetID(2);
 		SetQuarryPower(quarry_grayite, 1);
@@ -44,7 +44,7 @@ public class TileManager {
 		Tile quarry_whiteoxide = new Tile();
 		quarry_whiteoxide.SetName("Whiteoxide Quarry");
 		quarry_whiteoxide.SetRarity(Rarity.EPIC);
-		quarry_whiteoxide.SetTexture(TextureManager.quarry_whiteoxide);
+		quarry_whiteoxide.SetTexture(TextureManager.quarry_whiteoxide_01);
 		quarry_whiteoxide.SetType(TileType.QUARRY);
 		quarry_whiteoxide.SetID(3);
 		SetQuarryPower(quarry_whiteoxide, 1);
@@ -54,7 +54,7 @@ public class TileManager {
 		Tile quarry_bluntric = new Tile();
 		quarry_bluntric.SetName("Bluntric Quarry");
 		quarry_bluntric.SetRarity(Rarity.LEGENDARY);
-		quarry_bluntric.SetTexture(TextureManager.quarry_bluntric);
+		quarry_bluntric.SetTexture(TextureManager.quarry_bluntric_01);
 		quarry_bluntric.SetType(TileType.QUARRY);
 		quarry_bluntric.SetID(4);
 		SetQuarryPower(quarry_bluntric, 1);
