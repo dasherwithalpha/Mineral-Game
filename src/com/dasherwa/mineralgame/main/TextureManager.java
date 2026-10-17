@@ -7,23 +7,19 @@ public class TextureManager {
 	public static Texture
 					//TILE TEXTURES
 					dirt_texture,
+					dirt_00_mineral_1,
+					dirt_00_mineral_2,
+					dirt_00_mineral_3,
+					dirt_00_mineral_4,
 					quarry_cycle_completed,
-					quarry_brownite_01,
-					quarry_brownite_02,
-					quarry_brownite_03,
-					quarry_brownite_04,
-					quarry_grayite_01,
-					quarry_grayite_02,
-					quarry_grayite_03,
-					quarry_grayite_04,
-					quarry_whiteoxide_01,
-					quarry_whiteoxide_02,
-					quarry_whiteoxide_03,
-					quarry_whiteoxide_04,
-					quarry_bluntric_01,
-					quarry_bluntric_02,
-					quarry_bluntric_03,
-					quarry_bluntric_04,
+					quarry_00_body_1,
+					quarry_00_body_2,
+					quarry_00_body_3,
+					quarry_00_body_4,
+					quarry_00_mineral_1,
+					quarry_00_mineral_2,
+					quarry_00_mineral_3,
+					quarry_00_mineral_4,
 					//MENU TEXTURES
 					selected_tile,
 					black_bar,
@@ -54,23 +50,19 @@ public class TextureManager {
 	public static void LoadTextures() {
 		//TILE TEXTURES
 		dirt_texture = LoadTexture("Resources/Textures/Tile/dirt.png");
-		quarry_cycle_completed = LoadTexture("Resources/Textures/Tile/quarry-00-cycle-completed.png");
-		quarry_brownite_01 = LoadTexture("Resources/Textures/Tile/quarry-01-1.png");
-		quarry_brownite_02 = LoadTexture("Resources/Textures/Tile/quarry-01-2.png");
-		quarry_brownite_03 = LoadTexture("Resources/Textures/Tile/quarry-01-3.png");
-		quarry_brownite_04 = LoadTexture("Resources/Textures/Tile/quarry-01-4.png");
-		quarry_grayite_01 = LoadTexture("Resources/Textures/Tile/quarry-02-1.png");
-		quarry_grayite_02 = LoadTexture("Resources/Textures/Tile/quarry-02-2.png");
-		quarry_grayite_03 = LoadTexture("Resources/Textures/Tile/quarry-02-3.png");
-		quarry_grayite_04 = LoadTexture("Resources/Textures/Tile/quarry-02-4.png");
-		quarry_whiteoxide_01 = LoadTexture("Resources/Textures/Tile/quarry-03-1.png");
-		quarry_whiteoxide_02 = LoadTexture("Resources/Textures/Tile/quarry-03-2.png");
-		quarry_whiteoxide_03 = LoadTexture("Resources/Textures/Tile/quarry-03-3.png");
-		quarry_whiteoxide_04 = LoadTexture("Resources/Textures/Tile/quarry-03-4.png");
-		quarry_bluntric_01 = LoadTexture("Resources/Textures/Tile/quarry-04-1.png");
-		quarry_bluntric_02 = LoadTexture("Resources/Textures/Tile/quarry-04-2.png");
-		quarry_bluntric_03 = LoadTexture("Resources/Textures/Tile/quarry-04-3.png");
-		quarry_bluntric_04 = LoadTexture("Resources/Textures/Tile/quarry-04-4.png");
+		dirt_00_mineral_1 = LoadTexture("Resources/Textures/Tile/dirt_00_mineral_1.png");
+		dirt_00_mineral_2 = LoadTexture("Resources/Textures/Tile/dirt_00_mineral_2.png");
+		dirt_00_mineral_3 = LoadTexture("Resources/Textures/Tile/dirt_00_mineral_3.png");
+		dirt_00_mineral_4 = LoadTexture("Resources/Textures/Tile/dirt_00_mineral_4.png");
+		quarry_cycle_completed = LoadTexture("Resources/Textures/Tile/quarry-cycle-completed.png");
+		quarry_00_body_1 = LoadTexture("Resources/Textures/Tile/quarry_00_body_1.png");
+		quarry_00_body_2 = LoadTexture("Resources/Textures/Tile/quarry_00_body_2.png");
+		quarry_00_body_3 = LoadTexture("Resources/Textures/Tile/quarry_00_body_3.png");
+		quarry_00_body_4 = LoadTexture("Resources/Textures/Tile/quarry_00_body_4.png");
+		quarry_00_mineral_1 = LoadTexture("Resources/Textures/Tile/quarry_00_mineral_1.png");
+		quarry_00_mineral_2 = LoadTexture("Resources/Textures/Tile/quarry_00_mineral_2.png");
+		quarry_00_mineral_3 = LoadTexture("Resources/Textures/Tile/quarry_00_mineral_3.png");
+		quarry_00_mineral_4 = LoadTexture("Resources/Textures/Tile/quarry_00_mineral_4.png");
 		//MENU TEXTURES
 		selected_tile = LoadTexture("Resources/Textures/Menu/selected-tile.png");
 		black_bar = LoadTexture("Resources/Textures/Menu/black_bar.png");
@@ -93,7 +85,7 @@ public class TextureManager {
 		quarry_00_tier_4 = LoadTexture("Resources/Textures/Menu/quarry_00_tier_4.png");
 		quarry_tier_selected = LoadTexture("Resources/Textures/Menu/quarry_tier_selected.png");
 		//AREA MENU TEXTURES
-		black_bar_areas = LoadTexture("Resources/Textures/Menu/black_bar_area.png");
+		black_bar_areas = LoadTexture("Resources/Textures/Menu/black_bar_areas.png");
 		areas_selected_area = LoadTexture("Resources/Textures/Menu/areas_selected_area.png");
 		areas_selled_area = LoadTexture("Resources/Textures/Menu/areas_selled_area.png");
 	}
@@ -101,23 +93,19 @@ public class TextureManager {
 	public static void UnloadTextures() {
 		//TILE TEXTURES
 		UnloadTexture(dirt_texture);
+		UnloadTexture(dirt_00_mineral_1);
+		UnloadTexture(dirt_00_mineral_2);
+		UnloadTexture(dirt_00_mineral_3);
+		UnloadTexture(dirt_00_mineral_4);
 		UnloadTexture(quarry_cycle_completed);
-		UnloadTexture(quarry_brownite_01);
-		UnloadTexture(quarry_brownite_02);
-		UnloadTexture(quarry_brownite_03);
-		UnloadTexture(quarry_brownite_04);
-		UnloadTexture(quarry_grayite_01);
-		UnloadTexture(quarry_grayite_02);
-		UnloadTexture(quarry_grayite_03);
-		UnloadTexture(quarry_grayite_04);
-		UnloadTexture(quarry_whiteoxide_01);
-		UnloadTexture(quarry_whiteoxide_02);
-		UnloadTexture(quarry_whiteoxide_03);
-		UnloadTexture(quarry_whiteoxide_04);
-		UnloadTexture(quarry_bluntric_01);
-		UnloadTexture(quarry_bluntric_02);
-		UnloadTexture(quarry_bluntric_03);
-		UnloadTexture(quarry_bluntric_04);
+		UnloadTexture(quarry_00_body_1);
+		UnloadTexture(quarry_00_body_2);
+		UnloadTexture(quarry_00_body_3);
+		UnloadTexture(quarry_00_body_4);
+		UnloadTexture(quarry_00_mineral_1);
+		UnloadTexture(quarry_00_mineral_2);
+		UnloadTexture(quarry_00_mineral_3);
+		UnloadTexture(quarry_00_mineral_4);
 		//MENU TEXTURES
 		UnloadTexture(selected_tile);
 		UnloadTexture(black_bar);

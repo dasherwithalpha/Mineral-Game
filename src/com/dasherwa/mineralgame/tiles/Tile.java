@@ -11,7 +11,8 @@ public class Tile{
 	int id;
 	TileType type;
 	Rarity rarity;
-	Texture texture;
+	Texture texture_base;
+	Texture texture_mineral;
 	TileData tile_data;
 	
 	public Tile() {
@@ -22,7 +23,8 @@ public class Tile{
 		this.name = tile.name;
 		this.type = tile.type;
 		this.rarity = tile.rarity;
-		this.texture = tile.texture;
+		this.texture_base = tile.texture_base;
+		this.texture_mineral = tile.texture_mineral;
 		this.id = tile.id;
 		this.tile_data = new TileData(tile.tile_data);
 		
@@ -31,7 +33,10 @@ public class Tile{
 	//TASK SPECIFIC METHODS
 	public void Draw(int x, int y, Color colour) {
 		
-		DrawTexture(texture, x, y, colour);
+		DrawTexture(texture_base, x, y, colour);
+		if(texture_mineral != null) {
+			DrawTexture(texture_mineral, x, y, colour);
+		}
 		
 		if(type == TileType.QUARRY) {
 			if(tile_data.quarry_counter > TileData.FrequencyLevelToPeriod(TileData.GetQuarryFrequency(this)) - 0.1f) {
@@ -53,8 +58,12 @@ public class Tile{
 		this.rarity = rarity;
 	}
 	
-	public void SetTexture(Texture texture) {
-		this.texture = texture;
+	public void SetTextureBase(Texture texture) {
+		this.texture_base = texture;
+	}
+	
+	public void SetTextureMineral(Texture texture) {
+		this.texture_mineral = texture;
 	}
 	
 	public void SetID(int id) {
@@ -76,5 +85,13 @@ public class Tile{
 	
 	public String GetName() {
 		return this.name;
+	}
+	
+	public Texture GetTextureBase() {
+		return this.texture_base;
+	}
+	
+	public Texture GetTextureMineral() {
+		return this.texture_mineral;
 	}
 }

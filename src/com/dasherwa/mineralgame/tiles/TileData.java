@@ -1,5 +1,8 @@
 package com.dasherwa.mineralgame.tiles;
 
+import com.dasherwa.mineralgame.main.TextureManager;
+import com.raylib.Raylib.Texture;
+
 public class TileData {
 
 	int quarry_power;
@@ -13,6 +16,7 @@ public class TileData {
 		this.quarry_power = tile_data.quarry_power;
 		this.quarry_frequency = tile_data.quarry_frequency;
 		this.quarry_counter = tile_data.quarry_counter;
+		this.quarry_tier = tile_data.quarry_tier;
 	}
 	
 	//TASK SPECIFIC METHODS
@@ -20,8 +24,8 @@ public class TileData {
 		return 1 / frequency;
 	}
 	
-	public static float KGPerPower(int power_level) {
-		return (float) (9 * Math.pow(1.15f, power_level - 1));
+	public static float KGPerPower(Tile tile) {
+		return (float) ((9 + (GetQuarryTier(tile) - 1) * 2) * Math.pow(1.15f, GetQuarryPower(tile) - 1));
 	}
 	
 	public static float FrequencyLevelToPeriod(int frequency_level) {
@@ -73,12 +77,26 @@ public class TileData {
 		}
 	}
 	
+	public static float GetQuarryTierPrice(int tier) {
+		return 10000 * (tier + 1);
+	}
+	
 	public static float GetQuarryUpgradePowerPrice(Tile tile) {
 		return (float) (500 * Math.pow(1.1f, (GetQuarryPower(tile) - 1)));
 	}
 	
 	public static float GetQuarryUpgradeFrequencyPrice(Tile tile) {
 		return (float) (500 * Math.pow(1.1f, (GetQuarryFrequency(tile) - 1)));
+	}
+	
+	public static Texture QuarryBodyFromTierToTexture(Tile tile) {
+		switch (TileData.GetQuarryTier(tile)) {
+			case 1: return TextureManager.quarry_00_tier_1;
+			case 2: return TextureManager.quarry_00_tier_2;
+			case 3: return TextureManager.quarry_00_tier_3;
+			case 4: return TextureManager.quarry_00_tier_4;
+		}
+		return null;
 	}
 	
 	// SETTERS
@@ -93,6 +111,10 @@ public class TileData {
 	public static void SetQuarryCounter(Tile tile, float counter) {
 		tile.tile_data.quarry_counter = counter;
 	}
+	
+	public static void SetQuarryTier(Tile tile, int tier) {
+		tile.tile_data.quarry_tier = tier;
+	}
 
 	// GETTERS
 	public static int GetQuarryPower(Tile tile) {
@@ -105,6 +127,10 @@ public class TileData {
 
 	public static float GetQuarryCounter(Tile tile) {
 		return tile.tile_data.quarry_counter;
+	}
+	
+	public static int GetQuarryTier(Tile tile) {
+		return tile.tile_data.quarry_tier;
 	}
 
 }

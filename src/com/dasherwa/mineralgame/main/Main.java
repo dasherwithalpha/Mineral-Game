@@ -31,17 +31,19 @@ public class Main {
 	
 	public static UI ui;
 	public static DialogueBoxManager dialogue_box_manager;
+	public static boolean should_exit;
+	
 	static DRPC discord_rpc;
 	static boolean discord_rpc_on;
 	static Version version;
 	
-	static final int SCREEN_MULTIPLIER = 6;
+	static final int SCREEN_MULTIPLIER = 8;
 	
 	static final int MAJOR = 1;
 	static final int MINOR = 1;
 	static final int PATCH = 0;
 	static final Version.ReleaseIdentifier RELEASE_IDENTIFIER = ALPHA;
-	static final String BUILD = "0000-20261016";
+	static final String BUILD = "0001-20261017";
 	
 	
 	
@@ -68,6 +70,7 @@ public class Main {
 				);
 		
 		SetTargetFPS(60);
+		SetExitKey(KEY_NULL);
 		
 		@SuppressWarnings("resource")
 		Camera2D camera2d = new Camera2D().zoom(SCREEN_MULTIPLIER);
@@ -87,7 +90,11 @@ public class Main {
 		}
 		
 		
-		while(!WindowShouldClose()) {
+		while(!should_exit) {
+			
+			if(WindowShouldClose()) {
+				should_exit = true;
+			}
 			
 			ui.Update();
 			world_manager.UpdateWorld();

@@ -5,6 +5,7 @@ import com.FastNoiseLite.FastNoiseLite.FractalType;
 import com.FastNoiseLite.FastNoiseLite.NoiseType;
 import com.dasherwa.mineralgame.gem.Rarity;
 import com.dasherwa.mineralgame.main.Main;
+import com.dasherwa.mineralgame.main.TextureManager;
 import com.dasherwa.mineralgame.main.ui.SelectionType;
 import com.dasherwa.mineralgame.main.ui.UIState;
 import com.dasherwa.mineralgame.main.ui.dialoguebox.BoxType;
@@ -58,18 +59,22 @@ public class WorldManager {
 				if(noise_value >= 0 && noise_value < 6) {
 //					System.out.println("this value is between 0 and 6 (could be 0 as well)");
 					tiles[i][j].SetRarity(Rarity.COMMON);
+					tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_1);
 				}
 				if(noise_value >= 6 && noise_value < 11) {
 //					System.out.println("this value is between 6 and 11 (could be 6 as well)");
 					tiles[i][j].SetRarity(Rarity.RARE);
+					tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_2);
 				}
 				if(noise_value >= 11 && noise_value < 13) {
 //					System.out.println("this value is between 11 and 13 (could be 11 as well)");
 					tiles[i][j].SetRarity(Rarity.EPIC);
+					tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_3);
 				}
 				if(noise_value >= 13 && noise_value < 15) {
 //					System.out.println("this value is between 13 and 15 (could be 13 as well)");
 					tiles[i][j].SetRarity(Rarity.LEGENDARY);
+					tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_4);
 				}
 				
 			}
@@ -159,19 +164,19 @@ public class WorldManager {
 						switch (tiles[i][j].GetRarity()) {
 
 							case COMMON:
-								Main.ui.mineralKG_counts[0] += KGPerPower(GetQuarryPower(tiles[i][j]));
+								Main.ui.mineralKG_counts[0] += KGPerPower(tiles[i][j]);
 								break;
 
 							case RARE:
-								Main.ui.mineralKG_counts[1] += KGPerPower(GetQuarryPower(tiles[i][j]));
+								Main.ui.mineralKG_counts[1] += KGPerPower(tiles[i][j]);
 								break;
 
 							case EPIC:
-								Main.ui.mineralKG_counts[2] += KGPerPower(GetQuarryPower(tiles[i][j]));
+								Main.ui.mineralKG_counts[2] += KGPerPower(tiles[i][j]);
 								break;
 
 							case LEGENDARY:
-								Main.ui.mineralKG_counts[3] += KGPerPower(GetQuarryPower(tiles[i][j]));
+								Main.ui.mineralKG_counts[3] += KGPerPower(tiles[i][j]);
 								break;
 
 							default:
@@ -200,6 +205,23 @@ public class WorldManager {
 	
 	public static void IncreaseTileQuarryFrequency(int tile_x, int tile_y, int factor) {
 		SetQuarryFrequency(tiles[tile_x][tile_y], GetQuarryFrequency(tiles[tile_x][tile_y]) + factor);
+	}
+	
+	public static void IncreaseTileQuarryTier(int tile_x, int tile_y) {
+		SetQuarryTier(tiles[tile_x][tile_y], GetQuarryTier(tiles[tile_x][tile_y]) + 1);
+		UpdateTileQuarryTextureFromTier(tile_x, tile_y, GetQuarryTier(tiles[tile_x][tile_y]));
+	}
+	
+	static void UpdateTileQuarryTextureFromTier(int tile_x, int tile_y, int tier) {
+		switch (tier) {
+			case 1: tiles[tile_x][tile_y].SetTextureBase(TextureManager.quarry_00_body_1); break;
+			case 2: tiles[tile_x][tile_y].SetTextureBase(TextureManager.quarry_00_body_2); break;
+			case 3: tiles[tile_x][tile_y].SetTextureBase(TextureManager.quarry_00_body_3); break;
+			case 4: tiles[tile_x][tile_y].SetTextureBase(TextureManager.quarry_00_body_4); break;
+			
+			default:
+				break;
+		}
 	}
 	
 	public static boolean IsTileQuarryPowerMaxed(int tile_x, int tile_y, int max) {

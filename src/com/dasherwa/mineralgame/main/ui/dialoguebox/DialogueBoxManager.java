@@ -8,10 +8,12 @@ import com.dasherwa.mineralgame.main.Main;
 
 public class DialogueBoxManager {
 
-	DialogueBox not_enough_money;
-	DialogueBox not_a_quarry;
-	DialogueBox removed_money;
-	DialogueBox max_quarry_attribute_level;
+	DialogueBox not_enough_money,
+				not_a_quarry,
+				removed_money,
+				max_quarry_attribute_level,
+				max_quarry_tier;
+
 	
 	public DialogueBoxManager() {
 		
@@ -54,39 +56,22 @@ public class DialogueBoxManager {
 				.duration(2.0f)
 				.build();
 		
+		max_quarry_tier = new DialogueBox.Builder()
+				.counter(0.0f)
+				.text("Tier Maxed Out")
+				.box(new Rectangle().height(16).width(111).x(8).y(Main.GAME_SCREEN_HEIGHT - 8 - 16))
+				.show(false)
+				.duration(2.0f)
+				.build();
+		
 	}
 	
-	public void DrawBox(BoxType box_type) {
-		
-		switch (box_type) {
-
-			case NOT_ENOUGH_MONEY:		
-				DialogueBox.Draw(not_enough_money);
-				break;
-				
-			case NOT_A_QUARRY:
-				DialogueBox.Draw(not_a_quarry);
-				break;
-				
-			case REMOVED_MONEY:
-				DialogueBox.Draw(removed_money);
-				break;
-				
-			case MAX_QUARRY_ATTRIBUTE_LEVEL:
-				DialogueBox.Draw(max_quarry_attribute_level);
-
-			default:
-				break;
-
-		}
-		
-	}
-
 	public void Draw() {
-		DrawBox(BoxType.NOT_ENOUGH_MONEY);
-		DrawBox(BoxType.NOT_A_QUARRY);
-		DrawBox(BoxType.REMOVED_MONEY);
-		DrawBox(BoxType.MAX_QUARRY_ATTRIBUTE_LEVEL);
+		DialogueBox.Draw(not_enough_money);
+		DialogueBox.Draw(not_a_quarry);
+		DialogueBox.Draw(removed_money);
+		DialogueBox.Draw(max_quarry_attribute_level);
+		DialogueBox.Draw(max_quarry_tier);
 	}
 	
 	public void SetBoxShow(BoxType box_type) {
@@ -107,6 +92,11 @@ public class DialogueBoxManager {
 				
 			case MAX_QUARRY_ATTRIBUTE_LEVEL:
 				max_quarry_attribute_level.SetShow(true);
+				break;
+				
+			case MAX_QUARRY_TIER:
+				max_quarry_tier.SetShow(true);
+				break;
 
 			default:
 				break;
