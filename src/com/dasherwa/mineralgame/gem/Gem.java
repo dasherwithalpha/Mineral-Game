@@ -16,4 +16,8 @@ public class Gem {
 		this.value = value;
 		
 	}
+	
+	public float GetGemValue() {
+		return value;
+	}
 }

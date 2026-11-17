@@ -6,14 +6,13 @@ import com.dasherwa.mineralgame.drpc.DRPC;
 import com.dasherwa.mineralgame.main.ui.UI;
 import com.dasherwa.mineralgame.main.ui.dialoguebox.DialogueBoxManager;
 import com.dasherwa.mineralgame.tiles.TileManager;
+import com.dasherwa.mineralgame.world.PlanetManager;
 import com.dasherwa.mineralgame.world.WorldManager;
 import com.dasherwa.utilities.version.Version;
 
 import static com.dasherwa.utilities.version.Version.ReleaseIdentifier.*;
 
 import static com.raylib.Colors.*;
-
-import com.raylib.Helpers;
 
 public class Main {
 
@@ -24,26 +23,22 @@ public class Main {
 	public static final int GAME_SCREEN_HEIGHT = TILE_SIZE * TILE_COUNT_VERTICAL;
 	public static final int GAME_SCREEN_WIDHT = TILE_SIZE * TILE_COUNT_HORIZONTAL;
 	
-	public static final Color APABROWN = Helpers.newColor(119, 80, 39, 255);
-	public static final Color APABLUE = Helpers.newColor(182, 185, 244, 255);
-	public static final Color APAWHITE = Helpers.newColor(255, 255, 255, 255);
-	public static final Color APAGRAY = Helpers.newColor(75, 75, 75, 255);
-	
 	public static UI ui;
 	public static DialogueBoxManager dialogue_box_manager;
 	public static boolean should_exit;
+	public static PlanetManager planet_manager;
 	
 	static DRPC discord_rpc;
 	static boolean discord_rpc_on;
 	static Version version;
 	
-	static final int SCREEN_MULTIPLIER = 8;
+	static final int SCREEN_MULTIPLIER = 7;
 	
 	static final int MAJOR = 1;
 	static final int MINOR = 1;
 	static final int PATCH = 0;
 	static final Version.ReleaseIdentifier RELEASE_IDENTIFIER = ALPHA;
-	static final String BUILD = "0001-20261017";
+	static final String BUILD = "0002-20261116";
 	
 	
 	
@@ -78,7 +73,9 @@ public class Main {
 		TextureManager.LoadTextures();
 		@SuppressWarnings("unused")
 		TileManager tile_manager = new TileManager();
+		planet_manager = new PlanetManager();
 		WorldManager world_manager = new WorldManager();
+		
 		
 		dialogue_box_manager = new DialogueBoxManager();
 		
@@ -98,6 +95,13 @@ public class Main {
 			
 			ui.Update();
 			world_manager.UpdateWorld();
+			
+			if(IsKeyPressed(KEY_A)) {
+				WorldManager.SaveTilesToAreas();
+			}
+			if(IsKeyPressed(KEY_S)) {
+				WorldManager.LoadTilesFromAreas();
+			}
 			
 			BeginDrawing();
 			BeginMode2D(camera2d);

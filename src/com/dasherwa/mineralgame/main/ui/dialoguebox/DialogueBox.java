@@ -1,12 +1,12 @@
 package com.dasherwa.mineralgame.main.ui.dialoguebox;
 
 import static com.raylib.Colors.BLACK;
+import static com.raylib.Colors.WHITE;
 import static com.raylib.Raylib.DrawRectangleLinesEx;
 import static com.raylib.Raylib.DrawRectangleRec;
 import static com.raylib.Raylib.DrawText;
 import static com.raylib.Raylib.GetFrameTime;
 
-import com.dasherwa.mineralgame.main.Main;
 import com.raylib.Raylib.Rectangle;
 
 public class DialogueBox {
@@ -37,13 +37,13 @@ public class DialogueBox {
 			
 			if(box.GetCounter() < box.GetDuration()) {
 				DrawRectangleRec(box.GetBox(), BLACK);
-				DrawRectangleLinesEx(box.GetBox(), 1.0f, Main.APAWHITE);
+				DrawRectangleLinesEx(box.GetBox(), 1.0f, WHITE);
 				DrawText(
 						box.text,
 						(int)box.GetBox().x() + 3,
 						(int) box.GetBox().y() + 3,
 						3,
-						Main.APAWHITE
+						WHITE
 						);
 			}
 			if(box.GetCounter() > box.GetDuration()) {

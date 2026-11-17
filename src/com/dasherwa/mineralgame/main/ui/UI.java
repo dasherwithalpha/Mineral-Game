@@ -1,6 +1,7 @@
 package com.dasherwa.mineralgame.main.ui;
 
 import static com.raylib.Raylib.*;
+import static com.raylib.Colors.WHITE;
 
 import java.text.DecimalFormat;
 
@@ -179,7 +180,7 @@ public class UI {
 					selected_menu_draw.y(2);
 					
 					if(IsKeyPressed(KEY_ENTER)) {
-						balance += Math.round(mineralKG_counts[(int)selected_sell.x()] * GemManager.GetGemValue((int)selected_sell.x()));
+						balance += Math.round(mineralKG_counts[(int)selected_sell.x()] * Main.planet_manager.GetPlanetGemValue(WorldManager.current_planet_ordinal, (int)selected_sell.x()));
 						mineralKG_counts[(int)selected_sell.x()] = 0;
 						ui_state = UIState.BALANCE;
 						System.out.println(balance);
@@ -194,7 +195,7 @@ public class UI {
 					
 					if(IsKeyPressed(KEY_ENTER)) {
 						for (int i = 0; i < 4; i++) {
-							balance += Math.round(mineralKG_counts[i] * GemManager.GetGemValue(i));
+							balance += Math.round(mineralKG_counts[i] * Main.planet_manager.GetPlanetGemValue(WorldManager.current_planet_ordinal, i));
 							mineralKG_counts[i] = 0;
 						}
 						ui_state = UIState.BALANCE;
@@ -351,7 +352,15 @@ public class UI {
 		}
 	
 		if(ui_state == UIState.AERAS) {
-			ui_state = UIState.OPTIONS;
+			
+			if(!WorldManager.IsCurrentAreaFinished()) {
+				
+				if(IsKeyPressed(KEY_RIGHT)) {
+					WorldManager.current_chunk.x(WorldManager.current_chunk.x() + 1);
+				}
+				
+			}
+			
 		}
 
 	}
@@ -361,45 +370,45 @@ public class UI {
 		switch(ui_state) {
 			
 			case RESOURCES:
-				DrawTexture(TextureManager.black_bar, 0, 0, Main.APAWHITE);
-				DrawText(decimal_format.format(mineralKG_counts[2]), 20, 18, 13, Main.APAWHITE);
-				DrawText(decimal_format.format(mineralKG_counts[3]), 20, 3, 13, Main.APAWHITE);
-				DrawText(decimal_format.format(mineralKG_counts[0]), 100, 18, 13, Main.APAWHITE);
-				DrawText(decimal_format.format(mineralKG_counts[1]), 100, 3, 13, Main.APAWHITE);
+				DrawTexture(TextureManager.black_bar, 0, 0, WHITE);
+				DrawText(decimal_format.format(mineralKG_counts[2]), 20, 18, 13, WHITE);
+				DrawText(decimal_format.format(mineralKG_counts[3]), 20, 3, 13, WHITE);
+				DrawText(decimal_format.format(mineralKG_counts[0]), 100, 18, 13, WHITE);
+				DrawText(decimal_format.format(mineralKG_counts[1]), 100, 3, 13, WHITE);
 				break;
 				
 			case BALANCE:
-				DrawTexture(TextureManager.black_bar_balance, 0, 0, Main.APAWHITE);
-				DrawText(decimal_format2.format(balance), 53, 10, 13, Main.APAWHITE);
+				DrawTexture(TextureManager.black_bar_balance, 0, 0, WHITE);
+				DrawText(decimal_format2.format(balance), 53, 10, 13, WHITE);
 				break;
 				
 			case OPTIONS:
-				DrawTexture(TextureManager.black_bar_options, 0, 0, Main.APAWHITE);
-				DrawTexture(TextureManager.selected_option, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+				DrawTexture(TextureManager.black_bar_options, 0, 0, WHITE);
+				DrawTexture(TextureManager.selected_option, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), WHITE);
 				break;
 				
 			case QUARRY:
-				DrawTexture(TextureManager.black_bar_quarry, 0, 0, Main.APAWHITE);
+				DrawTexture(TextureManager.black_bar_quarry, 0, 0, WHITE);
 				DrawText(
 						"" + RomanNumeral.GetRomanNumeral(WorldManager.GetTileQuarryPower((int)selected_tile.x(), (int)selected_tile.y())),
 						55,
 						1,
 						16,
-						Main.APAWHITE
+						WHITE
 						);
 				DrawText(
 						"" + RomanNumeral.GetRomanNumeral(WorldManager.GetTileQuarryFrequency((int)selected_tile.x(), (int)selected_tile.y())),
 						55,
 						17,
 						16,
-						Main.APAWHITE
+						WHITE
 						);
 				
 				DrawTexture(
 						TextureManager.selected_tile_notinmenu,
 						(int)selected_tile.x() * Main.TILE_SIZE,
 						(int)selected_tile.y() * Main.TILE_SIZE + Main.SCREEN_BLACKNESS,
-						Main.APAWHITE
+						WHITE
 						);
 				
 				if(WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y())) {
@@ -408,42 +417,44 @@ public class UI {
 							TileData.QuarryBodyFromTierToTexture(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())),
 							9,
 							9,
-							Main.APAWHITE);
+							WHITE);
 					
 				}
 				
 				
 				
 				if(selected_quarry.x() == 1) {
-					DrawTexture(TextureManager.quarry_back_menu, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+					DrawTexture(TextureManager.quarry_back_menu, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), WHITE);
 				}
 				
 				if(selected_quarry.x() == 0) {
-					DrawTexture(TextureManager.quarry_selected_attribute, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+					DrawTexture(TextureManager.quarry_selected_attribute, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), WHITE);
 				}
 				if(selected_quarry.x() == -1) {
-					DrawTexture(TextureManager.quarry_tier_selected, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+					DrawTexture(TextureManager.quarry_tier_selected, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), WHITE);
 				}
 				
 				break;
 				
 			case SELL:
-				DrawTexture(TextureManager.black_bar_sell, 0, 0, Main.APAWHITE);
+				DrawTexture(TextureManager.black_bar_sell, 0, 0, WHITE);
 				
 				if(selected_sell.x() >= 0 && selected_sell.x() <= 3) {
 					
 					if(!IsKeyDown(KEY_APOSTROPHE)) {
-						DrawTexture(TextureManager.sell_selected_mineral, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+						DrawTexture(TextureManager.sell_selected_mineral, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), WHITE);
 					} else {
-						DrawTexture(TextureManager.sell_selected_mineral_all, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+						DrawTexture(TextureManager.sell_selected_mineral_all, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), WHITE);
 					}
 				}
 				if(selected_sell.x() == 4) {
-					DrawTexture(TextureManager.sell_back_menu, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), Main.APAWHITE);
+					DrawTexture(TextureManager.sell_back_menu, (int)selected_menu_draw.x(), (int)selected_menu_draw.y(), WHITE);
 				}
 				break;
 				
 			case AERAS:
+				DrawTexture(TextureManager.black_bar_areas, 0, 0, WHITE);
+				DrawTexture(TextureManager.areas_selected_area, (int)WorldManager.current_chunk.x() * 4 + 2, (int)WorldManager.current_chunk.y() * 4 + 2, WHITE);
 				break;
 		}
 		
@@ -454,7 +465,7 @@ public class UI {
 						TextureManager.selected_tile,
 						(int)selected_tile.x() * Main.TILE_SIZE,
 						(int)selected_tile.y() * Main.TILE_SIZE + Main.SCREEN_BLACKNESS,
-						Main.APAWHITE
+						WHITE
 						);
 				break;
 				

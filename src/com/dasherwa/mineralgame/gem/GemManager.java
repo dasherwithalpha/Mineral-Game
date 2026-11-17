@@ -1,16 +1,14 @@
 package com.dasherwa.mineralgame.gem;
 
-import com.dasherwa.mineralgame.main.Main;
-
 public class GemManager {
 
 	static Gem[] gems = new Gem[4];
 	
 	public GemManager() {
-		gems[0] = new Gem("Brownite", Rarity.COMMON, Main.APABROWN, 4);
-		gems[1] = new Gem("Grayite", Rarity.RARE, Main.APAGRAY, 4.8f);
-		gems[2] = new Gem("Whiteoxide", Rarity.EPIC, Main.APAWHITE, 12);
-		gems[3] = new Gem("Bluntric", Rarity.LEGENDARY, Main.APABLUE, 12);
+//		gems[0] = Main.planet_manager.GetPlanet(0).gem_common;
+//		gems[1] = Main.planet_manager.GetPlanet(0).gem_rare;
+//		gems[2] = Main.planet_manager.GetPlanet(0).gem_epic;
+//		gems[3] = Main.planet_manager.GetPlanet(0).gem_legendary;
 	}
 	
 	public static float GetGemValue(int gem_ordinal) {
