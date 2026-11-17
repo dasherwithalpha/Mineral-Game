@@ -16,6 +16,9 @@ public class Areas {
 	public Area GetArea(int x, int y) {
 		return area[x][y];	
 	}
+	public Area GetArea(Vector2 pos) {
+		return area[(int)pos.x()][(int)pos.y()];	
+	}
 	
 	public void SetArea(Area area, int x, int y) {
 		this.area[x][y] = area;

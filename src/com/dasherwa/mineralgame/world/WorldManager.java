@@ -1,10 +1,7 @@
 package com.dasherwa.mineralgame.world;
 
-import com.FastNoiseLite.FastNoiseLite;
-import com.FastNoiseLite.FastNoiseLite.FractalType;
-import com.FastNoiseLite.FastNoiseLite.NoiseType;
-import com.dasherwa.mineralgame.gem.Rarity;
 import com.dasherwa.mineralgame.main.Main;
+import com.dasherwa.mineralgame.main.Signal;
 import com.dasherwa.mineralgame.main.TextureManager;
 import com.dasherwa.mineralgame.main.ui.SelectionType;
 import com.dasherwa.mineralgame.main.ui.UIState;
@@ -20,56 +17,32 @@ import static com.raylib.Colors.WHITE;
 
 public class WorldManager {
 
-	static FastNoiseLite noise;
 	static final int WORLD_WIDTH = 10;
 	static final int WORLD_HEIGHT = 6;
 	public TileManager tile_manager;
 	
-	int noise_extend;
-	
 	static Tile[][] tiles;
 	
 	public static int current_planet_ordinal;
-	static Areas areas;
+
 	public static Vector2 current_chunk;
 	
 	boolean every_quarry_max_tier;
 	
+	public static Signal area_change_signal;
+	
 	public WorldManager() {
 		
-//		tile_manager = new TileManager();
-		
-//		current_planet = PlanetManager.
-		
-		areas = new Areas();
 		current_chunk = new Vector2();
 		current_chunk.x(0);
 		current_chunk.y(0);
 		
 		tiles = new Tile[WORLD_WIDTH][WORLD_HEIGHT];
-		
-		noise_extend = 1;
-		
-		noise = Main.planet_manager.GetPlanet(current_planet_ordinal).GetNoise();
-//		noise = new FastNoiseLite();
-//		noise.SetNoiseType(NoiseType.OpenSimplex2);
-//		noise.SetSeed(10);
-//		noise.SetFrequency(0.09f);
-//		noise.SetFractalType(FractalType.PingPong);
-//		noise.SetFractalOctaves(4);
-//		noise.SetFractalLacunarity(0.2f);
-//		noise.SetFractalGain(0.21f);
-//		noise.SetFractalWeightedStrength(7.47f);
-//		noise.SetFractalPingPongStrength(2);
-		
-		areas.area[(int)current_chunk.x()][(int)current_chunk.y()] = new Area();
-		
-//		tiles = CreateTilesWithNoise(noise, noise_extend, current_chunk);
 		tiles = Main.planet_manager.GetPlanet(current_planet_ordinal).GetTilesFromAnArea(0, 0);
 		
-		SaveTilesToAreas();
-		
 		every_quarry_max_tier = false;
+		
+		area_change_signal = new Signal();
 	}
 	
 	public void DrawWorld() {
@@ -88,6 +61,12 @@ public class WorldManager {
 		
 		int selected_tile_x = (int) Main.ui.selected_tile.x();
 		int selected_tile_y = (int) Main.ui.selected_tile.y();
+		
+		if(area_change_signal.IsAlerted()) {
+			tiles = Main.planet_manager.GetPlanet(current_planet_ordinal).GetArea(current_chunk).GetTiles();
+			area_change_signal.Reset();
+			System.out.println("bomboclat");
+		}
 		
 		if(IsCurrentAreaFinished()) {
 			return;
@@ -231,95 +210,6 @@ public class WorldManager {
 		
 	}
 
-	public static void SaveTilesToAreas() {
-		if(areas.area[(int)current_chunk.x()][(int)current_chunk.y()] == null) {
-			System.out.println("its null");
-			areas.area[(int)current_chunk.x()][(int)current_chunk.y()] = new Area();
-			areas.area[(int)current_chunk.x()][(int)current_chunk.y()].SetTiles(new Tile[WORLD_WIDTH][WORLD_HEIGHT]);
-			areas.area[(int)current_chunk.x()][(int)current_chunk.y()].SetIsAreaFinished(false);
-			areas.area[(int)current_chunk.x()][(int)current_chunk.y()].SetPosition((int)current_chunk.x(), (int)current_chunk.y());
-			areas.area[(int)current_chunk.x()][(int)current_chunk.y()].SetTiles(CloneChunk());
-		} else {
-			areas.area[(int)current_chunk.x()][(int)current_chunk.y()].SetTiles(CloneChunk());
-		}
-		
-	}
-	public static void LoadTilesFromAreas() {
-		tiles = areas.area[(int)current_chunk.x()][(int)current_chunk.y()].GetTiles();
-		System.out.println(areas.area[(int)current_chunk.x()][(int)current_chunk.y()].GetTileName(0, 0));;
-	}
-	
-	public static Tile[][] CloneChunk() {
-		
-		Tile[][] new_tiles = new Tile[WORLD_WIDTH][WORLD_HEIGHT];
-		
-		for (int i = 0; i < WORLD_WIDTH; i++) {
-			for (int j = 0; j < WORLD_HEIGHT; j++) {
-				
-				new_tiles[i][j] = tiles[i][j];
-				
-			}
-		}
-		
-		return new_tiles;
-		
-	}
-	
-	public static Tile[][] CreateBlankTiles(){
-		
-		Tile[][] new_tiles = new Tile[WORLD_WIDTH][WORLD_HEIGHT];
-		
-		for (int i = 0; i < WORLD_WIDTH; i++) {
-			for (int j = 0; j < WORLD_HEIGHT; j++) {
-				
-				new_tiles[i][j] = new Tile(TileManager.world_tiles[0]); 
-				
-			}
-		}
-		
-		return new_tiles;
-	}
-	
-	public static Tile[][] CreateTilesWithNoise(FastNoiseLite noise, int noise_extend, Vector2 chunk){
-		
-		Tile[][] new_tiles = new Tile[WORLD_WIDTH][WORLD_HEIGHT];
-		
-		for (int i = 0; i < WORLD_WIDTH; i++) {
-			for (int j = 0; j < WORLD_HEIGHT; j++) {
-				
-				new_tiles[i][j] = new Tile(TileManager.world_tiles[0]);
-				
-				float noise_value = (noise.GetNoise((i + chunk.x() * WORLD_WIDTH) * noise_extend, (j + chunk.y() * WORLD_HEIGHT) * noise_extend) + 1) / 2 * 15;
-				
-				//System.out.println(noise_value);
-				
-				if(noise_value >= 0 && noise_value < 6) {
-//					System.out.println("this value is between 0 and 6 (could be 0 as well)");
-					new_tiles[i][j].SetRarity(Rarity.COMMON);
-					new_tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_1);
-				}
-				if(noise_value >= 6 && noise_value < 11) {
-//					System.out.println("this value is between 6 and 11 (could be 6 as well)");
-					new_tiles[i][j].SetRarity(Rarity.RARE);
-					new_tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_2);
-				}
-				if(noise_value >= 11 && noise_value < 13) {
-//					System.out.println("this value is between 11 and 13 (could be 11 as well)");
-					new_tiles[i][j].SetRarity(Rarity.EPIC);
-					new_tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_3);
-				}
-				if(noise_value >= 13 && noise_value < 15) {
-//					System.out.println("this value is between 13 and 15 (could be 13 as well)");
-					new_tiles[i][j].SetRarity(Rarity.LEGENDARY);
-					new_tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_4);
-				}
-				
-			}
-		}
-		
-		return new_tiles;
-	}
-
 	static boolean IsEveryQuarryMaxTier() {
 		
 		boolean result = true;
@@ -339,13 +229,13 @@ public class WorldManager {
 	
 	static void SetCurrentAreaFinished() {
 		
-		areas.area[(int)current_chunk.x()][(int)current_chunk.y()].SetIsAreaFinished(true);
+		Main.planet_manager.GetPlanet(current_planet_ordinal).GetArea(current_chunk).SetIsAreaFinished(true);
 		
 	}
 	
 	public static boolean IsCurrentAreaFinished() {
 		
-		return areas.area[(int)current_chunk.x()][(int)current_chunk.y()].GetIsAreaFinished();
+		return Main.planet_manager.GetPlanet(current_planet_ordinal).GetArea(current_chunk).GetIsAreaFinished();
 		
 	}
 }

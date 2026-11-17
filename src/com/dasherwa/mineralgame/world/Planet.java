@@ -1,7 +1,5 @@
 package com.dasherwa.mineralgame.world;
 
-import java.util.Iterator;
-
 import com.FastNoiseLite.FastNoiseLite;
 import com.dasherwa.mineralgame.gem.Gem;
 import com.dasherwa.mineralgame.gem.Rarity;
@@ -23,14 +21,6 @@ public abstract class Planet {
 	protected Areas areas;
 	
 	protected FastNoiseLite noise;
-//	NoiseType noise_type;
-//	float frequency;
-//	FractalType fractal_type;
-//	int fractal_octaves;
-//	float fractal_lacunarity;
-//	float fractal_gain;
-//	float fractal_weighted_strength;
-//	int fractal_pingpong_strength;
 	
 	protected int noise_extend;
 	
@@ -52,6 +42,7 @@ public abstract class Planet {
 		for(int i=0;i<Areas.HORIZONTAL_AREA_COUNT; i++) {
 			for(int j=0;j<Areas.VERTICAL_AREA_COUNT;j++) {
 				areas.area[i][j] = new Area();
+				areas.area[i][j].SetIsAreaFinished(false);
 				areas.area[i][j].SetPosition(i, j);
 				areas.area[i][j].SetTiles(CreateTiles(noise, noise_extend, areas.area[i][j].GetPosition()));
 			}
@@ -95,6 +86,14 @@ public abstract class Planet {
 			
 			return new_tiles;
 		}
+	
+	public Area GetArea(int x, int y) {
+		return areas.GetArea(x, y);
+	}
+	
+	public Area GetArea(Vector2 pos) {
+		return areas.GetArea(pos);
+	}
 	
 	public Tile[][] GetTilesFromAnArea(int x, int y){
 		return areas.area[x][y].GetTiles();

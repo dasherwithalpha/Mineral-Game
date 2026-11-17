@@ -1,6 +1,5 @@
 package com.dasherwa.mineralgame.world;
 
-import com.FastNoiseLite.FastNoiseLite;
 import com.dasherwa.mineralgame.world.planets.ApaPlanet;
 
 public class PlanetManager {
@@ -16,5 +15,9 @@ public class PlanetManager {
 	}
 	public float GetPlanetGemValue(int planet_ordinal, int gem_ordinal) {
 		return planets[planet_ordinal].gems[gem_ordinal].GetGemValue();
+	}
+	
+	public String GetPlanetAreaTileName(int planet, int area_x, int area_y, int tile_x, int tile_y) {
+		return planets[planet].GetArea(area_x, area_y).GetTileName(tile_x, tile_y);
 	}
 }

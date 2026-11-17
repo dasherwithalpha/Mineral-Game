@@ -38,7 +38,7 @@ public class Main {
 	static final int MINOR = 1;
 	static final int PATCH = 0;
 	static final Version.ReleaseIdentifier RELEASE_IDENTIFIER = ALPHA;
-	static final String BUILD = "0002-20261116";
+	static final String BUILD = "0003-20261117";
 	
 	
 	
@@ -96,12 +96,12 @@ public class Main {
 			ui.Update();
 			world_manager.UpdateWorld();
 			
-			if(IsKeyPressed(KEY_A)) {
-				WorldManager.SaveTilesToAreas();
-			}
-			if(IsKeyPressed(KEY_S)) {
-				WorldManager.LoadTilesFromAreas();
-			}
+//			if(IsKeyPressed(KEY_A)) {
+//				WorldManager.SaveTilesToAreas();
+//			}
+//			if(IsKeyPressed(KEY_S)) {
+//				WorldManager.LoadTilesFromAreas();
+//			}
 			
 			BeginDrawing();
 			BeginMode2D(camera2d);

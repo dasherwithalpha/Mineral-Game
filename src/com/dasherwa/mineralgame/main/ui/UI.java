@@ -10,6 +10,7 @@ import com.dasherwa.mineralgame.main.Main;
 import com.dasherwa.mineralgame.main.TextureManager;
 import com.dasherwa.mineralgame.main.ui.dialoguebox.BoxType;
 import com.dasherwa.mineralgame.tiles.TileData;
+import com.dasherwa.mineralgame.world.Areas;
 import com.dasherwa.mineralgame.world.WorldManager;
 import com.dasherwa.utilities.romannumeral.RomanNumeral;
 
@@ -356,7 +357,33 @@ public class UI {
 			if(!WorldManager.IsCurrentAreaFinished()) {
 				
 				if(IsKeyPressed(KEY_RIGHT)) {
-					WorldManager.current_chunk.x(WorldManager.current_chunk.x() + 1);
+					if(WorldManager.current_chunk.x() < Areas.HORIZONTAL_AREA_COUNT - 1) {
+						WorldManager.current_chunk.x(WorldManager.current_chunk.x() + 1);
+						WorldManager.area_change_signal.Alert();
+					}
+					
+				}
+				
+				if(IsKeyPressed(KEY_LEFT)) {
+					if(WorldManager.current_chunk.x() > 0) {
+						WorldManager.current_chunk.x(WorldManager.current_chunk.x() - 1);
+						WorldManager.area_change_signal.Alert();
+					}
+				}
+				
+				if(IsKeyPressed(KEY_UP)) {
+					if(WorldManager.current_chunk.y() > 0) {
+						WorldManager.current_chunk.y(WorldManager.current_chunk.y() - 1);
+						WorldManager.area_change_signal.Alert();
+					}
+				}
+				
+				if(IsKeyPressed(KEY_DOWN)) {
+					if(WorldManager.current_chunk.y() < Areas.VERTICAL_AREA_COUNT - 1) {
+						WorldManager.current_chunk.y(WorldManager.current_chunk.y() + 1);
+						WorldManager.area_change_signal.Alert();
+					}
+					
 				}
 				
 			}
