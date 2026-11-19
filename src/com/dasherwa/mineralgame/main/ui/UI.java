@@ -440,13 +440,13 @@ public class UI {
 							TextureManager.quarry_body_bright,
 							8,
 							7,
-							ColorBrightness(WorldManager.GetRarityColorOfTile((int)selected_tile.x(), (int)selected_tile.y()), 0.5f));
+							Main.planet_manager.GetPlanetMineralColourBright(WorldManager.current_planet_ordinal, TileData.GetQuarryTier(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())) - 1));
 					
 					DrawTexture(
 							TextureManager.quarry_body,
 							8,
 							7,
-							WorldManager.GetRarityColorOfTile((int)selected_tile.x(), (int)selected_tile.y()));
+							Main.planet_manager.GetPlanetMineralColour(WorldManager.current_planet_ordinal, TileData.GetQuarryTier(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())) - 1));
 					
 					DrawTexture(
 							TextureManager.quarry_rope,

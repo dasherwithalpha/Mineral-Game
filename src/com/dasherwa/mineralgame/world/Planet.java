@@ -18,6 +18,10 @@ public abstract class Planet {
 	protected Color colour_rare;
 	protected Color colour_epic;
 	protected Color colour_legendary;
+	protected Color colour_common_bright;
+	protected Color colour_rare_bright;
+	protected Color colour_epic_bright;
+	protected Color colour_legendary_bright;
 	
 	protected Areas areas;
 	
@@ -118,6 +122,36 @@ public abstract class Planet {
 		}
 	}
 	
+	public Color GetColor(int index) {
+		switch (index) {
+			case 0: return colour_common;
+			case 1: return colour_rare;
+			case 2: return colour_epic;
+			case 3: return colour_legendary;
+			default: return WHITE;
+		}
+	}
+	
+	public Color GetColorBright(Rarity rarity) {
+		switch (rarity) {
+			case COMMON: return colour_common_bright;
+			case RARE: return colour_rare_bright;
+			case EPIC: return colour_epic_bright;
+			case LEGENDARY: return colour_legendary_bright;
+			default: return WHITE;
+		}
+	}
+	
+	public Color GetColorBright(int index) {
+		switch (index) {
+			case 0: return colour_common_bright;
+			case 1: return colour_rare_bright;
+			case 2: return colour_epic_bright;
+			case 3: return colour_legendary_bright;
+			default: return WHITE;
+		}
+	}
+	
 	public String GetMineralName(Rarity rarity) {
 		switch (rarity) {
 			case COMMON: return gems[0].GetGemName();
@@ -126,6 +160,24 @@ public abstract class Planet {
 			case LEGENDARY: return gems[3].GetGemName();
 			default: return "";
 		}
+	}
+	
+	public boolean GetGemUseBright(int gem_index) {
+		return gems[gem_index].GetUseBright();
+	}
+	
+	public boolean GetGemUseBright(Rarity rarity) {
+		return gems[
+		            switch (rarity) {
+		            	case COMMON: yield 0;
+		            	case RARE: yield 1;
+		            	case EPIC: yield 2;
+		            	case LEGENDARY: yield 3;
+			
+		            	default:
+		            		throw new IllegalArgumentException("Unexpected value: " + rarity);
+		            }
+		            ].GetUseBright();
 	}
 	
 }

@@ -5,6 +5,7 @@ import static com.raylib.Colors.GREEN;
 import static com.raylib.Colors.WHITE;
 
 import com.dasherwa.mineralgame.gem.Rarity;
+import com.dasherwa.mineralgame.main.Main;
 import com.dasherwa.mineralgame.main.TextureManager;
 
 public class Tile{
@@ -50,28 +51,46 @@ public class Tile{
 	}
 	
 	//TASK SPECIFIC METHODS
-	public void Draw(int x, int y, Color colour) {
+	public void Draw(int x, int y, int planet_ordinal) {
 		
-		if(texture_base_bright != null) {
-			DrawTexture(texture_base_bright, x, y, ColorBrightness(colour, 0.5f));
-		}
-		
-		if(texture_base != null) {
-			DrawTexture(texture_base, x, y, colour);
-		}
-		
-		if(texture_mineral_bright != null) {
-			DrawTexture(texture_mineral_bright, x, y, ColorBrightness(colour, 0.5f));
-		}
-		
-		if(texture_mineral != null) {
-			DrawTexture(texture_mineral, x, y, colour);
+		if(type == TileType.REGULAR) {
+				
+			if(Main.planet_manager.GetPlanet(planet_ordinal).GetGemUseBright(rarity)) {
+				if(texture_mineral != null) {
+					DrawTexture(texture_mineral, x, y, Main.planet_manager.GetPlanetMineralColourBright(planet_ordinal, rarity));
+				}
+			} else {
+				if(texture_mineral != null) {
+					DrawTexture(texture_mineral, x, y, Main.planet_manager.GetPlanetMineralColour(planet_ordinal, rarity));
+				}
+			}
+			
+			
 		}
 		
 		if(type == TileType.QUARRY) {
+			
+			if(texture_base_bright != null) {
+				DrawTexture(texture_base_bright, x, y, Main.planet_manager.GetPlanetMineralColourBright(planet_ordinal, TileData.GetQuarryTier(this) - 1));
+			}
+		
+			if(texture_base != null) {
+				DrawTexture(texture_base, x, y, Main.planet_manager.GetPlanetMineralColour(planet_ordinal, TileData.GetQuarryTier(this) - 1));
+			}
+			
+			if(texture_mineral_bright != null) {
+				DrawTexture(texture_mineral_bright, x, y, Main.planet_manager.GetPlanetMineralColourBright(planet_ordinal, rarity));
+			}
+			
+			if(texture_mineral != null) {
+				DrawTexture(texture_mineral, x, y, Main.planet_manager.GetPlanetMineralColour(planet_ordinal, rarity));
+			}
+			
 			if(tile_data.quarry_counter > TileData.FrequencyLevelToPeriod(TileData.GetQuarryFrequency(this)) - 0.1f) {
-				DrawTexture(TextureManager.quarry_mineral_bright, x, y, ColorBrightness(GREEN, 0.5f));
-				DrawTexture(TextureManager.quarry_mineral, x, y, GREEN);
+				if(texture_mineral != null && texture_mineral_bright != null) {
+					DrawTexture(texture_mineral_bright, x, y, GREEN);
+					DrawTexture(texture_mineral, x, y, ColorBrightness(GREEN, -0.3f));
+				}
 			}
 			DrawTexture(TextureManager.quarry_rope, x, y, WHITE);
 		}

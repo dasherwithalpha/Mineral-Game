@@ -38,7 +38,7 @@ public class Main {
 	static final int MINOR = 0;
 	static final int PATCH = 0;
 	static final Version.ReleaseIdentifier RELEASE_IDENTIFIER = ALPHA;
-	static final String BUILD = "0004-20261119";
+	static final String BUILD = "0005-20261120";
 	
 	
 	

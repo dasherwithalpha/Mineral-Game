@@ -7,6 +7,7 @@ public class Gem {
 	Rarity rarity;
 	Color colour;
 	float value;
+	boolean use_bright;
 	
 	public Gem(String name, Rarity rarity, Color colour, float value) {
 		
@@ -22,5 +23,13 @@ public class Gem {
 	}
 	public String GetGemName() {
 		return name;
+	}
+	
+	public void UseBright() {
+		use_bright = true;
+	}
+	
+	public boolean GetUseBright() {
+		return use_bright;
 	}
 }

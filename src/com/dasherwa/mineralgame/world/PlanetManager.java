@@ -28,6 +28,18 @@ public class PlanetManager {
 		return planets[planet_ordinal].GetColor(rarity);
 	}
 	
+	public Color GetPlanetMineralColour(int planet_ordinal, int index) {
+		return planets[planet_ordinal].GetColor(index);
+	}
+	
+	public Color GetPlanetMineralColourBright(int planet_ordinal, Rarity rarity) {
+		return planets[planet_ordinal].GetColorBright(rarity);
+	}
+	
+	public Color GetPlanetMineralColourBright(int planet_ordinal, int index) {
+		return planets[planet_ordinal].GetColorBright(index);
+	}
+	
 	public String GetPlanetMineralName(int planet_ordinal, Rarity rarity) {
 		return planets[planet_ordinal].GetMineralName(rarity);
 	}

@@ -65,7 +65,7 @@ public class WorldManager {
 				tiles[i][j].Draw(
 						i * Main.TILE_SIZE,
 						j * Main.TILE_SIZE + Main.SCREEN_BLACKNESS,
-						Main.planet_manager.GetPlanetMineralColour(current_planet_ordinal, tiles[i][j].GetRarity()));
+						current_planet_ordinal);
 				
 			}
 		}

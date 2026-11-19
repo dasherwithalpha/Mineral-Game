@@ -39,8 +39,12 @@ public class ApaPlanet extends Planet{
 	public void InitColours() {
 		colour_common = Helpers.newColor(119, 80, 39, 255);
 		colour_rare = Helpers.newColor(75, 75, 75, 255);
-		colour_epic = Helpers.newColor(255, 255, 255, 255);
+		colour_epic = Helpers.newColor(230, 230, 230, 255);
 		colour_legendary = Helpers.newColor(182, 185, 244, 255);
+		colour_common_bright = Helpers.newColor(178, 119, 58, 255);
+		colour_rare_bright = Helpers.newColor(112, 112, 112, 255);
+		colour_epic_bright = Helpers.newColor(255, 255, 255, 255);
+		colour_legendary_bright = Helpers.newColor(218, 219, 249, 255);
 //		colour_common = Helpers.newColor(255, 0, 0, 255);
 //		colour_rare = Helpers.newColor(0, 255, 0, 255);
 //		colour_epic = Helpers.newColor(0, 0, 255, 255);
@@ -54,6 +58,8 @@ public class ApaPlanet extends Planet{
 		gems[1] = new Gem("Grayite", Rarity.RARE, colour_rare, 4.8f);
 		gems[2] = new Gem("Whiteoxide", Rarity.EPIC, colour_epic, 12);
 		gems[3] = new Gem("Bluntric", Rarity.LEGENDARY, colour_legendary, 12);
+		
+		gems[0].UseBright();
 	}
 
 	@Override
