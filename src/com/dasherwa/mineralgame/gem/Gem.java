@@ -20,4 +20,7 @@ public class Gem {
 	public float GetGemValue() {
 		return value;
 	}
+	public String GetGemName() {
+		return name;
+	}
 }

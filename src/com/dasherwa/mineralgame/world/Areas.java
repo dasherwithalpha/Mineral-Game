@@ -44,6 +44,10 @@ class Area {
 		return tiles;
 	}
 	
+	public Tile GetTile(int x, int y) {
+		return tiles[x][y];
+	}
+	
 	public boolean GetIsAreaFinished() {
 		return is_area_finished;
 	}

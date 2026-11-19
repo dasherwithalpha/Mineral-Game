@@ -1,8 +1,5 @@
 package com.dasherwa.mineralgame.tiles;
 
-import com.dasherwa.mineralgame.main.TextureManager;
-import com.raylib.Raylib.Texture;
-
 public class TileData {
 
 	int quarry_power;
@@ -30,27 +27,6 @@ public class TileData {
 	
 	public static float FrequencyLevelToPeriod(int frequency_level) {
 		return 5 / (float)frequency_level;
-	}
-	
-	public static Tile PlaceQuarry(Tile tile) {
-		
-		switch (tile.GetRarity()) {
-
-			case COMMON:
-				return new Tile(TileManager.world_tiles[1]);
-
-			case RARE:
-				return new Tile(TileManager.world_tiles[2]);
-
-			case EPIC:
-				return new Tile(TileManager.world_tiles[3]);
-
-			case LEGENDARY:
-				return new Tile(TileManager.world_tiles[4]);
-				
-		}
-		return tile;
-		
 	}
 	
 	public static float GetQuarryPrice(Tile tile, int quarry_count) {
@@ -87,16 +63,6 @@ public class TileData {
 	
 	public static float GetQuarryUpgradeFrequencyPrice(Tile tile) {
 		return (float) (500 * Math.pow(1.1f, (GetQuarryFrequency(tile) - 1)));
-	}
-	
-	public static Texture QuarryBodyFromTierToTexture(Tile tile) {
-		switch (TileData.GetQuarryTier(tile)) {
-			case 1: return TextureManager.quarry_00_tier_1;
-			case 2: return TextureManager.quarry_00_tier_2;
-			case 3: return TextureManager.quarry_00_tier_3;
-			case 4: return TextureManager.quarry_00_tier_4;
-		}
-		return null;
 	}
 	
 	// SETTERS

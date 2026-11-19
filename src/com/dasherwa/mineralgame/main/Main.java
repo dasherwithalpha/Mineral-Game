@@ -34,11 +34,11 @@ public class Main {
 	
 	static final int SCREEN_MULTIPLIER = 7;
 	
-	static final int MAJOR = 1;
-	static final int MINOR = 1;
+	static final int MAJOR = 2;
+	static final int MINOR = 0;
 	static final int PATCH = 0;
 	static final Version.ReleaseIdentifier RELEASE_IDENTIFIER = ALPHA;
-	static final String BUILD = "0003-20261117";
+	static final String BUILD = "0004-20261119";
 	
 	
 	
@@ -102,7 +102,7 @@ public class Main {
 //			if(IsKeyPressed(KEY_S)) {
 //				WorldManager.LoadTilesFromAreas();
 //			}
-			
+			System.out.println(planet_manager.GetPlanetAreaTileName(0, 0, 0, 0, 1));
 			BeginDrawing();
 			BeginMode2D(camera2d);
 			ClearBackground(BLACK);
@@ -122,6 +122,7 @@ public class Main {
 		}
 		
 		TextureManager.UnloadTextures();
+		planet_manager.UnloadTextures();
 		camera2d.close();
 		CloseWindow();
 		

@@ -1,5 +1,6 @@
 package com.dasherwa.mineralgame.world;
 
+import com.dasherwa.mineralgame.gem.Rarity;
 import com.dasherwa.mineralgame.main.Main;
 import com.dasherwa.mineralgame.main.Signal;
 import com.dasherwa.mineralgame.main.TextureManager;
@@ -13,13 +14,11 @@ import com.dasherwa.mineralgame.tiles.TileType;
 
 import static com.dasherwa.mineralgame.tiles.TileData.*;
 import static com.raylib.Raylib.*;
-import static com.raylib.Colors.WHITE;
 
 public class WorldManager {
 
 	static final int WORLD_WIDTH = 10;
 	static final int WORLD_HEIGHT = 6;
-	public TileManager tile_manager;
 	
 	static Tile[][] tiles;
 	
@@ -39,6 +38,13 @@ public class WorldManager {
 		
 		tiles = new Tile[WORLD_WIDTH][WORLD_HEIGHT];
 		tiles = Main.planet_manager.GetPlanet(current_planet_ordinal).GetTilesFromAnArea(0, 0);
+		TextureManager.SwapQuarryTexturesWith(
+				Main.planet_manager.planets[current_planet_ordinal].quarry_body,
+				Main.planet_manager.planets[current_planet_ordinal].quarry_body_bright,
+				Main.planet_manager.planets[current_planet_ordinal].quarry_mineral,
+				Main.planet_manager.planets[current_planet_ordinal].quarry_mineral_bright,
+				Main.planet_manager.planets[current_planet_ordinal].quarry_rope
+				);
 		
 		every_quarry_max_tier = false;
 		
@@ -50,7 +56,16 @@ public class WorldManager {
 		for (int i = 0; i < WORLD_WIDTH; i++) {
 			for (int j = 0; j < WORLD_HEIGHT; j++) {
 				
-				tiles[i][j].Draw(i * Main.TILE_SIZE, j * Main.TILE_SIZE + Main.SCREEN_BLACKNESS, WHITE);
+				DrawTexture(
+						TextureManager.dirt_texture,
+						i * Main.TILE_SIZE,
+						j * Main.TILE_SIZE + Main.SCREEN_BLACKNESS,
+						Main.planet_manager.GetPlanetMineralColour(current_planet_ordinal, Rarity.COMMON));
+				
+				tiles[i][j].Draw(
+						i * Main.TILE_SIZE,
+						j * Main.TILE_SIZE + Main.SCREEN_BLACKNESS,
+						Main.planet_manager.GetPlanetMineralColour(current_planet_ordinal, tiles[i][j].GetRarity()));
 				
 			}
 		}
@@ -65,7 +80,6 @@ public class WorldManager {
 		if(area_change_signal.IsAlerted()) {
 			tiles = Main.planet_manager.GetPlanet(current_planet_ordinal).GetArea(current_chunk).GetTiles();
 			area_change_signal.Reset();
-			System.out.println("bomboclat");
 		}
 		
 		if(IsCurrentAreaFinished()) {
@@ -82,7 +96,7 @@ public class WorldManager {
 					Main.dialogue_box_manager.SetRemovedMoneyBoxText(TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y], Main.ui.GetQuarryCount()));
 					Main.dialogue_box_manager.SetBoxShow(BoxType.REMOVED_MONEY);
 					
-					tiles[selected_tile_x][selected_tile_y] = TileData.PlaceQuarry(tiles[selected_tile_x][selected_tile_y]);
+					tiles[selected_tile_x][selected_tile_y] = TileManager.QuarryFactory(Main.planet_manager.GetPlanetMineralName(current_planet_ordinal, tiles[selected_tile_x][selected_tile_y].GetRarity()), tiles[selected_tile_x][selected_tile_y].GetRarity());
 					System.out.println(TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y], Main.ui.GetQuarryCount()));
 					Main.ui.IncreaseQuarryCountByOne();
 					
@@ -157,19 +171,6 @@ public class WorldManager {
 	
 	public static void IncreaseTileQuarryTier(int tile_x, int tile_y) {
 		SetQuarryTier(tiles[tile_x][tile_y], GetQuarryTier(tiles[tile_x][tile_y]) + 1);
-		UpdateTileQuarryTextureFromTier(tile_x, tile_y, GetQuarryTier(tiles[tile_x][tile_y]));
-	}
-	
-	static void UpdateTileQuarryTextureFromTier(int tile_x, int tile_y, int tier) {
-		switch (tier) {
-			case 1: tiles[tile_x][tile_y].SetTextureBase(TextureManager.quarry_00_body_1); break;
-			case 2: tiles[tile_x][tile_y].SetTextureBase(TextureManager.quarry_00_body_2); break;
-			case 3: tiles[tile_x][tile_y].SetTextureBase(TextureManager.quarry_00_body_3); break;
-			case 4: tiles[tile_x][tile_y].SetTextureBase(TextureManager.quarry_00_body_4); break;
-			
-			default:
-				break;
-		}
 	}
 	
 	public static boolean IsTileQuarryPowerMaxed(int tile_x, int tile_y, int max) {
@@ -237,5 +238,9 @@ public class WorldManager {
 		
 		return Main.planet_manager.GetPlanet(current_planet_ordinal).GetArea(current_chunk).GetIsAreaFinished();
 		
+	}
+	
+	public static Color GetRarityColorOfTile(int x, int y) {
+		return Main.planet_manager.GetPlanetMineralColour(current_planet_ordinal, tiles[x][y].GetRarity());
 	}
 }

@@ -3,13 +3,14 @@ package com.dasherwa.mineralgame.world;
 import com.FastNoiseLite.FastNoiseLite;
 import com.dasherwa.mineralgame.gem.Gem;
 import com.dasherwa.mineralgame.gem.Rarity;
-import com.dasherwa.mineralgame.main.TextureManager;
 import com.dasherwa.mineralgame.tiles.Tile;
 import com.dasherwa.mineralgame.tiles.TileManager;
 import com.raylib.Raylib.Color;
+import com.raylib.Raylib.Texture;
 import com.raylib.Raylib.Vector2;
 import static com.dasherwa.mineralgame.world.WorldManager.WORLD_HEIGHT;
 import static com.dasherwa.mineralgame.world.WorldManager.WORLD_WIDTH;
+import static com.raylib.Colors.WHITE;
 
 public abstract class Planet {
 
@@ -24,9 +25,16 @@ public abstract class Planet {
 	
 	protected int noise_extend;
 	
+	protected Texture quarry_body;
+	protected Texture quarry_body_bright;
+	protected Texture quarry_mineral;
+	protected Texture quarry_mineral_bright;
+	protected Texture quarry_rope;
+	
 	public Gem[] gems;
 	
 	public Planet() {
+		InitTextures();
 		InitNoise();
 		InitColours();
 		InitGems();
@@ -37,6 +45,7 @@ public abstract class Planet {
 	public abstract void InitAreas();
 	public abstract void InitColours();
 	public abstract void InitGems();
+	public abstract void InitTextures();
 	
 	public void CreatePlanetAreas() {
 		for(int i=0;i<Areas.HORIZONTAL_AREA_COUNT; i++) {
@@ -63,22 +72,18 @@ public abstract class Planet {
 					if(noise_value >= 0 && noise_value < 6) {
 	//					System.out.println("this value is between 0 and 6 (could be 0 as well)");
 						new_tiles[i][j].SetRarity(Rarity.COMMON);
-						new_tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_1);
 					}
 					if(noise_value >= 6 && noise_value < 11) {
 	//					System.out.println("this value is between 6 and 11 (could be 6 as well)");
 						new_tiles[i][j].SetRarity(Rarity.RARE);
-						new_tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_2);
 					}
 					if(noise_value >= 11 && noise_value < 13) {
 	//					System.out.println("this value is between 11 and 13 (could be 11 as well)");
 						new_tiles[i][j].SetRarity(Rarity.EPIC);
-						new_tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_3);
 					}
 					if(noise_value >= 13 && noise_value < 15) {
 	//					System.out.println("this value is between 13 and 15 (could be 13 as well)");
 						new_tiles[i][j].SetRarity(Rarity.LEGENDARY);
-						new_tiles[i][j].SetTextureMineral(TextureManager.dirt_00_mineral_4);
 					}
 					
 				}
@@ -101,6 +106,26 @@ public abstract class Planet {
 	
 	public FastNoiseLite GetNoise() {
 		return noise;
+	}
+	
+	public Color GetColor(Rarity rarity) {
+		switch (rarity) {
+			case COMMON: return colour_common;
+			case RARE: return colour_rare;
+			case EPIC: return colour_epic;
+			case LEGENDARY: return colour_legendary;
+			default: return WHITE;
+		}
+	}
+	
+	public String GetMineralName(Rarity rarity) {
+		switch (rarity) {
+			case COMMON: return gems[0].GetGemName();
+			case RARE: return gems[1].GetGemName();
+			case EPIC: return gems[2].GetGemName();
+			case LEGENDARY: return gems[3].GetGemName();
+			default: return "";
+		}
 	}
 	
 }

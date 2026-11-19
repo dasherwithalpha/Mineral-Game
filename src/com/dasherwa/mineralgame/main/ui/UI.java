@@ -5,7 +5,6 @@ import static com.raylib.Colors.WHITE;
 
 import java.text.DecimalFormat;
 
-import com.dasherwa.mineralgame.gem.GemManager;
 import com.dasherwa.mineralgame.main.Main;
 import com.dasherwa.mineralgame.main.TextureManager;
 import com.dasherwa.mineralgame.main.ui.dialoguebox.BoxType;
@@ -27,7 +26,6 @@ public class UI {
 	int quarry_count;
 	
 	DecimalFormat decimal_format, decimal_format2;	
-	GemManager gem_manager;
 	
 	@SuppressWarnings("resource")
 	public UI(){
@@ -36,8 +34,6 @@ public class UI {
 		decimal_format2 = new DecimalFormat("00000000000000");
 		
 		quarry_count = 0;
-		
-		gem_manager = new GemManager();
 		
 		ui_state = UIState.RESOURCES;
 		selection_type = SelectionType.TILE;
@@ -441,9 +437,21 @@ public class UI {
 				if(WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y())) {
 
 					DrawTexture(
-							TileData.QuarryBodyFromTierToTexture(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())),
-							9,
-							9,
+							TextureManager.quarry_body_bright,
+							8,
+							7,
+							ColorBrightness(WorldManager.GetRarityColorOfTile((int)selected_tile.x(), (int)selected_tile.y()), 0.5f));
+					
+					DrawTexture(
+							TextureManager.quarry_body,
+							8,
+							7,
+							WorldManager.GetRarityColorOfTile((int)selected_tile.x(), (int)selected_tile.y()));
+					
+					DrawTexture(
+							TextureManager.quarry_rope,
+							8,
+							7,
 							WHITE);
 					
 				}

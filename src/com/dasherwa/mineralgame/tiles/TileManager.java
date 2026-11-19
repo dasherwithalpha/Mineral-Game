@@ -8,76 +8,43 @@ import com.dasherwa.mineralgame.main.TextureManager;
 public class TileManager {
 
 	public static Tile[] world_tiles;
-	private final int TILE_COUNT = 5;
+	private final int TILE_COUNT = 2;
 	
 	public TileManager() {
 		
 		world_tiles = new Tile[TILE_COUNT];
 		
-		Tile dirt_tile = new Tile();
-		dirt_tile.SetName("Dirt");
-		dirt_tile.SetRarity(Rarity.COMMON);
-		dirt_tile.SetTextureBase(TextureManager.dirt_texture);
-		dirt_tile.SetTextureMineral(TextureManager.dirt_00_mineral_1);
-		dirt_tile.SetType(TileType.REGULAR);
-		dirt_tile.SetID(0);
+		Tile mineral_tile = new Tile();
+		mineral_tile.SetName("Mineral");
+		mineral_tile.SetRarity(Rarity.COMMON);
+		mineral_tile.SetTextureMineral(TextureManager.mineral);
+		mineral_tile.SetType(TileType.REGULAR);
+		mineral_tile.SetID(0);
 		
-		Tile quarry_brownite = new Tile();
-		quarry_brownite.SetName("Brownite Quarry");
-		quarry_brownite.SetRarity(Rarity.COMMON);
-		quarry_brownite.SetTextureBase(TextureManager.quarry_00_body_1);
-		quarry_brownite.SetTextureMineral(TextureManager.quarry_00_mineral_1);
-		quarry_brownite.SetType(TileType.QUARRY);
-		quarry_brownite.SetID(1);
-		SetQuarryPower(quarry_brownite, 1);
-		SetQuarryFrequency(quarry_brownite, 1);
-		SetQuarryCounter(quarry_brownite, 0.0f);
-		SetQuarryTier(quarry_brownite, 1);
-		
-		Tile quarry_grayite = new Tile();
-		quarry_grayite.SetName("Grayite Quarry");
-		quarry_grayite.SetRarity(Rarity.RARE);
-		quarry_grayite.SetTextureBase(TextureManager.quarry_00_body_1);
-		quarry_grayite.SetTextureMineral(TextureManager.quarry_00_mineral_2);
-		quarry_grayite.SetType(TileType.QUARRY);
-		quarry_grayite.SetID(2);
-		SetQuarryPower(quarry_grayite, 1);
-		SetQuarryFrequency(quarry_grayite, 1);
-		SetQuarryCounter(quarry_grayite, 0.0f);
-		SetQuarryTier(quarry_grayite, 1);
-		
-		Tile quarry_whiteoxide = new Tile();
-		quarry_whiteoxide.SetName("Whiteoxide Quarry");
-		quarry_whiteoxide.SetRarity(Rarity.EPIC);
-		quarry_whiteoxide.SetTextureBase(TextureManager.quarry_00_body_1);
-		quarry_whiteoxide.SetTextureMineral(TextureManager.quarry_00_mineral_3);
-		quarry_whiteoxide.SetType(TileType.QUARRY);
-		quarry_whiteoxide.SetID(3);
-		SetQuarryPower(quarry_whiteoxide, 1);
-		SetQuarryFrequency(quarry_whiteoxide, 1);
-		SetQuarryCounter(quarry_whiteoxide, 0.0f);
-		SetQuarryTier(quarry_whiteoxide, 1);
-
-		Tile quarry_bluntric = new Tile();
-		quarry_bluntric.SetName("Bluntric Quarry");
-		quarry_bluntric.SetRarity(Rarity.LEGENDARY);
-		quarry_bluntric.SetTextureBase(TextureManager.quarry_00_body_1);
-		quarry_bluntric.SetTextureMineral(TextureManager.quarry_00_mineral_4);
-		quarry_bluntric.SetType(TileType.QUARRY);
-		quarry_bluntric.SetID(4);
-		SetQuarryPower(quarry_bluntric, 1);
-		SetQuarryFrequency(quarry_bluntric, 1);
-		SetQuarryCounter(quarry_bluntric, 0.0f);
-		SetQuarryTier(quarry_bluntric, 1);
+		Tile quarry = new Tile();
+		quarry.SetName("Quarry");
+		quarry.SetRarity(Rarity.COMMON);
+		quarry.SetTextureBase(TextureManager.quarry_body);
+		quarry.SetTextureMineral(TextureManager.quarry_mineral);
+		quarry.SetType(TileType.QUARRY);
+		quarry.SetID(1);
+		SetQuarryPower(quarry, 1);
+		SetQuarryFrequency(quarry, 1);
+		SetQuarryCounter(quarry, 0.0f);
+		SetQuarryTier(quarry, 1);
 
 		
 		
-		world_tiles[0] = dirt_tile;
-		world_tiles[1] = quarry_brownite;
-		world_tiles[2] = quarry_grayite;
-		world_tiles[3] = quarry_whiteoxide;
-		world_tiles[4] = quarry_bluntric;
+		world_tiles[0] = mineral_tile;
+		world_tiles[1] = quarry;
 		
+	}
+	
+	public static Tile QuarryFactory(String name, Rarity rarity) {
+		world_tiles[1].SetTextureBase(TextureManager.quarry_body, TextureManager.quarry_body_bright);
+		world_tiles[1].SetTextureMineral(TextureManager.quarry_mineral, TextureManager.quarry_mineral_bright);
+		
+		return new Tile(world_tiles[1], name + " Quarry", rarity);
 	}
 	
 }

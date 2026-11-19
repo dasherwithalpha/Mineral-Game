@@ -9,6 +9,8 @@ import com.dasherwa.mineralgame.world.Areas;
 import com.dasherwa.mineralgame.world.Planet;
 import com.raylib.Helpers;
 
+import static com.raylib.Raylib.*;
+
 public class ApaPlanet extends Planet{
 
 	@Override
@@ -31,7 +33,6 @@ public class ApaPlanet extends Planet{
 	public void InitAreas() {
 		areas = new Areas();
 		CreatePlanetAreas();
-		
 	}
 
 	@Override
@@ -40,7 +41,10 @@ public class ApaPlanet extends Planet{
 		colour_rare = Helpers.newColor(75, 75, 75, 255);
 		colour_epic = Helpers.newColor(255, 255, 255, 255);
 		colour_legendary = Helpers.newColor(182, 185, 244, 255);
-		
+//		colour_common = Helpers.newColor(255, 0, 0, 255);
+//		colour_rare = Helpers.newColor(0, 255, 0, 255);
+//		colour_epic = Helpers.newColor(0, 0, 255, 255);
+//		colour_legendary = Helpers.newColor(255, 255, 255, 255);
 	}
 
 	@Override
@@ -50,7 +54,15 @@ public class ApaPlanet extends Planet{
 		gems[1] = new Gem("Grayite", Rarity.RARE, colour_rare, 4.8f);
 		gems[2] = new Gem("Whiteoxide", Rarity.EPIC, colour_epic, 12);
 		gems[3] = new Gem("Bluntric", Rarity.LEGENDARY, colour_legendary, 12);
-		
+	}
+
+	@Override
+	public void InitTextures() {
+		quarry_body = LoadTexture("Resources/Textures/Tile/apa_quarry_body.png");
+		quarry_body_bright = LoadTexture("Resources/Textures/Tile/apa_quarry_body_bright.png");
+		quarry_mineral = LoadTexture("Resources/Textures/Tile/apa_quarry_mineral.png");
+		quarry_mineral_bright = LoadTexture("Resources/Textures/Tile/apa_quarry_mineral_bright.png");
+		quarry_rope = LoadTexture("Resources/Textures/Tile/apa_quarry_rope.png");
 	}
 
 }

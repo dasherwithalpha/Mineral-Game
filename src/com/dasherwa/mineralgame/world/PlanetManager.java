@@ -1,6 +1,9 @@
 package com.dasherwa.mineralgame.world;
 
+import com.dasherwa.mineralgame.gem.Rarity;
 import com.dasherwa.mineralgame.world.planets.ApaPlanet;
+import com.raylib.Raylib.Color;
+import static com.raylib.Raylib.*;
 
 public class PlanetManager {
 
@@ -19,5 +22,23 @@ public class PlanetManager {
 	
 	public String GetPlanetAreaTileName(int planet, int area_x, int area_y, int tile_x, int tile_y) {
 		return planets[planet].GetArea(area_x, area_y).GetTileName(tile_x, tile_y);
+	}
+	
+	public Color GetPlanetMineralColour(int planet_ordinal, Rarity rarity) {
+		return planets[planet_ordinal].GetColor(rarity);
+	}
+	
+	public String GetPlanetMineralName(int planet_ordinal, Rarity rarity) {
+		return planets[planet_ordinal].GetMineralName(rarity);
+	}
+	
+	public void UnloadTextures() {
+		for (int i = 0; i < planets.length; i++) {
+			if(planets[i] != null) {
+				UnloadTexture(planets[i].quarry_body);
+				UnloadTexture(planets[i].quarry_mineral);
+				UnloadTexture(planets[i].quarry_rope);
+			}
+		}
 	}
 }
