@@ -60,6 +60,7 @@ public class ApaPlanet extends Planet{
 		gems[3] = new Gem("Bluntric", Rarity.LEGENDARY, colour_legendary, 12);
 		
 		gems[0].UseBright();
+		gems[2].UseBright();
 	}
 
 	@Override

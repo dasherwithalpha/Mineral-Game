@@ -394,10 +394,14 @@ public class UI {
 			
 			case RESOURCES:
 				DrawTexture(TextureManager.black_bar, 0, 0, WHITE);
-				DrawText(decimal_format.format(mineralKG_counts[2]), 20, 18, 13, WHITE);
-				DrawText(decimal_format.format(mineralKG_counts[3]), 20, 3, 13, WHITE);
-				DrawText(decimal_format.format(mineralKG_counts[0]), 100, 18, 13, WHITE);
-				DrawText(decimal_format.format(mineralKG_counts[1]), 100, 3, 13, WHITE);
+				int k = 3;
+				for(int i = 0; i<2; i++) {
+					for(int j = 0; j<2; j++) {
+						DrawRectangle(80 * i + 3,15 * j + 3,11,11, Main.planet_manager.GetPlanet(WorldManager.current_planet_ordinal).GetColor(k));
+						DrawText(decimal_format.format(mineralKG_counts[3 - k]), 80 * (1 - i) + 20, 15 * (1 - j) + 3, 13, WHITE);
+						k--;
+					}
+				}
 				break;
 				
 			case BALANCE:
@@ -473,6 +477,10 @@ public class UI {
 				
 			case SELL:
 				DrawTexture(TextureManager.black_bar_sell, 0, 0, WHITE);
+				for(int i = 0; i<4; i++) {
+					DrawRectangle(30 * i + 3, 4, 24, 24, Main.planet_manager.GetPlanet(WorldManager.current_planet_ordinal).GetColor(i));
+				}
+				
 				
 				if(selected_sell.x() >= 0 && selected_sell.x() <= 3) {
 					
