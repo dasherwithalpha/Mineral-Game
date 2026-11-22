@@ -15,7 +15,6 @@ public class TextureManager {
 					quarry_rope,
 					//MENU TEXTURES
 					selected_tile,
-					black_bar,
 					black_bar_options,
 					black_bar_balance,
 					selected_option,
@@ -31,10 +30,7 @@ public class TextureManager {
 					selected_tile_notinmenu,
 					quarry_tier_selected,
 					//AERAS MENU TEXTURES
-					black_bar_areas,
-					areas_selected_area,
-					areas_selled_area;
-					
+					black_bar_areas;
 	
 	public static void LoadTextures() {
 		//TILE TEXTURES
@@ -42,7 +38,6 @@ public class TextureManager {
 		mineral = LoadTexture("Resources/Textures/Tile/mineral.png");
 		//MENU TEXTURES
 		selected_tile = LoadTexture("Resources/Textures/Menu/selected-tile.png");
-		black_bar = LoadTexture("Resources/Textures/Menu/black_bar.png");
 		black_bar_options = LoadTexture("Resources/Textures/Menu/black_bar_options.png");
 		black_bar_balance = LoadTexture("Resources/Textures/Menu/black_bar_balance.png");
 		selected_option = LoadTexture("Resources/Textures/Menu/selected_option.png");
@@ -59,8 +54,6 @@ public class TextureManager {
 		quarry_tier_selected = LoadTexture("Resources/Textures/Menu/quarry_tier_selected.png");
 		//AREA MENU TEXTURES
 		black_bar_areas = LoadTexture("Resources/Textures/Menu/black_bar_areas.png");
-		areas_selected_area = LoadTexture("Resources/Textures/Menu/areas_selected_area.png");
-		areas_selled_area = LoadTexture("Resources/Textures/Menu/areas_selled_area.png");
 	}
 	
 	public static void UnloadTextures() {
@@ -74,7 +67,6 @@ public class TextureManager {
 		UnloadTexture(quarry_rope);
 		//MENU TEXTURES
 		UnloadTexture(selected_tile);
-		UnloadTexture(black_bar);
 		UnloadTexture(black_bar_options);
 		UnloadTexture(black_bar_balance);
 		UnloadTexture(selected_option);
@@ -91,8 +83,6 @@ public class TextureManager {
 		UnloadTexture(quarry_tier_selected);
 		//AREAS MENU TEXTURES
 		UnloadTexture(black_bar_areas);
-		UnloadTexture(areas_selected_area);
-		UnloadTexture(areas_selled_area);
 	}
 	
 	public static void SwapQuarryTexturesWith(Texture quarry_body, Texture quarry_body_bright, Texture quarry_mineral, Texture quarry_mineral_bright, Texture quarry_rope) {

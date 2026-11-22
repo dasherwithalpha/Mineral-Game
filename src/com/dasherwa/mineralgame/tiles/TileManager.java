@@ -2,8 +2,8 @@ package com.dasherwa.mineralgame.tiles;
 
 import static com.dasherwa.mineralgame.tiles.TileData.*;
 
-import com.dasherwa.mineralgame.gem.Rarity;
 import com.dasherwa.mineralgame.main.TextureManager;
+import com.dasherwa.mineralgame.mineral.Rarity;
 
 public class TileManager {
 

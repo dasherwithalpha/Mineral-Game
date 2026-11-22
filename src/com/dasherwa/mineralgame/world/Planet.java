@@ -1,8 +1,8 @@
 package com.dasherwa.mineralgame.world;
 
 import com.FastNoiseLite.FastNoiseLite;
-import com.dasherwa.mineralgame.gem.Gem;
-import com.dasherwa.mineralgame.gem.Rarity;
+import com.dasherwa.mineralgame.mineral.Mineral;
+import com.dasherwa.mineralgame.mineral.Rarity;
 import com.dasherwa.mineralgame.tiles.Tile;
 import com.dasherwa.mineralgame.tiles.TileManager;
 import com.raylib.Raylib.Color;
@@ -14,6 +14,7 @@ import static com.raylib.Colors.WHITE;
 
 public abstract class Planet {
 
+	protected Color colour_dirt;
 	protected Color colour_common;
 	protected Color colour_rare;
 	protected Color colour_epic;
@@ -35,20 +36,20 @@ public abstract class Planet {
 	protected Texture quarry_mineral_bright;
 	protected Texture quarry_rope;
 	
-	public Gem[] gems;
+	public Mineral[] minerals;
 	
 	public Planet() {
 		InitTextures();
 		InitNoise();
 		InitColours();
-		InitGems();
+		InitMinerals();
 		InitAreas();
 	}
 	
 	public abstract void InitNoise();
 	public abstract void InitAreas();
 	public abstract void InitColours();
-	public abstract void InitGems();
+	public abstract void InitMinerals();
 	public abstract void InitTextures();
 	
 	public void CreatePlanetAreas() {
@@ -154,20 +155,20 @@ public abstract class Planet {
 	
 	public String GetMineralName(Rarity rarity) {
 		switch (rarity) {
-			case COMMON: return gems[0].GetGemName();
-			case RARE: return gems[1].GetGemName();
-			case EPIC: return gems[2].GetGemName();
-			case LEGENDARY: return gems[3].GetGemName();
+			case COMMON: return minerals[0].GetMineralString();
+			case RARE: return minerals[1].GetMineralString();
+			case EPIC: return minerals[2].GetMineralString();
+			case LEGENDARY: return minerals[3].GetMineralString();
 			default: return "";
 		}
 	}
 	
-	public boolean GetGemUseBright(int gem_index) {
-		return gems[gem_index].GetUseBright();
+	public boolean GetMineralUseBright(int mineral_index) {
+		return minerals[mineral_index].GetUseBright();
 	}
 	
-	public boolean GetGemUseBright(Rarity rarity) {
-		return gems[
+	public boolean GetMineralUseBright(Rarity rarity) {
+		return minerals[
 		            switch (rarity) {
 		            	case COMMON: yield 0;
 		            	case RARE: yield 1;
@@ -178,6 +179,14 @@ public abstract class Planet {
 		            		throw new IllegalArgumentException("Unexpected value: " + rarity);
 		            }
 		            ].GetUseBright();
+	}
+	
+	public boolean GetAreaFinished(Vector2 pos) {
+		return areas.GetArea(pos).GetIsAreaFinished();
+	}
+	
+	public boolean GetAreaFinished(int x, int y) {
+		return areas.GetArea(x, y).GetIsAreaFinished();
 	}
 	
 }

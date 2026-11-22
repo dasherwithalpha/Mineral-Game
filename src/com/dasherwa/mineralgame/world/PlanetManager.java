@@ -1,6 +1,6 @@
 package com.dasherwa.mineralgame.world;
 
-import com.dasherwa.mineralgame.gem.Rarity;
+import com.dasherwa.mineralgame.mineral.Rarity;
 import com.dasherwa.mineralgame.world.planets.ApaPlanet;
 import com.raylib.Raylib.Color;
 import static com.raylib.Raylib.*;
@@ -16,8 +16,8 @@ public class PlanetManager {
 	public Planet GetPlanet(int index) {
 		return planets[index];
 	}
-	public float GetPlanetGemValue(int planet_ordinal, int gem_ordinal) {
-		return planets[planet_ordinal].gems[gem_ordinal].GetGemValue();
+	public float GetPlanetMineralValue(int planet_ordinal, int mineral_ordinal) {
+		return planets[planet_ordinal].minerals[mineral_ordinal].GetMineralValue();
 	}
 	
 	public String GetPlanetAreaTileName(int planet, int area_x, int area_y, int tile_x, int tile_y) {

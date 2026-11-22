@@ -23,6 +23,18 @@ public class Areas {
 	public void SetArea(Area area, int x, int y) {
 		this.area[x][y] = area;
 	}
+	
+	public boolean GetAreaFinished(Vector2 pos) {
+		return area[(int)pos.x()][(int)pos.y()].GetIsAreaFinished();
+	}
+	
+	public boolean GetAreaFinished(int x, int y) {
+		return area[x][y].GetIsAreaFinished();
+	}
+	
+	public void SetAreaFinished(int x, int y, boolean area_finished) {
+		area[x][y].SetIsAreaFinished(area_finished);
+	}
 }
 
 class Area {

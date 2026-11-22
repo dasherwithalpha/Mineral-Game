@@ -1,15 +1,15 @@
-package com.dasherwa.mineralgame.gem;
+package com.dasherwa.mineralgame.mineral;
 
 import static com.raylib.Raylib.*;
 
-public class Gem {
+public class Mineral {
 	String name;
 	Rarity rarity;
 	Color colour;
 	float value;
 	boolean use_bright;
 	
-	public Gem(String name, Rarity rarity, Color colour, float value) {
+	public Mineral(String name, Rarity rarity, Color colour, float value) {
 		
 		this.name = name;
 		this.rarity = rarity;
@@ -18,10 +18,10 @@ public class Gem {
 		
 	}
 	
-	public float GetGemValue() {
+	public float GetMineralValue() {
 		return value;
 	}
-	public String GetGemName() {
+	public String GetMineralString() {
 		return name;
 	}
 	

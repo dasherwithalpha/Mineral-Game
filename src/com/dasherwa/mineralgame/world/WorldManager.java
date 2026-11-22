@@ -1,12 +1,12 @@
 package com.dasherwa.mineralgame.world;
 
-import com.dasherwa.mineralgame.gem.Rarity;
 import com.dasherwa.mineralgame.main.Main;
 import com.dasherwa.mineralgame.main.Signal;
 import com.dasherwa.mineralgame.main.TextureManager;
 import com.dasherwa.mineralgame.main.ui.SelectionType;
 import com.dasherwa.mineralgame.main.ui.UIState;
 import com.dasherwa.mineralgame.main.ui.dialoguebox.BoxType;
+import com.dasherwa.mineralgame.mineral.Rarity;
 import com.dasherwa.mineralgame.tiles.Tile;
 import com.dasherwa.mineralgame.tiles.TileData;
 import com.dasherwa.mineralgame.tiles.TileManager;

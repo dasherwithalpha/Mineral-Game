@@ -3,8 +3,8 @@ package com.dasherwa.mineralgame.world.planets;
 import com.FastNoiseLite.FastNoiseLite;
 import com.FastNoiseLite.FastNoiseLite.FractalType;
 import com.FastNoiseLite.FastNoiseLite.NoiseType;
-import com.dasherwa.mineralgame.gem.Gem;
-import com.dasherwa.mineralgame.gem.Rarity;
+import com.dasherwa.mineralgame.mineral.Mineral;
+import com.dasherwa.mineralgame.mineral.Rarity;
 import com.dasherwa.mineralgame.world.Areas;
 import com.dasherwa.mineralgame.world.Planet;
 import com.raylib.Helpers;
@@ -33,13 +33,15 @@ public class ApaPlanet extends Planet{
 	public void InitAreas() {
 		areas = new Areas();
 		CreatePlanetAreas();
+//		areas.SetAreaFinished(0, 0, true);
+//		areas.SetAreaFinished(5, 3, true);
 	}
 
 	@Override
 	public void InitColours() {
 		colour_common = Helpers.newColor(119, 80, 39, 255);
 		colour_rare = Helpers.newColor(75, 75, 75, 255);
-		colour_epic = Helpers.newColor(230, 230, 230, 255);
+		colour_epic = Helpers.newColor(215, 218, 234, 255);
 		colour_legendary = Helpers.newColor(182, 185, 244, 255);
 		colour_common_bright = Helpers.newColor(178, 119, 58, 255);
 		colour_rare_bright = Helpers.newColor(112, 112, 112, 255);
@@ -52,15 +54,15 @@ public class ApaPlanet extends Planet{
 	}
 
 	@Override
-	public void InitGems() {
-		gems = new Gem[4];
-		gems[0] = new Gem("Brownite", Rarity.COMMON, colour_common, 4);
-		gems[1] = new Gem("Grayite", Rarity.RARE, colour_rare, 4.8f);
-		gems[2] = new Gem("Whiteoxide", Rarity.EPIC, colour_epic, 12);
-		gems[3] = new Gem("Bluntric", Rarity.LEGENDARY, colour_legendary, 12);
+	public void InitMinerals() {
+		minerals = new Mineral[4];
+		minerals[0] = new Mineral("Brownite", Rarity.COMMON, colour_common, 4);
+		minerals[1] = new Mineral("Grayite", Rarity.RARE, colour_rare, 4.8f);
+		minerals[2] = new Mineral("Whiteoxide", Rarity.EPIC, colour_epic, 12);
+		minerals[3] = new Mineral("Bluntric", Rarity.LEGENDARY, colour_legendary, 12);
 		
-		gems[0].UseBright();
-		gems[2].UseBright();
+		minerals[0].UseBright();
+		minerals[2].UseBright();
 	}
 
 	@Override
@@ -70,6 +72,10 @@ public class ApaPlanet extends Planet{
 		quarry_mineral = LoadTexture("Resources/Textures/Tile/apa_quarry_mineral.png");
 		quarry_mineral_bright = LoadTexture("Resources/Textures/Tile/apa_quarry_mineral_bright.png");
 		quarry_rope = LoadTexture("Resources/Textures/Tile/apa_quarry_rope.png");
+//		quarry_body = LoadTexture("Resources/Textures/Tile/lavre_quarry_body.png");
+//		quarry_body_bright = LoadTexture("Resources/Textures/Tile/lavre_quarry_body_bright.png");
+//		quarry_mineral = LoadTexture("Resources/Textures/Tile/lavre_quarry_mineral.png");
+//		quarry_mineral_bright = LoadTexture("Resources/Textures/Tile/lavre_quarry_mineral_bright.png");
 	}
 
 }

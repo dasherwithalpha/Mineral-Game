@@ -4,9 +4,9 @@ import static com.raylib.Raylib.*;
 import static com.raylib.Colors.GREEN;
 import static com.raylib.Colors.WHITE;
 
-import com.dasherwa.mineralgame.gem.Rarity;
 import com.dasherwa.mineralgame.main.Main;
 import com.dasherwa.mineralgame.main.TextureManager;
+import com.dasherwa.mineralgame.mineral.Rarity;
 
 public class Tile{
 
@@ -55,7 +55,7 @@ public class Tile{
 		
 		if(type == TileType.REGULAR) {
 				
-			if(Main.planet_manager.GetPlanet(planet_ordinal).GetGemUseBright(rarity)) {
+			if(Main.planet_manager.GetPlanet(planet_ordinal).GetMineralUseBright(rarity)) {
 				if(texture_mineral != null) {
 					DrawTexture(texture_mineral, x, y, Main.planet_manager.GetPlanetMineralColourBright(planet_ordinal, rarity));
 				}
@@ -92,7 +92,10 @@ public class Tile{
 					DrawTexture(texture_mineral, x, y, ColorBrightness(GREEN, -0.3f));
 				}
 			}
-			DrawTexture(TextureManager.quarry_rope, x, y, WHITE);
+			if(TextureManager.quarry_rope != null) {
+				DrawTexture(TextureManager.quarry_rope, x, y, WHITE);
+			}
+			
 		}
 	};
 	

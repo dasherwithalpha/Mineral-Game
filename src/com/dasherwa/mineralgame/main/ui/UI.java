@@ -12,6 +12,7 @@ import com.dasherwa.mineralgame.tiles.TileData;
 import com.dasherwa.mineralgame.world.Areas;
 import com.dasherwa.mineralgame.world.WorldManager;
 import com.dasherwa.utilities.romannumeral.RomanNumeral;
+import com.raylib.Helpers;
 
 public class UI {
 
@@ -27,10 +28,14 @@ public class UI {
 	
 	DecimalFormat decimal_format, decimal_format2;	
 	
+	Color LESSWHITE;
+	
 	@SuppressWarnings("resource")
 	public UI(){
 		
-		decimal_format = new DecimalFormat("0.00");
+		LESSWHITE = Helpers.newColor(215, 218, 234, 255);
+		
+		decimal_format = new DecimalFormat("0");
 		decimal_format2 = new DecimalFormat("00000000000000");
 		
 		quarry_count = 0;
@@ -177,7 +182,7 @@ public class UI {
 					selected_menu_draw.y(2);
 					
 					if(IsKeyPressed(KEY_ENTER)) {
-						balance += Math.round(mineralKG_counts[(int)selected_sell.x()] * Main.planet_manager.GetPlanetGemValue(WorldManager.current_planet_ordinal, (int)selected_sell.x()));
+						balance += Math.round(mineralKG_counts[(int)selected_sell.x()] * Main.planet_manager.GetPlanetMineralValue(WorldManager.current_planet_ordinal, (int)selected_sell.x()));
 						mineralKG_counts[(int)selected_sell.x()] = 0;
 						ui_state = UIState.BALANCE;
 						System.out.println(balance);
@@ -192,7 +197,7 @@ public class UI {
 					
 					if(IsKeyPressed(KEY_ENTER)) {
 						for (int i = 0; i < 4; i++) {
-							balance += Math.round(mineralKG_counts[i] * Main.planet_manager.GetPlanetGemValue(WorldManager.current_planet_ordinal, i));
+							balance += Math.round(mineralKG_counts[i] * Main.planet_manager.GetPlanetMineralValue(WorldManager.current_planet_ordinal, i));
 							mineralKG_counts[i] = 0;
 						}
 						ui_state = UIState.BALANCE;
@@ -350,39 +355,36 @@ public class UI {
 	
 		if(ui_state == UIState.AERAS) {
 			
-			if(!WorldManager.IsCurrentAreaFinished()) {
-				
-				if(IsKeyPressed(KEY_RIGHT)) {
-					if(WorldManager.current_chunk.x() < Areas.HORIZONTAL_AREA_COUNT - 1) {
-						WorldManager.current_chunk.x(WorldManager.current_chunk.x() + 1);
-						WorldManager.area_change_signal.Alert();
-					}
-					
+			if (IsKeyPressed(KEY_RIGHT)) {
+				if (WorldManager.current_chunk.x() < Areas.HORIZONTAL_AREA_COUNT - 1) {
+					WorldManager.current_chunk.x(WorldManager.current_chunk.x() + 1);
+					WorldManager.area_change_signal.Alert();
 				}
-				
-				if(IsKeyPressed(KEY_LEFT)) {
-					if(WorldManager.current_chunk.x() > 0) {
-						WorldManager.current_chunk.x(WorldManager.current_chunk.x() - 1);
-						WorldManager.area_change_signal.Alert();
-					}
-				}
-				
-				if(IsKeyPressed(KEY_UP)) {
-					if(WorldManager.current_chunk.y() > 0) {
-						WorldManager.current_chunk.y(WorldManager.current_chunk.y() - 1);
-						WorldManager.area_change_signal.Alert();
-					}
-				}
-				
-				if(IsKeyPressed(KEY_DOWN)) {
-					if(WorldManager.current_chunk.y() < Areas.VERTICAL_AREA_COUNT - 1) {
-						WorldManager.current_chunk.y(WorldManager.current_chunk.y() + 1);
-						WorldManager.area_change_signal.Alert();
-					}
-					
-				}
-				
+
 			}
+
+			if (IsKeyPressed(KEY_LEFT)) {
+				if (WorldManager.current_chunk.x() > 0) {
+					WorldManager.current_chunk.x(WorldManager.current_chunk.x() - 1);
+					WorldManager.area_change_signal.Alert();
+				}
+			}
+
+			if (IsKeyPressed(KEY_UP)) {
+				if (WorldManager.current_chunk.y() > 0) {
+					WorldManager.current_chunk.y(WorldManager.current_chunk.y() - 1);
+					WorldManager.area_change_signal.Alert();
+				}
+			}
+
+			if (IsKeyPressed(KEY_DOWN)) {
+				if (WorldManager.current_chunk.y() < Areas.VERTICAL_AREA_COUNT - 1) {
+					WorldManager.current_chunk.y(WorldManager.current_chunk.y() + 1);
+					WorldManager.area_change_signal.Alert();
+				}
+
+			}
+				
 			
 		}
 
@@ -393,19 +395,20 @@ public class UI {
 		switch(ui_state) {
 			
 			case RESOURCES:
-				DrawTexture(TextureManager.black_bar, 0, 0, WHITE);
 				int k = 3;
 				for(int i = 0; i<2; i++) {
 					for(int j = 0; j<2; j++) {
 						DrawRectangle(80 * i + 3,15 * j + 3,11,11, Main.planet_manager.GetPlanet(WorldManager.current_planet_ordinal).GetColor(k));
-						DrawText(decimal_format.format(mineralKG_counts[3 - k]), 80 * (1 - i) + 20, 15 * (1 - j) + 3, 13, WHITE);
+						DrawRectangle(80 * i + 16, 15 * j + 5, 2, 2, WHITE);
+						DrawRectangle(80 * i + 16, 15 * j + 10, 2, 2, WHITE);
+						DrawText(decimal_format.format(mineralKG_counts[3 - k]) + " KG", 80 * (1 - i) + 20, 15 * (1 - j) + 3, 13, WHITE);
 						k--;
 					}
 				}
 				break;
 				
 			case BALANCE:
-				DrawTexture(TextureManager.black_bar_balance, 0, 0, WHITE);
+				DrawTexture(TextureManager.black_bar_balance, 3, 4, WHITE);
 				DrawText(decimal_format2.format(balance), 53, 10, 13, WHITE);
 				break;
 				
@@ -439,27 +442,58 @@ public class UI {
 						);
 				
 				if(WorldManager.IsTileQuarry((int)selected_tile.x(), (int)selected_tile.y())) {
-
+					
+					if(TextureManager.quarry_body_bright != null) {
+						DrawTexture(
+								TextureManager.quarry_body_bright,
+								8,
+								7,
+								Main.planet_manager.GetPlanetMineralColourBright(WorldManager.current_planet_ordinal, TileData.GetQuarryTier(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())) - 1));
+					}
+					
+					if (TextureManager.quarry_body != null) {
+						DrawTexture(
+								TextureManager.quarry_body,
+								8,
+								7,
+								Main.planet_manager.GetPlanetMineralColour(WorldManager.current_planet_ordinal, TileData.GetQuarryTier(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())) - 1));
+					}
+					
+				} else {
+					
+					if(TextureManager.quarry_body_bright != null) {
+						DrawTexture(
+								TextureManager.quarry_body_bright,
+								8,
+								7,
+								WHITE);
+					}
+					
+					if (TextureManager.quarry_body != null) {
+						DrawTexture(
+								TextureManager.quarry_body,
+								8,
+								7,
+								LESSWHITE);
+					}
+				}
+				
+				if(TextureManager.quarry_mineral != null) {
 					DrawTexture(
-							TextureManager.quarry_body_bright,
+							TextureManager.quarry_mineral,
 							8,
 							7,
-							Main.planet_manager.GetPlanetMineralColourBright(WorldManager.current_planet_ordinal, TileData.GetQuarryTier(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())) - 1));
-					
+							LESSWHITE);
+				}
+				
+				if(TextureManager.quarry_mineral_bright != null) {
 					DrawTexture(
-							TextureManager.quarry_body,
-							8,
-							7,
-							Main.planet_manager.GetPlanetMineralColour(WorldManager.current_planet_ordinal, TileData.GetQuarryTier(WorldManager.GetTile((int)selected_tile.x(), (int)selected_tile.y())) - 1));
-					
-					DrawTexture(
-							TextureManager.quarry_rope,
+							TextureManager.quarry_mineral_bright,
 							8,
 							7,
 							WHITE);
-					
 				}
-				
+
 				
 				
 				if(selected_quarry.x() == 1) {
@@ -497,7 +531,15 @@ public class UI {
 				
 			case AERAS:
 				DrawTexture(TextureManager.black_bar_areas, 0, 0, WHITE);
-				DrawTexture(TextureManager.areas_selected_area, (int)WorldManager.current_chunk.x() * 4 + 2, (int)WorldManager.current_chunk.y() * 4 + 2, WHITE);
+				for(int i = 0; i<Areas.HORIZONTAL_AREA_COUNT;i++) {
+					for(int j = 0; j<Areas.VERTICAL_AREA_COUNT;j++) {
+						if(Main.planet_manager.GetPlanet(WorldManager.current_planet_ordinal).GetAreaFinished(i, j)) {
+							DrawRectangle(i * 4 + 2, j * 4 + 2, 4, 4, Main.planet_manager.GetPlanetMineralColour(WorldManager.current_planet_ordinal, 0));
+						}
+						
+					}
+				}
+				DrawRectangle((int)WorldManager.current_chunk.x() * 4 + 2, (int)WorldManager.current_chunk.y() * 4 + 2, 4, 4, Main.planet_manager.GetPlanetMineralColour(WorldManager.current_planet_ordinal, 3));
 				break;
 		}
 		
