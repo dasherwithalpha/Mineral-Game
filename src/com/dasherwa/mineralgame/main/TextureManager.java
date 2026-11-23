@@ -15,45 +15,49 @@ public class TextureManager {
 					quarry_rope,
 					//MENU TEXTURES
 					selected_tile,
-					black_bar_options,
-					black_bar_balance,
+					selected_tile_notinmenu,
+					balance_money,
 					selected_option,
+					button_back,
+					button_back_selected,
 					//SELL MENU TEXTURES
-					black_bar_sell,
-					sell_back_menu,
 					sell_selected_mineral,
 					sell_selected_mineral_all,
 					//QUARRY MENU TEXTURES
-					black_bar_quarry,
 					quarry_selected_attribute,
-					quarry_back_menu,
-					selected_tile_notinmenu,
 					quarry_tier_selected,
-					//AERAS MENU TEXTURES
-					black_bar_areas;
+					quarry_upgrade_frequency,
+					quarry_upgrade_power,
+					quarry_upgrade_tree;
+	
+	public static Texture[] texts = new Texture[6];
 	
 	public static void LoadTextures() {
 		//TILE TEXTURES
 		dirt_texture = LoadTexture("Resources/Textures/Tile/dirt.png");
 		mineral = LoadTexture("Resources/Textures/Tile/mineral.png");
 		//MENU TEXTURES
+		texts[0] = LoadTexture("Resources/Textures/Menu/text_SELL.png");
+		texts[1] = LoadTexture("Resources/Textures/Menu/text_QUARRY.png");
+		texts[2] = LoadTexture("Resources/Textures/Menu/text_SETTINGS.png");
+		texts[3] = LoadTexture("Resources/Textures/Menu/text_AREAS.png");
+		texts[4] = LoadTexture("Resources/Textures/Menu/text_PLANET.png");
+		texts[5] = LoadTexture("Resources/Textures/Menu/text_EXIT.png");
 		selected_tile = LoadTexture("Resources/Textures/Menu/selected-tile.png");
-		black_bar_options = LoadTexture("Resources/Textures/Menu/black_bar_options.png");
-		black_bar_balance = LoadTexture("Resources/Textures/Menu/black_bar_balance.png");
+		balance_money = LoadTexture("Resources/Textures/Menu/balance_money.png");
 		selected_option = LoadTexture("Resources/Textures/Menu/selected_option.png");
+		button_back = LoadTexture("Resources/Textures/Menu/button_back.png");
+		button_back_selected = LoadTexture("Resources/Textures/Menu/button_back_selected.png");
 		//SELL MENU TEXTURES
-		black_bar_sell = LoadTexture("Resources/Textures/Menu/black_bar_sell.png");
-		sell_back_menu = LoadTexture("Resources/Textures/Menu/sell_back_menu.png");
 		sell_selected_mineral = LoadTexture("Resources/Textures/Menu/sell_selected_mineral.png");
 		sell_selected_mineral_all = LoadTexture("Resources/Textures/Menu/sell_selected_mineral_all.png");
 		//QUARRY MENU TEXTURES
-		black_bar_quarry = LoadTexture("Resources/Textures/Menu/black_bar_quarry.png");
 		quarry_selected_attribute = LoadTexture("Resources/Textures/Menu/quarry_selected_attribute.png");
-		quarry_back_menu = LoadTexture("Resources/Textures/Menu/quarry_back_menu.png");
 		selected_tile_notinmenu = LoadTexture("Resources/Textures/Menu/selected-tile_notinmenu.png");
 		quarry_tier_selected = LoadTexture("Resources/Textures/Menu/quarry_tier_selected.png");
-		//AREA MENU TEXTURES
-		black_bar_areas = LoadTexture("Resources/Textures/Menu/black_bar_areas.png");
+		quarry_upgrade_power = LoadTexture("Resources/Textures/Menu/quarry_upgrade_power.png");
+		quarry_upgrade_frequency = LoadTexture("Resources/Textures/Menu/quarry_upgrade_frequency.png");
+		quarry_upgrade_tree = LoadTexture("Resources/Textures/Menu/quarry_upgrade_tree.png");
 	}
 	
 	public static void UnloadTextures() {
@@ -66,23 +70,24 @@ public class TextureManager {
 		UnloadTexture(quarry_mineral_bright);
 		UnloadTexture(quarry_rope);
 		//MENU TEXTURES
+		for(int i = 0; i<6; i++) {
+			UnloadTexture(texts[i]);
+		}
 		UnloadTexture(selected_tile);
-		UnloadTexture(black_bar_options);
-		UnloadTexture(black_bar_balance);
+		UnloadTexture(balance_money);
 		UnloadTexture(selected_option);
+		UnloadTexture(button_back);
+		UnloadTexture(button_back_selected);
 		//SELL MENU TEXTURES
-		UnloadTexture(black_bar_sell);
-		UnloadTexture(sell_back_menu);
 		UnloadTexture(sell_selected_mineral);
 		UnloadTexture(sell_selected_mineral_all);
 		//QUARRY MENU TEXTURES
-		UnloadTexture(black_bar_quarry);
 		UnloadTexture(quarry_selected_attribute);
-		UnloadTexture(quarry_back_menu);
 		UnloadTexture(selected_tile_notinmenu);
 		UnloadTexture(quarry_tier_selected);
-		//AREAS MENU TEXTURES
-		UnloadTexture(black_bar_areas);
+		UnloadTexture(quarry_upgrade_power);
+		UnloadTexture(quarry_upgrade_frequency);
+		UnloadTexture(quarry_upgrade_tree);
 	}
 	
 	public static void SwapQuarryTexturesWith(Texture quarry_body, Texture quarry_body_bright, Texture quarry_mineral, Texture quarry_mineral_bright, Texture quarry_rope) {

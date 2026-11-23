@@ -39,6 +39,7 @@ public class ApaPlanet extends Planet{
 
 	@Override
 	public void InitColours() {
+		colour_dirt = Helpers.newColor(119, 80, 39, 255);
 		colour_common = Helpers.newColor(119, 80, 39, 255);
 		colour_rare = Helpers.newColor(75, 75, 75, 255);
 		colour_epic = Helpers.newColor(215, 218, 234, 255);

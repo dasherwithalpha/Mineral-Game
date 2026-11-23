@@ -44,6 +44,10 @@ public class PlanetManager {
 		return planets[planet_ordinal].GetMineralName(rarity);
 	}
 	
+	public Color GetPlanetDirtColour(int planet_ordinal) {
+		return planets[planet_ordinal].colour_dirt;
+	}
+	
 	public void UnloadTextures() {
 		for (int i = 0; i < planets.length; i++) {
 			if(planets[i] != null) {

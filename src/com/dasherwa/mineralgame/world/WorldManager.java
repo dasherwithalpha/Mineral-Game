@@ -4,9 +4,7 @@ import com.dasherwa.mineralgame.main.Main;
 import com.dasherwa.mineralgame.main.Signal;
 import com.dasherwa.mineralgame.main.TextureManager;
 import com.dasherwa.mineralgame.main.ui.SelectionType;
-import com.dasherwa.mineralgame.main.ui.UIState;
 import com.dasherwa.mineralgame.main.ui.dialoguebox.BoxType;
-import com.dasherwa.mineralgame.mineral.Rarity;
 import com.dasherwa.mineralgame.tiles.Tile;
 import com.dasherwa.mineralgame.tiles.TileData;
 import com.dasherwa.mineralgame.tiles.TileManager;
@@ -30,6 +28,8 @@ public class WorldManager {
 	
 	public static Signal area_change_signal;
 	
+	float all_quarry_maximised_check_counter;
+	
 	public WorldManager() {
 		
 		current_chunk = new Vector2();
@@ -49,6 +49,8 @@ public class WorldManager {
 		every_quarry_max_tier = false;
 		
 		area_change_signal = new Signal();
+		
+		all_quarry_maximised_check_counter = 0f;
 	}
 	
 	public void DrawWorld() {
@@ -60,7 +62,7 @@ public class WorldManager {
 						TextureManager.dirt_texture,
 						i * Main.TILE_SIZE,
 						j * Main.TILE_SIZE + Main.SCREEN_BLACKNESS,
-						Main.planet_manager.GetPlanetMineralColour(current_planet_ordinal, Rarity.COMMON));
+						Main.planet_manager.GetPlanetDirtColour(current_planet_ordinal));
 				
 				tiles[i][j].Draw(
 						i * Main.TILE_SIZE,
@@ -74,9 +76,6 @@ public class WorldManager {
 	
 	public void UpdateWorld() {
 		
-		int selected_tile_x = (int) Main.ui.selected_tile.x();
-		int selected_tile_y = (int) Main.ui.selected_tile.y();
-		
 		if(area_change_signal.IsAlerted()) {
 			tiles = Main.planet_manager.GetPlanet(current_planet_ordinal).GetArea(current_chunk).GetTiles();
 			area_change_signal.Reset();
@@ -86,7 +85,12 @@ public class WorldManager {
 			return;
 		}
 		
-		if(IsKeyPressed(KEY_ENTER) && Main.ui.ui_state == UIState.RESOURCES && Main.ui.selection_type == SelectionType.TILE) {
+		all_quarry_maximised_check_counter += GetFrameTime();
+		
+		int selected_tile_x = (int) Main.ui.selected_tile.x();
+		int selected_tile_y = (int) Main.ui.selected_tile.y();
+		
+		if(IsKeyPressed(KEY_ENTER) && Main.ui.selection_type == SelectionType.TILE) {
 			if (tiles[selected_tile_x][selected_tile_y].GetID() == 0) {
 				
 				if(Main.ui.GetTotalBalance() >= TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y], Main.ui.GetQuarryCount())) {
@@ -97,8 +101,9 @@ public class WorldManager {
 					Main.dialogue_box_manager.SetBoxShow(BoxType.REMOVED_MONEY);
 					
 					tiles[selected_tile_x][selected_tile_y] = TileManager.QuarryFactory(Main.planet_manager.GetPlanetMineralName(current_planet_ordinal, tiles[selected_tile_x][selected_tile_y].GetRarity()), tiles[selected_tile_x][selected_tile_y].GetRarity());
-					System.out.println(TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y], Main.ui.GetQuarryCount()));
+//					System.out.println(TileData.GetQuarryPrice(tiles[selected_tile_x][selected_tile_y], Main.ui.GetQuarryCount()));
 					Main.ui.IncreaseQuarryCountByOne();
+					
 					
 				} else {
 					Main.dialogue_box_manager.SetBoxShow(BoxType.NOT_ENOUGH_MONEY);
@@ -106,9 +111,16 @@ public class WorldManager {
 			}
 		}
 		
-		every_quarry_max_tier = IsEveryQuarryMaxTier();
+		if(all_quarry_maximised_check_counter > 5f) {
+			every_quarry_max_tier = IsEveryQuarryMaximized();
+			all_quarry_maximised_check_counter = 0f;
+		}
+		
 		if(every_quarry_max_tier) {
 			SetCurrentAreaFinished();
+			every_quarry_max_tier = false;
+			ResetQuarryCounters();
+			return;
 		}
 		
 		CollectMineral();
@@ -189,6 +201,14 @@ public class WorldManager {
 		}
 	}
 	
+	public static boolean IsTileQuarryTierMaxed(int tile_x, int tile_y, int max) {
+		if(GetQuarryTier(tiles[tile_x][tile_y]) < max) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	public static int GetTileQuarryPower(int tile_x, int tile_y) {
 		return GetQuarryPower(tiles[tile_x][tile_y]);
 	}
@@ -211,20 +231,26 @@ public class WorldManager {
 		
 	}
 
-	static boolean IsEveryQuarryMaxTier() {
+	static boolean IsEveryQuarryMaximized() {
 		
 		boolean result = true;
 		
 		for (int i = 0; i < WORLD_WIDTH; i++) {
 			for (int j = 0; j < WORLD_HEIGHT; j++) {
 				
-				if(TileData.GetQuarryTier(tiles[i][j]) != 3) {
+				if(!IsTileQuarryTierMaxed(i, j, 4)) {
+					result = false;
+				}
+				if(!IsTileQuarryPowerMaxed(i, j, 10)) {
+					result = false;
+				}
+				if(!IsTileQuarryFrequencyMaxed(i, j, 10)) {
 					result = false;
 				}
 				
 			}
 		}
-		
+		System.out.println(result);
 		return result;
 	}
 	
@@ -242,5 +268,13 @@ public class WorldManager {
 	
 	public static Color GetRarityColorOfTile(int x, int y) {
 		return Main.planet_manager.GetPlanetMineralColour(current_planet_ordinal, tiles[x][y].GetRarity());
+	}
+	
+	static void ResetQuarryCounters() {
+		for(int i = 0; i< WORLD_WIDTH; i++) {
+			for(int j = 0; j< WORLD_HEIGHT; j++) {
+				TileData.SetQuarryCounter(tiles[i][j], 0f);
+			}
+		}
 	}
 }

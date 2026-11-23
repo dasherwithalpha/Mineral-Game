@@ -38,7 +38,7 @@ public class Main {
 	static final int MINOR = 0;
 	static final int PATCH = 0;
 	static final Version.ReleaseIdentifier RELEASE_IDENTIFIER = ALPHA;
-	static final String BUILD = "0007-20261123";
+	static final String BUILD = "0008-20261124";
 	
 	
 	
@@ -102,7 +102,7 @@ public class Main {
 //			if(IsKeyPressed(KEY_S)) {
 //				WorldManager.LoadTilesFromAreas();
 //			}
-			System.out.println(planet_manager.GetPlanetAreaTileName(0, 0, 0, 0, 0));
+//			System.out.println(planet_manager.GetPlanetAreaTileName(0, 0, 0, 0, 0));
 			BeginDrawing();
 			BeginMode2D(camera2d);
 			ClearBackground(BLACK);
